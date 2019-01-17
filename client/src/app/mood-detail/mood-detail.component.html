@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<div class=container>
+  <br><br>
+  <div *ngIf="mood" class="mood-container">
+    <h2>{{ mood.mood }} mood</h2>
+      <hr>
+      <img class="mood_image" [attr.src]="mood.image">
+    <h3 class="mood_description_h">Description</h3>
+    <span class="mood_description">{{ mood.description }}</span>
+
+    <h3 class="mood_description_h">Movies relevant to {{ mood.mood }} mood</h3><br><br><br>
+    <span style="text-align: center; width:5%; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div  class="movie" *ngFor="let movie of mood.movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
+      <hr>
+      <img *ngIf="movie.logo" class="movie_image" [attr.src]="movie.logo">
+      <span class="movie_name" routerLink="/movies/{{movie.id}}">
+        {{ getTitle(movie.title, movie.pub_year)[0] }}
+        <span *ngIf="getTitle(movie.title, movie.pub_year)[1]" class="movie_name_pop">{{ getTitle(movie.title, movie.pub_year)[1] }}</span>
+      </span>
+      <span class="movie_description">
+        {{ movie.description }}
+      </span>
+      <span style="position:absolute; margin-left:450px; margin-top:50px; width:18%">
+        Director<span *ngIf="movie.director.length > 1">s</span>:
+        <strong *ngFor="let direct of movie.director_details">
+          {{ direct.name + ' ' + direct.l_name }}
+        </strong>
+         <br>
+        Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
+        <br>
+        Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+        <br>
+        Duration: <strong>{{ movie.strDuration }}</strong>
+      </span>
+      <hr>
+    </div>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+  </div>
+</div>
+<app-footer></app-footer>
+
+
+
+
+
+

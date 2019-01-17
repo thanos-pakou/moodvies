@@ -1,0 +1,20 @@
+.main-img {
+  width: 100%;
+  height: auto;
+}
+
+.login{
+  position: absolute;
+  text-align: center;
+  top: 15%;
+  left: 38%;
+  color:white;
+}
+
+.error-messages {
+  padding:40px;
+  width:30%;
+  text-align: center;
+  margin:50px auto 20px;
+  background-color: rgba(250,177,177, 0.7);
+}

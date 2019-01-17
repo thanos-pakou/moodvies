@@ -1,0 +1,27 @@
+<form class="navbar-form navbar-left">
+  <div class="form-group">
+    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search.." style="background-color:black"  (blur)="searchBox.value = ''; search(searchBox.value)">
+  </div>
+  <span class="glyphicon glyphicon-search search_icon"></span>
+</form>
+<ng-container *ngIf="movies$ | async; let movies">
+  <div  *ngIf="movies.length>0" class="search-result">
+    Results ({{ movies.length }})
+    <div class="search-result-movie" *ngFor="let movie of movies" routerLink="/movies/{{movie.id}}">
+      <a>
+        <img class='search_movie_image' [attr.src]="movie.logo">
+        <div class="movie-info">
+          <span>{{movie.title}} ({{ movie.pub_year }})</span>
+          <br>
+          <span *ngFor="let dir of movie.director_details; let b=index" >
+            {{ dir.name }} {{ dir.l_name }}<span *ngIf="movie.director_details.length - 1 != b">, </span>
+          </span>
+          <br>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-container>
+
+
+

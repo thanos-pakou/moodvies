@@ -1,0 +1,146 @@
+nav {
+  font-family: 'Consolas', 'Monaco', 'Bitstream Vera Sans Mono', monospace;
+  width: 63%;
+  font-size:120%;
+  opacity: 1 !important;
+  position: fixed;
+  z-index: 1000;
+}
+.navbar{
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  border: 0;
+  width:100%;
+}
+.nav.navbar-nav>li {
+  font-family: "Palatino Linotype";
+  margin-right: 50px;
+  color: darkgray;
+}
+.nav.navbar-nav>li.active1{
+  background: -moz-linear-gradient(bottom right, whitesmoke, white);
+  background: linear-gradient(to bottom right, whitesmoke, white); /* Standard syntax (must be last) */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-fonts{
+  color:azure
+}
+
+.dropdown-menu {
+  background: rgba(0, 0, 0, 0.6);
+  z-index:100000;
+}
+
+.dropdown-menu>li>a {
+   color:white !important;
+ }
+
+.dropdown-menu>li>a:hover {
+  color:black !important;
+}
+
+.form-control {
+  border-radius: 0;
+  height:27px;
+  margin-top:3px;
+  padding-right:40px;
+  margin-right:-37px;
+}
+.btn.btn-default {
+  border-radius: 0;
+  height:27px;
+  margin-top:3px;
+}
+
+.navbar-right {
+  float: right !important;
+}
+
+.search_icon {
+  position: absolute;
+  color:white !important;
+  padding:5px !important;
+  left: 10px;
+  top:5.5px !important;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.form-control {
+  font-family: "Palatino Linotype";
+
+
+}
+
+.profile {
+  position: fixed;
+  width: 1400px;
+  height: 1080px;
+  top: 50%;
+  left: 50%;
+  margin-top: -425px; /* Negative half of height. */
+  margin-left: -700px; /* Negative half of width. */
+  background: rgba(0,0,0,0.7);
+  z-index: 10;
+}
+
+.movie-logo {
+  height:22px;
+  width: 70px;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  nav{
+    top: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  nav{
+    top: 0px !important;
+
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  nav {
+    width: 100%;
+    height: 400px;
+    top: 0px !important;
+    position: absolute;
+    background-color: black !important;
+  }
+
+  .collapse {
+    display: inline-grid;
+    margin-left: 1%;
+    margin-bottom: 200px;
+    position: absolute !important;
+  }
+
+  .navbar {
+
+    position: relative;
+  }
+
+  .search_icon {
+    position: absolute !important;
+    color: white !important;
+    padding: 5px !important;
+    top: 76% !important;
+    left: 83%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .nav.navbar-nav > li {
+    width: 70vw;
+  }
+}
+
+  @media only screen and (max-width: 585px) {
+    .nav.navbar-nav>li {
+      width:50vw;
+    }
+}

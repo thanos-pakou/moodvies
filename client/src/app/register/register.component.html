@@ -1,0 +1,48 @@
+
+<app-navbar></app-navbar>
+
+
+<div class="container">
+  <div class="login">
+    <h1>Sign up and create a new account</h1>
+    <p>all you need is 20 seconds</p>
+  </div>
+  <img class="main-img" src="../../assets/home_images/image_main.png">
+    <form class="form-signup">
+      <label for="username" class="sr-only">Email address</label>
+      <input #username
+             type="text" id="username" class="form-control"
+             placeholder="Username" required autofocus="">
+      <label for="password" class="sr-only">Password</label>
+      <input #email
+             type="email" id="email" class="form-control"
+             placeholder="Email" required>
+      <input #password
+             type="password" id="password" class="form-control"
+             placeholder="Password" required>
+      <label for="first_name" class="sr-only">Email address</label>
+      <input #first_name
+             type="text" id="first_name" class="form-control"
+             placeholder="First Name" required autofocus="">
+      <label for="last_name" class="sr-only">Email address</label>
+      <input #last_name
+             type="text" id="last_name" class="form-control"
+             placeholder="Last Name" required autofocus="">
+
+      <button (click)="register(username.value, email.value, password.value, first_name.value, last_name.value)" class="btn btn-lg btn-primary btn-block"
+              type="submit">Sign Up</button>
+    </form>
+
+</div>
+<div class="error-messages" *ngIf="messageService.messages.length > 0">
+  <h4>Something went wrong..</h4>
+  <h5>please check the fields that have a trouble below..</h5>
+  <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+  <br>
+  <button (click)="messageService.clear()">OK</button>
+</div>
+
+<div style="margin-top: 150px">
+  <app-footer></app-footer>
+</div>
+

@@ -1,0 +1,102 @@
+<app-navbar></app-navbar>
+<div *ngIf="movie" class=container>
+  <div class="movie-container">
+    <h1>{{ movie.title }} ({{ movie.pub_year }}) - {{ movie.duration }} mins</h1>
+    <h3
+      style="margin-bottom: 50px">Director: {{ movie.director_details[0].name + ' ' + movie.director_details[0].l_name }} <span class="movie_country">Country: {{ movie.country }} </span>
+      <button *ngIf="user" (click)="userRate(true)">Rate this movie</button>
+      <span style="margin-left: 30px; font-size: 14px" *ngIf="!user">You can rate this movie by <a routerLink="/login">logging in</a></span>
+      <div class="user-rate" *ngIf="this.userRatee">
+        <button (click)="userRate(false)">Close</button>
+        <br><br>
+        <h5>Rate {{ movie.title }}</h5>
+        <div class="col-sm-5 rating-options-container">
+          <select class="form-control rating-options" #ratinge>
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+        </div>
+        <button  class="rate-button" type="submit" (click)="userRates(movie.id, user[0].id, +ratinge.value);">Rate Now</button>
+        <p style="color:white" *ngFor="let mess of messageService.messages">{{ mess }}</p>
+        <p style="color:white" *ngIf="res">You have rated this movie successfully!</p>
+      </div>
+    </h3>
+    <h4 *ngIf="movie.mood_details">Mood:
+      <span *ngFor="let mood of movie.mood_details"><span>
+        <a routerLink="/moods/{{ mood.id }}"> {{ mood.mood}} </a></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+      <span style="float:right">Genre:
+        <span *ngFor="let genre of movie.genre_details">
+          <a routerLink="/genres">{{genre.genre}}&nbsp;&nbsp;</a>
+        </span>
+      </span>
+    </h4>
+    <img class="logoImage" [attr.src]="movie.logo">
+    <iframe style="float:right"  frameBorder="0" scrolling="no" [src]="getUrl()">
+    </iframe>
+    <br>
+    <div class="rating">
+      IMDB Rating<br>{{ movie.imdb_score }}
+      <hr>
+      Uers Rating<br>{{movie.ratings[0] }}<br><span style="font-size:70%; opacity:0.7">by {{movie.ratings[1]}} Users</span>
+    </div>
+    <div class="movie_desc">
+      <p>{{ movie.description }}</p>
+
+    </div>
+
+
+
+    <h3>Casting:</h3>
+    <div class="movie_desc">
+
+      <span *ngFor="let actor_data of movie.actor_details; let i = index" [attr.data-index]='i' style="font-size:110%"><span *ngIf="i!==0">, </span><a routerLink="/actors/{{ actor_data.idActor }}">{{actor_data.name}} {{actor_data.last_name}}</a> </span>
+
+    </div>
+    <br><br><br>
+    <h3>Reviews</h3><hr>
+
+    <ng-container *ngIf="movie.reviews.length != 0; else noreviews">
+      <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b=index">
+      <h5>
+        <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie:
+        <span class="likes">
+          {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} <br>
+          <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
+          </span>
+        </span>
+      </h5>
+      <br>
+      <p>{{review.content}}
+      </p>
+      <p class="date_posted">Posted {{review.created.substring(0,10)}} &nbsp; Time {{review.created.substring(11,19)}}</p>
+      <div class="like-butt" *ngIf="user">
+        <button  (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
+        <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+      </div>
+    </div>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    </ng-container>
+    <ng-template #noreviews>There are no reviews yet for this movie...</ng-template>
+    <button style="margin-left:40%; margin-top:50px;" (click)="toggleCreateReview()" *ngIf="!createReview && user">Create a Review</button>
+    <div style="margin-left:40%; margin-top:50px;" *ngIf="!user"><a routerLink="/login">Login</a> to create a review</div>
+    <div *ngIf="movieService.createReview">
+      <app-post-review [idUser]="user[0].id" [idMovie]="movie.id"></app-post-review>
+
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
+
+

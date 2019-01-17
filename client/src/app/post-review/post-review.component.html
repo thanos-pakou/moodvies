@@ -1,0 +1,15 @@
+<h3>Create a review for this movie</h3>
+<div class="review-container">
+  <input #title class="form-control" placeholder="Title...">
+  <textarea rows="8" #content class="form-control" placeholder="Content...">
+</textarea>
+  <button class='post-review-butt' type="submit" (click)="postReview(title.value, content.value)">Submit Review</button>
+  <div class="error-messages" *ngIf="messageService.messages.length > 0">
+    <h4>Something went wrong..</h4>
+    <h5>please check the fields that have a trouble below..</h5>
+    <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+    <br>
+    <button (click)="messageService.clear()">OK</button>
+  </div>
+</div>
+

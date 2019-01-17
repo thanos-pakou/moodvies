@@ -1,0 +1,146 @@
+<app-navbar></app-navbar>
+
+<div class="create-list-container" *ngIf="showListWindow">
+  <div class="error-messages" *ngIf="messageService.messages.length > 0">
+    <h4>Something went wrong..</h4>
+    <h5>please check the fields that have a trouble below..</h5>
+    <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+    <br>
+    <button (click)="messageService.clear()">OK</button>
+  </div>
+  <button class="btn-close-list-window"  (click)="listWindow(false)">Close</button>
+  <h1 style="color:white;">Create a Movie List</h1>
+  <br><br><br>
+  <div class="create-list-container-2">
+    <div class="movie-list-input">
+      <h4>Give your movie list a title</h4>
+      <input #titleList class="form-control" placeholder="Title..">
+      <h4>Don't forget to add a description</h4>
+      <textarea #titleDesc type="text" class="form-control" placeholder="Description of your movie list.." rows="5"></textarea>
+    </div>
+  </div>
+    <hr>
+    <h4>Select the movies you want for your movie list below..</h4>
+    <form class="navbar-form navbar-left">
+      <div class="form-group">
+        <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search for movies..">
+      </div>
+      <span class="glyphicon glyphicon-search search_icon"></span>
+    </form>
+    <div class="user-list-header">Your List</div>
+    <div class="userList">
+      <span *ngIf="!userMovieList[0]">No movies have been added to your list yet..</span>
+      <div *ngFor="let movie of userMovieList; let i = index" class="user-list-movie">
+
+        <span class="user-list-movie-info" style="color:white; font-family: 'Berlin Sans FB'; font-size: 16px; float: left">
+          <strong>{{ i+1 }})</strong> {{movie['title']}} ({{movie['pub_year']}})
+        </span>
+        <button type="button" class="btn btn-danger remove-movie" (click)="deleteMovie(i)">Remove Movie</button>
+      </div>
+      <span *ngIf="userMovieList[0]">
+      <button class="btn btn-warning create-list-but" (click)="postList(user[0].id, titleList.value, titleDesc.value)" >Create Movie List</button>
+    </span>
+    </div>
+    <br><br><br>
+
+      <ng-container *ngIf="movies$ | async; let movies;">
+        <div  *ngIf="movies.length>0" class="search-result">
+          <h4 style="text-align: center; color:white">Results ({{ movies.length }}) </h4>
+          <br>
+          <div class="search-result-movie" *ngFor="let movie of movies">ng
+            <span routerLink="/movies/{{movie.id}}">
+              <img class='search_movie_image' [attr.src]="movie.logo">
+              <div class="movie-info">{{movie.title}} ({{ movie.pub_year }})</div>
+              <div class="movie-info">
+                <span *ngFor="let dir of movie.director_details; let d = index"> {{dir.name}} {{ dir.l_name }}<span *ngIf="movie.director_details.length - 1 != d">, </span>  </span>
+              </div>
+              <div class="movie-info">
+                <span *ngFor="let genre of movie.genre_details; let b = index"> {{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span>  </span>
+              </div>
+              <span class="imdb">
+                <img class="imdb-img" src="../../assets/imdb/imdb.png">
+                {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
+                <img class="moodvies-img" src="../../favicon.ico">
+                {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
+              </span>
+            </span>
+            <button type="button" class="btn btn-success addMovie movie-info" *ngIf="!containedMovie.includes(movie.id)" (click)="addMovie(movie.id, movie.title, movie.pub_year)">Add Movie +</button>
+            <button type="button" class="btn btn-success addMovie movie-info" *ngIf="containedMovie.includes(movie.id)" disabled>Movie Added</button>
+          </div>
+      </div>
+     </ng-container>
+</div>
+
+
+
+<div class=container>
+  <br><br>
+  <div class="mood_header">
+    <h1>Lists of movies created by users</h1>
+    <h3>You can always create your own.</h3>
+  </div>
+  <div class="movie-container">
+    <h2>Movie Lists</h2>
+    <div class="create-new-list-window">
+      <button *ngIf="authService.isLoggedIn" (click)="listWindow(true)">Create New List</button>
+      <span *ngIf="!authService.isLoggedIn">You must first <a routerLink="/login">login</a> to create a movie list</span>
+    </div>
+    <br><br>
+    <br><br>
+
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div id="{{j.toString()+'a'}}"  class="mood" *ngFor="let umList of userMovieLists | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
+      <hr>
+      <span class="mood_name" routerLink="/movie-lists/{{ umList.idUserMovieList }}">
+        {{ umList.title }}
+      </span>
+      <span class="mood_description">
+        {{ umList.description }}
+      </span>
+      <br>
+      <span class="userList-username">
+        from {{ umList.user_details.username }}
+      </span>
+
+      <span style="position:absolute; margin-left:450px; margin-top:50px; width:180px">Total number of movies in that list: <strong>{{ umList.movies.length }}</strong></span>
+      <div class="mood_movies_container">
+        <span  *ngFor="let movie of umList['movies_details'] | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
+         <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
+          <div class="movie_info">
+            <h4 style="color:black">{{ movie.title }}</h4>
+            <br>
+            Year Published: <strong>{{ movie.pub_year }}</strong>
+            <br>
+            Duration <strong>{{ movie.duration }} mins </strong>
+            <br>
+            Director: <strong *ngFor="let dir of movie.director_details; let b=index">{{dir.name + ' ' + dir.l_name}}<span *ngIf="movie.director_details.length - 1 != b">, </span></strong>
+            <br>
+            Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
+            <br>
+            Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+            <br>
+            Description: <br>
+            <span class="movie_description">
+              <strong>{{ movie.description }}</strong>
+          </span>
+          </div>
+          <br *ngIf="i === 2"><br *ngIf="i === 2">
+        </span>
+        <div style=" margin-top:15px; margin-right: 60px; margin-bottom:50px; font-size:10px;">
+          <pagination-controls  [maxSize]="5" previousLabel="" nextLabel="" class="my-pagination" *ngIf="umList.movies.length > 6" style="text-align: center" (pageChange)="p[j] = $event" [id]="j">
+          </pagination-controls>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <pagination-controls style="text-align: center" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div class="create-new-list-window">
+      <button *ngIf="authService.isLoggedIn" (click)="listWindow(true)">Create New List</button>
+      <span *ngIf="!authService.isLoggedIn">You must first <a routerLink="/login">login</a> to create a movie list</span>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
+
+

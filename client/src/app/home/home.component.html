@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div class=container>
+
+  <div class="moodSearch">
+    <h1>What's your mood today?</h1>
+    <p>press the button...</p>
+    <button routerLink="/moods" class="btnLogo"></button>
+  </div>
+
+  <img class="main-img" src="../../assets/home_images/image_main.png">
+  <p style=" font-family:'Century Gothic', CenturyGothic, AppleGothic, sans-serif ; color: rgba(0, 0, 0, 1); margin: 10px; " class="pull-right">Our Reccomendations</p>
+
+  <div class="carousel-container">
+    <!-- Carousel -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <div class="rec_movies_layer">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <div class="item active">
+            <ul>
+              <ng-container *ngFor="let movie of movies; let i = index" >
+                <li *ngIf="i < 4" style="display:inline-block"><img routerLink="/movies/{{ movie.id }}" [attr.src]="movie.logo"><br>{{ getTitle(movie.title, movie.pub_year)[0] }}
+                  <br>
+                  <span class="director_name" *ngFor="let direct of movie.director_details">
+                    {{ direct.name.substring(0,1) + '. ' + direct.l_name }}<span *ngIf="movie.director_details.length > 1">,</span>
+                  </span></li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="item">
+            <ul>
+              <ng-container *ngFor="let movie of movies; let i = index" >
+                <li *ngIf="i >= 4 && i < 8" style="display:inline-block"><img routerLink="/movies/{{ movie.id }}" [attr.src]="movie.logo"><br>{{ getTitle(movie.title, movie.pub_year)[0] }}<br><span class="director_name">F. Darabont</span></li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+        <!-- Carousel END-->
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+

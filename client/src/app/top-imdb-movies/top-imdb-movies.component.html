@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+<div class=container>
+  <br><br>
+  <div class="movie_header">
+    <h1> What movie would you like too investigate?</h1>
+    <h3>Select from our list and find it</h3>
+  </div>
+  <div class="movies-container">
+    <h2>Movie List</h2>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div  class="movie" *ngFor="let movie of movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let j = index;" [attr.data-index]="j">
+      <hr>
+      <img *ngIf="movie.logo" class="movie_image" [attr.src]="movie.logo">
+      <span class="movie_name" routerLink="/movies/{{movie.id}}">
+        {{ getTitle(movie.title, movie.pub_year)[0] }}
+        <span *ngIf="getTitle(movie.title, movie.pub_year)[1]" class="movie_name_pop">{{ getTitle(movie.title, movie.pub_year)[1] }}</span>
+      </span>
+      <span class="movie_description">
+        {{ movie.description }}
+      </span>
+
+      <span style="position:absolute; margin-left:450px; margin-top:50px; width:200px">
+        Director<span *ngIf="movie.director.length > 1">s</span>:
+        <strong *ngFor="let direct of movie.director_details">
+          {{ direct.name + ' ' + direct.l_name }}
+        </strong>
+         <br>
+        Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
+        <br>
+        Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+      </span>
+      <span class="imdb">
+        <img class="imdb-img" src="../../assets/imdb/imdb2.png">
+        {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
+        <img class="moodvies-img" src="../../favicon.ico">
+        {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
+      </span>
+      <hr>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

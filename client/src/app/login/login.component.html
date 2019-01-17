@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="login">
+    <h1>Sign in to your account</h1>
+    <p>or <a routerLink="/register">Sign Up</a> to create a new one!</p>
+  </div>
+
+  <img class="main-img" src="../../assets/home_images/image_main.png">
+  <span [ngSwitch]="auth.isLoggedIn">
+    <span *ngSwitchCase="false">
+      <form class="form-signin">
+        <label for="username" class="sr-only">Email address</label>
+        <input #username
+               type="text" id="username" class="form-control"
+               placeholder="username" required="" autofocus="">
+        <label for="password" class="sr-only">Password</label>
+        <input #password
+               type="password" id="password" class="form-control"
+               placeholder="Password" required="">
+
+        <button (click)="login(username.value, password.value)"
+                class="btn btn-lg btn-success btn-block"
+                type="submit">Sign in</button>
+      </form>
+    </span>
+    <span *ngSwitchCase="true">
+      <form class="form-signin">
+        <button (click)="logout()"
+                class="btn btn-lg btn-primary btn-block">Logout</button>
+      </form>
+    </span>
+  </span>
+
+  <div class="error-messages" *ngIf="messageService.messages.length > 0">
+    <h4>Something went wrong..</h4>
+    <h5>please check the fields that have a trouble below..</h5>
+    <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+    <br>
+    <button (click)="messageService.clear()">OK</button>
+  </div>
+
+</div>
+<div style="margin-top: 150px">
+  <app-footer></app-footer>
+</div>
+

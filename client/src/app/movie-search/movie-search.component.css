@@ -1,0 +1,85 @@
+.form-control {
+  font-family: "Palatino Linotype";
+}
+
+.search_icon {
+  color:white !important;
+  padding:5px !important;
+  left: 10px;
+  top:5.5px !important;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.form-control {
+  border-radius: 0;
+  height:27px;
+  margin-top:3px;
+  padding-right:40px;
+  margin-right:-37px;
+}
+
+.search-result {
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  color:white;
+  text-align: center;
+  position: absolute;
+  margin-top:50px;
+  padding:50px;
+  right:0;
+  width:500px;
+  background: rgba(0, 0, 0, 0.7);
+
+
+  z-index: 10;
+}
+
+.search-result-movie {
+  text-align: left;
+  font-size:14px;
+  padding:20px;
+  border: solid black;
+  height: 120px;
+  cursor: pointer;
+}
+
+.search-result-movie:hover {
+  background: rgba(69, 255, 245, 0.2);
+}
+
+
+.search_movie_image {
+  position: absolute;
+  height:80px;
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.movie-info {
+  margin-left: 60px;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .search_icon {
+    position: absolute;
+    margin-top:279px;
+    margin-left: 71.5vw;
+  }
+}
+
+@media only screen and (max-width: 585px) {
+  .search_icon {
+    position: absolute;
+    margin-top:279px;
+    margin-left: 52vw;
+  }
+}
+
+@media only screen and (max-width: 385px) {
+  .search_icon {
+    position: absolute;
+    margin-top: 279px;
+    margin-left: 53.6vw;
+  }
+}
+
