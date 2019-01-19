@@ -168,5 +168,32 @@
     .num-of-movies {
       margin-top:40vh;
       margin-left:-145px;
+      font-size:70%;
+      width: 150px;
     }
+
+    .container {
+      padding: 0 !important;
+    }
+}
+
+@media (max-width: 650px) {
+  .num-of-movies {
+    margin-top:40vh;
+    margin-left:-145px;
+    font-size:70%;
+    width: 120px;
+  }
+}
+
+@media (max-width: 650px) {
+  .mood_image {
+    height: 131.5px;
+    width: 80px;
+    margin-bottom: 60px;
+  }
+  .mood_description {
+    margin-left:100px;
+    width:180px;
+  }
 }

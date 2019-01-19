@@ -19,7 +19,7 @@
         {{ movie.description }}
       </span>
 
-      <span style="position:absolute; margin-left:450px; margin-top:50px; width:200px">
+      <span class="movie-info">
         Director<span *ngIf="movie.director.length > 1">s</span>:
         <strong *ngFor="let direct of movie.director_details">
           {{ direct.name + ' ' + direct.l_name }}

@@ -94,3 +94,76 @@
   width: 20px;
   margin-left:40px;
 }
+
+.movie-info {
+  position:absolute;
+  margin-left:450px;
+  margin-top:50px;
+  width:200px;
+}
+
+
+@media only screen and (max-width: 1199px) {
+  .movie_name{
+    position: absolute;
+    margin-right:100px;
+    margin-left: 50px;
+    width:530px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .movie-info {
+    position:relative;
+    display: block;
+    margin-left: 0px;
+    margin-top:50px;
+    width:200px;
+  }
+
+  .imdb {
+    margin-left: 0;
+    position: relative;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .movie_name{
+    position: absolute;
+    margin-right:100px;
+    margin-left: 25px;
+    width:380px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .movie_description {
+    margin-top: 80px;
+    margin-left: 25px;
+  }
+
+  .movie_name_pop {
+    font-size:15px;
+    width:300px;
+  }
+}
+
+@media only screen and (max-width: 690px) {
+  .movie_image {
+    height: 131.5px;
+    width: 80px;
+    margin-bottom: 30px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .movie_description {
+    width: 190px;
+  }
+
+  .movie_name {
+    width: 230px;
+    font-size:20px;
+    font-weight: bold;
+  }
+}
