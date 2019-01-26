@@ -45,9 +45,17 @@ export class ErrorHandlingService {
       if (error.error.non_field_errors) {
         if (String(error.error.non_field_errors) === 'The fields user, movie must make a unique set.') {
           this.messageService.add('You have already rated this movie.');
+        } else if (String(error.error.non_field_errors) === 'Signature has expired.') {
+          this.messageService.add('Your signature has expired. Please log in again.');
+        } else if((String(error.error.non_field_errors) === 'Error decoding signature.')) {
+          this.messageService.add('Your token seems to be incorrect. Please try to log in again');
         } else {
           this.messageService.add('Username, Password or both seem to be  incorrect');
         }
+      }
+
+      if (error.error.token) {
+        this.messageService.add('Couldn\'t find a token to your browser. Please login again.');
       }
 
       if (error.error.title) {
@@ -64,6 +72,10 @@ export class ErrorHandlingService {
 
       if (error.error.content) {
         this.messageService.add('Content: ' + error.error.content);
+      }
+
+      if (error.error.detail) {
+        this.messageService.add('Your token seems to be incorrect. Please try to log in again')
       }
 
       console.error(error); // log to console instead

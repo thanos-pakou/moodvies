@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
               private umlService: UserMovieListService) { }
 
   ngOnInit() {
-    if (this.auth.isLoggedIn === true) {
+    if (this.auth.isLoggedIn == true) {
       this.auth.getUser().subscribe(user => this.user = user);
     }
   }

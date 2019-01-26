@@ -7,7 +7,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -26,8 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
       });
       return next.handle(authReq);
     } else {
-      const authr = req.clone({})
-      return next.handle(authr)
+      return next.handle(req)
     }
   }
 }

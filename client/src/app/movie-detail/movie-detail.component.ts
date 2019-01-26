@@ -10,7 +10,7 @@ import {AuthService} from '../auth.service';
 import {User} from '../user';
 import {MessageService} from '../message.service';
 import {ReviewLike} from '../review-like';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 
 @Component({
@@ -21,14 +21,14 @@ import {Observable} from 'rxjs';
 export class MovieDetailComponent implements OnInit {
 
   @Input()
-  movie: Movie
+  movie: Movie;
 
+  isRevChecked = [];
   p1 = 1;
   user: User[];
   res;
   liked;
   reviewLike: ReviewLike;
-  reviewLiked;
   x: boolean[];
 
   constructor(private route: ActivatedRoute,
@@ -91,8 +91,20 @@ export class MovieDetailComponent implements OnInit {
   likeReview(like: boolean, user: number, review: number): void {
     this.reviewLike = new ReviewLike(like, user, review);
     this.movieService.likeReview(like, user, review).subscribe(liked => this.liked = liked);
+
+  }
+
+  checkIfLiked(b: number): boolean {
+    if (document.getElementById("users-like-cont"+ b) == null) {
+      return true
+    } else {
+      return false
+    }
   }
 
 
+  checkIfRev(b: number): void {
+    this.isRevChecked[b] = true;
+  }
 }
 

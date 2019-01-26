@@ -41,7 +41,7 @@
     <ul class="list-group mb-4">
       <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let movieList of uMovieLists">
         <div>
-          <h5 class="my-0">{{ movieList.title }}</h5>
+          <h5 routerLink="/movie-lists/{{ movieList.idUserMovieList }}" class="my-0">{{ movieList.title }}</h5>
           <small class="text-muted">{{ movieList.movies.length }} movies in that list</small>
         </div>
         Created <small class="text-muted">{{movieList.created.substring(0,10)}} &nbsp; Time {{movieList.created.substring(11,19)}}</small>

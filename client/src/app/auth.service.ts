@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/index';
 import { map, catchError } from 'rxjs/operators';
 import {ErrorHandlingService} from './errorhandling.service';
 import { User } from './user';
+import * as jwt_decode from 'jwt-decode';
 import {Mood} from './mood';
 
 
@@ -68,12 +69,57 @@ export class AuthService {
       );
   }
 
+
+
   logout(mess: boolean): void {
     this.isLoggedIn = false;
     if (mess) {
       alert('You have successfully logged out');
     }
     localStorage.removeItem('moodvies-jwt-token');
+  }
+
+  tokenVerify(token: string): Observable<boolean> {
+    const verUrl = `/api-token-verify/`;
+    return this.http
+      .post(verUrl, {token: token}, httpOptions ).pipe(
+        map(results => {
+          if (results['token']) {
+            localStorage.setItem('moodvies-jwt-token', results['token']);
+            const decoded = jwt_decode(token);
+            this.username = decoded.username;
+            this.isLoggedIn = true;
+            return true;
+          } else {
+            return false;
+          }
+        }),
+        catchError(this.eh.handleError<boolean>(`Server Error`,
+          false))
+      );
+  }
+
+  tokenRefresh(token: string): Observable<boolean> {
+    const refUrl = `/api-token-refresh/`;
+    return this.http
+      .post(refUrl, {token: token}, httpOptions ).pipe(
+        map(results => {
+          if (results['token']) {
+            const currDate = Math.floor((new Date).getTime()/1000);
+            if(jwt_decode(results['token']).exp - currDate < 60 ) {
+              localStorage.setItem('moodvies-jwt-token', results['token']);
+            }
+            const decoded = jwt_decode(token);
+            this.username = decoded.username;
+            this.isLoggedIn = true;
+            return true;
+          } else {
+            return false;
+          }
+        }),
+        catchError(this.eh.handleError<boolean>(`Server Error`,
+          false))
+    );
   }
 
 

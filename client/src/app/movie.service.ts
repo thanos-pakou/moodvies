@@ -106,7 +106,7 @@ export class MovieService {
 
   reviewCheckIfLiked(user: number, review: number): Observable<boolean> {
     const url = `api/review-like/?user=${user}&review=${review}`;
-    return this.http.get<ReviewLike>(url).pipe(
+      return this.http.get<ReviewLike>(url).pipe(
       map(
       res => {
         if (res) {

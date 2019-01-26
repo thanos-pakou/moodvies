@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class UserMovieListService {
 
-  url = 'api/movie-list'
+  url = 'api/movie-list';
 
   constructor(private http: HttpClient,
               private eh: ErrorHandlingService) { }
@@ -35,7 +35,7 @@ export class UserMovieListService {
     return this.http.get<UserMovieList[]>(url);
   }
 
-  /** DELETE: delete the book from the server */
+
   deleteUserMovieList(umList: UserMovieList | number): Observable<UserMovieList> {
     const id = typeof umList === 'number' ? umList : umList.idUserMovieList;
     const url = `${this.url}/${id}`;

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { catchError } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import {MessageService} from '../message.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, OnDestroy{
   message: string;
 
   constructor(
@@ -22,6 +22,9 @@ export class LoginComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
     this.messageService.clear();
   }
 

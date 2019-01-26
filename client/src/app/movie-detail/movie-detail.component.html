@@ -67,25 +67,45 @@
 
     <ng-container *ngIf="movie.reviews.length != 0; else noreviews">
       <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
-    <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b=index">
-      <h5>
-        <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie:
-        <span class="likes">
-          {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} <br>
-          <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
+      <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b=index">
+        <h5>
+          <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie:
+          <span class="likes">
+            {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} <br>
+            <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
+            </span>
           </span>
-        </span>
-      </h5>
-      <br>
-      <p>{{review.content}}
-      </p>
-      <p class="date_posted">Posted {{review.created.substring(0,10)}} &nbsp; Time {{review.created.substring(11,19)}}</p>
-      <div class="like-butt" *ngIf="user">
-        <button  (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
-        <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+        </h5>
+        <br>
+        <p>
+          {{review.content}}
+        </p>
+        <p class="date_posted">Posted {{review.created.substring(0,10)}} &nbsp; Time {{review.created.substring(11,19)}}</p>
+        <div class="like-butt" *ngIf="user">
+          <ng-container *ngFor="let userL of review.users_liked">
+            <span *ngIf="userL.user == user[0].id">
+              <span *ngIf="userL.like == true; else dislikeContent">
+                <button style="background-color: green" (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
+                <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+              </span>
+              <ng-template #dislikeContent>
+                <span>
+                  <button (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
+                  <button style="background-color: red" (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+                </span>
+              </ng-template>
+            </span>
+
+          </ng-container>
+          <span *ngIf="isRevChecked[b] != true">
+            <button (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
+            <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+          </span>
+
+
+        </div>
       </div>
-    </div>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+      <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
     </ng-container>
     <ng-template #noreviews>There are no reviews yet for this movie...</ng-template>
     <button style="margin-left:40%; margin-top:50px;" (click)="toggleCreateReview()" *ngIf="!createReview && user">Create a Review</button>

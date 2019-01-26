@@ -27,12 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    const helper = new JwtHelperService();
-    const token = localStorage.getItem('moodvies-jwt-token');
-    const isExpired = helper.isTokenExpired(token);
-    if (isExpired) {
-      this.auth.logout(false);
-    }
+
   }
   getProfile(bool: boolean): void {
     this.profile = bool;
