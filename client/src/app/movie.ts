@@ -9,4 +9,5 @@ export class Movie {
   pub_year: number;
   mood: [number];
   trailer_url: string;
+  logo: string;
 }

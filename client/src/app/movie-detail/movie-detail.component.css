@@ -132,7 +132,23 @@
   float:right;
 }
 
+.actor {
 
+}
+
+.actor-image {
+  visibility: hidden;
+  height: 190px;
+  width: 130px;
+  position: absolute;
+  z-index: 1;
+  margin-top: 50px;
+  margin-left: -100px;
+}
+
+.actor:hover .actor-image {
+  visibility: visible;
+}
 
 iframe {
   width:740px;

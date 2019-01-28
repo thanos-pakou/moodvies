@@ -58,8 +58,10 @@
 
     <h3>Casting:</h3>
     <div class="movie_desc">
-
-      <span *ngFor="let actor_data of movie.actor_details; let i = index" [attr.data-index]='i' style="font-size:110%"><span *ngIf="i!==0">, </span><a routerLink="/actors/{{ actor_data.idActor }}">{{actor_data.name}} {{actor_data.last_name}}</a> </span>
+      <span class="actor" *ngFor="let actor_data of movie.actor_details; let i = index" [attr.data-index]='i' style="font-size:110%">
+        <span *ngIf="i!==0">, </span><a routerLink="/actors/{{ actor_data.idActor }}">{{actor_data.name}} {{actor_data.last_name}}</a>
+        <img class="actor-image" [attr.src]="actor_data.image">
+      </span>
 
     </div>
     <br><br><br>

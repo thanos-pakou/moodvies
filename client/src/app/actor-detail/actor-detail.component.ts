@@ -11,6 +11,7 @@ import { Actor } from '../actor';
   styleUrls: ['./actor-detail.component.css']
 })
 export class ActorDetailComponent implements OnInit {
+  p1 = 1;
 
   @Input()
   actor: Actor;
@@ -25,6 +26,15 @@ export class ActorDetailComponent implements OnInit {
   getActor(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.actorService.getActor(id).subscribe(actor => this.actor = actor);
+  }
+
+  getTitle(title, pub_year): String[] {
+    const wTitle = title + ' (' + pub_year.toString() + ')';
+    if (wTitle.length > 45) {
+      return [wTitle.substr(0, 43) + '...', wTitle];
+    } else {
+      return [wTitle];
+    }
   }
 
 }

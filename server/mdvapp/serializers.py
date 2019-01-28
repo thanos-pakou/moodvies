@@ -72,9 +72,10 @@ class UserSearchSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Actor
-        fields = ('idActor', 'name', 'last_name')
+        fields = ('idActor', 'name', 'last_name', 'description', 'image')
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -148,11 +149,12 @@ class GenreMoviesSerializer(serializers.ModelSerializer):
 
 
 class ActorMoviesSerializer(serializers.ModelSerializer):
+    date_of_birth = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     movies = serializers.SerializerMethodField()
 
     class Meta:
         model = Actor
-        fields = ('idActor', 'name', 'last_name', 'movies')
+        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'image', 'movies')
 
     def get_movies(self, obj):
         movies = Movie.objects.filter(actor=obj)
@@ -328,3 +330,5 @@ class MoodMoviesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mood
         fields = '__all__'
+
+

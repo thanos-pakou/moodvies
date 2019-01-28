@@ -11,6 +11,7 @@ class Actor(models.Model):
     last_name = models.CharField(db_column='last_nameActor', max_length=45, blank=True, null=True)
     date_of_birth = models.DateField(db_column='date_of_birthActor', blank=True, null=True)
     description = models.CharField(db_column='descriptionActor', max_length=1000, blank=True, null=True)
+    image = models.ImageField(default='')
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
@@ -28,6 +29,7 @@ class Director(models.Model):
     l_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
+    image = models.ImageField(default='')
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
