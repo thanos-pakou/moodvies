@@ -4,6 +4,24 @@ from django.db import models
 from django.conf import settings
 
 
+# --------------------- IP Adress Model ---------------------
+class IPAddress(models.Model):
+    id = models.AutoField(db_column='idActor', primary_key=True)  # Field name made lowercase.
+    ip = models.CharField(db_column='nameActor', max_length=45, blank=True, null=True)
+    last_name = models.CharField(db_column='last_nameActor', max_length=45, blank=True, null=True)
+    date_of_birth = models.DateField(db_column='date_of_birthActor', blank=True, null=True)
+    description = models.CharField(db_column='descriptionActor', max_length=1000, blank=True, null=True)
+    image = models.ImageField(default='')
+    created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    class Meta:
+        db_table = 'actor'
+
+    def __str__(self):
+        return "%s %s (%s)" % (self.name, self.last_name, self.date_of_birth)
+
+
 # --------------------- Actor Model ---------------------
 class Actor(models.Model):
     idActor = models.AutoField(db_column='idActor', primary_key=True)  # Field name made lowercase.
@@ -43,7 +61,7 @@ class Director(models.Model):
 # --------------------- Genre Model ---------------------
 class Genre(models.Model):
     idGenre = models.AutoField(db_column='idGenre', primary_key=True)  # Field name made lowercase.
-    genre = models.CharField(db_column='genre', max_length=50, blank=True, null=True)
+    genre = models.CharField(db_column='genre', max_length=50, blank=True, null=True, unique=True)
     description = models.CharField(db_column='descriptionGenre', max_length=1000, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)

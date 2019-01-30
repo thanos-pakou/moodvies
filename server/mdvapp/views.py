@@ -58,8 +58,15 @@ class GenreList(generics.ListCreateAPIView):
 
 
 class ActorList(generics.ListCreateAPIView):
-    queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+
+    def get_queryset(self):
+        queryset = Actor.objects.all()
+        search = self.request.query_params.get('search', None)
+        if search is not None:
+            queryset = queryset.filter(search_field__icontains=search)
+        return queryset
+
 
 
 class ActorDetail(generics.RetrieveUpdateDestroyAPIView):

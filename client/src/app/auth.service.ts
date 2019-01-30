@@ -87,7 +87,7 @@ export class AuthService {
           if (results['token']) {
             localStorage.setItem('moodvies-jwt-token', results['token']);
             const decoded = jwt_decode(token);
-            this.username = decoded.username;
+            this.username = decoded['username'];
             this.isLoggedIn = true;
             return true;
           } else {
@@ -106,11 +106,11 @@ export class AuthService {
         map(results => {
           if (results['token']) {
             const currDate = Math.floor((new Date).getTime()/1000);
-            if(jwt_decode(results['token']).exp - currDate < 60 ) {
+            if(jwt_decode(results['token'])['exp'] - currDate < 60 ) {
               localStorage.setItem('moodvies-jwt-token', results['token']);
             }
             const decoded = jwt_decode(token);
-            this.username = decoded.username;
+            this.username = decoded['username'];
             this.isLoggedIn = true;
             return true;
           } else {

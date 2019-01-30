@@ -343,9 +343,6 @@ THE SOFTWARE.
 @angular/animations
 MIT
 
-angular-star-rating
-MIT
-
 zone.js
 MIT
 The MIT License

@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StarRatingModule } from 'angular-star-rating';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -42,6 +41,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostReviewComponent } from './post-review/post-review.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
+import {IpService} from "./ip.service";
 
 
 @NgModule({
@@ -79,9 +79,14 @@ import { FooterComponent } from './footer/footer.component';
     NgbModule.forRoot(),
     NgxPaginationModule,
     BrowserAnimationsModule,
-    StarRatingModule.forRoot()
   ],
-  providers: [MovieService, AuthService, MoodService, ErrorHandlingService, MessageService, UserMovieListService,
+  providers: [MovieService,
+    AuthService,
+    MoodService,
+    ErrorHandlingService,
+    MessageService,
+    UserMovieListService,
+    IpService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

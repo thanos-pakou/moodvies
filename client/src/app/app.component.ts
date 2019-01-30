@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from './auth.service';
-import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
+import {Component, OnInit} from "@angular/core";
+import {AuthService} from "./auth.service";
+import { Router } from "@angular/router";
 import {ErrorHandlingService} from "./errorhandling.service";
+import {HttpClient} from "@angular/common/http";
+import * as jwt_decode from "jwt-decode";
+import {IpService} from "./ip.service";
 
 @Component({
   selector: 'app-root',
@@ -12,16 +14,21 @@ import {ErrorHandlingService} from "./errorhandling.service";
 export class AppComponent implements OnInit{
   title = 'moodvies';
   token: string;
+  ipAddress: any;
+
 
 
   constructor(
+    private http: HttpClient,
     private auth: AuthService,
     private router: Router,
-    private eh: ErrorHandlingService,
-  ) {}
+    private ip: IpService,
+  ) {
+
+  }
 
   ngOnInit() {
-
+    this.getIpAddress();
   }
 
   changeOfRoutes() {
@@ -30,7 +37,9 @@ export class AppComponent implements OnInit{
       this.auth.tokenRefresh(this.token).subscribe(results => {
         if (results) {
           const currDate = Math.floor((new Date).getTime()/1000);
-          if(jwt_decode(this.token).exp - currDate < 60 ) {
+          const decoded = jwt_decode(this.token);
+          alert(decoded['exp']);
+          if(decoded['exp'] - currDate < 60 ) {
 
           }
         } else {
@@ -41,6 +50,10 @@ export class AppComponent implements OnInit{
     } else {
       this.auth.logout(false);
     }
+  }
+
+  getIpAddress(): void {
+    this.ip.getIpAddress();
   }
 }
 
