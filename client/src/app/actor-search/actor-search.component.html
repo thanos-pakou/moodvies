@@ -1,0 +1,23 @@
+<form class="navbar-form navbar-right">
+  <div class="form-group">
+    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search.." (blur)="searchBox.value = ''; search(searchBox.value)" autocomplete="off">
+  </div>
+  <span class="glyphicon glyphicon-search search_icon"></span>
+</form>
+
+<ng-container *ngIf="actors$ | async; let actors">
+  <div  *ngIf="actors.length>0" class="search-result">
+    <span class="results-length">Results of actors(<strong>{{ actors.length }}</strong>) </span>
+    <div class="search-result-movie" *ngFor="let actor of actors" routerLink="/actors/{{actor.idActor}}">
+      <a>
+        <img class='search_movie_image' [attr.src]="actor.image">
+        <div class="movie-info">
+          <span>{{actor.name + '' + actor.last_name}}</span>
+          <br>
+          <span>{{ actor.date_of_birth }}</span>
+          <br>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-container>

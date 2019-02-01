@@ -22,12 +22,12 @@
   margin-bottom: 100px;
 }
 
-.mood {
+.actor {
   padding-left: 50px;
   padding-bottom: 5px;
 }
 
-.mood:hover {
+.actor:hover {
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -35,21 +35,21 @@
 
 }
 
-.mood_header>h1,h3{
+.actor_header>h1,h3{
   color:white;
   text-align: center;
   padding: 0;
   margin-top: 50px;
 }
 
-.mood_name{
+.actor_name{
   position: absolute;
   margin-right:100px;
   margin-left: 50px;
   font-size: 30px;
 }
 
-.mood_description {
+.actor_description {
   margin-top:-120px;
   margin-left:150px;
   position: absolute;
@@ -58,19 +58,19 @@
   overflow: auto;
 }
 
-.mood_movies_container {
+.actor_movies_container {
 
   float:right;
   font-size: 10px;
 
 
 }
-.mood_movies {
+.actor_movies {
   margin-right: 5px;
 }
 
 
-.mood_image {
+.actor_image {
   height: 190px;
   width: 130px;
 }
@@ -135,18 +135,18 @@
 
 
 @media (max-width: 1199px) {
-  .mood_movies_container {
+  .actor_movies_container {
     float: none;
     margin-top:20px;
     margin-left: auto;
     text-align: center;
   }
 
-  .mood_name{
+  .actor_name{
     font-size: 24px;
   }
 
-  .mood_description {
+  .actor_description {
     width: 240px;
   }
 }
@@ -187,13 +187,40 @@
 }
 
 @media (max-width: 650px) {
-  .mood_image {
+  .actor_image {
     height: 131.5px;
     width: 80px;
     margin-bottom: 60px;
   }
-  .mood_description {
+  .actor_description {
     margin-left:100px;
     width:180px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

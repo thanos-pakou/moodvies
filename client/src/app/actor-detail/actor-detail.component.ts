@@ -47,7 +47,6 @@ export class ActorDetailComponent implements OnInit {
   }
 
   actorVisit() {
-
     this.actor['visit'].push(this.ip.idIpAddress);
     this.ip.actorVisit(this.actor, this.actorId).subscribe();
   }

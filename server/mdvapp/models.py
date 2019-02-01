@@ -24,6 +24,7 @@ class Actor(models.Model):
     date_of_birth = models.DateField(db_column='date_of_birthActor', blank=True, null=True)
     description = models.CharField(db_column='descriptionActor', max_length=1000, blank=True, null=True)
     image = models.ImageField(default='', blank=True, null=True)
+    search_field = models.CharField(max_length=200, blank=True, null=True)
     visit = models.ManyToManyField(IPAddress, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)

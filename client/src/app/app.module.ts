@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ErrorHandler, NgModule} from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -27,21 +27,22 @@ import { GenreComponent } from './genre/genre.component';
 import { GenreDetailComponent } from './genre-detail/genre-detail.component';
 import { UserMovieListComponent } from './user-movie-list/user-movie-list.component';
 import { UserMovieListDetailComponent } from './user-movie-list-detail/user-movie-list-detail.component';
-import {ErrorHandlingService} from './errorhandling.service';
+import { ErrorHandlingService } from './errorhandling.service';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import {MessageService} from './message.service';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { MessageService } from './message.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { TopImdbMoviesComponent } from './top-imdb-movies/top-imdb-movies.component';
-import {UserMovieListService} from './user-movie-list.service';
+import { UserMovieListService } from './user-movie-list.service';
 import { Top20Component } from './top20/top20.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostReviewComponent } from './post-review/post-review.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import {IpService} from "./ip.service";
+import { ActorSearchComponent } from './actor-search/actor-search.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import {IpService} from "./ip.service";
     ProfileComponent,
     PostReviewComponent,
     AboutComponent,
-    FooterComponent
+    FooterComponent,
+    ActorSearchComponent
   ],
   imports: [
     BrowserModule,

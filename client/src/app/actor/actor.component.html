@@ -1,25 +1,26 @@
 <app-navbar></app-navbar>
 <div class=container>
   <br><br>
-  <div class="mood_header">
-    <h1> What's your mood today?</h1>
-    <h3>Select from our list to find a movie related to that mood</h3>
+  <div class="actor_header">
+    <h1> Actors</h1>
+    <h3>This page contains all the actors starring in the movies of our website </h3>
   </div>
   <div class="movie-container">
-    <h2>Mood List</h2>
+    <h2>Actor List</h2>
+    <app-actor-search></app-actor-search><br><br><br>
     <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
-    <div class="mood" *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
+    <div class="" *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
       <hr>
-      <img class="mood_image" [attr.src]="actor.image">
-      <span class="mood_name" routerLink="/actors/{{ actor.idActor }}">
+      <img class="actor_image" [attr.src]="actor.image">
+      <span class="actor_name" routerLink="/actors/{{ actor.idActor }}">
         {{ actor.name + ' ' + actor.last_name }}
       </span>
-      <div class="mood_description">
+      <div class="actor_description">
         {{ actor.description }}
       </div>
       <span class="num-of-movies">Total number of movies having that mood: <strong>{{ actor.movies.length }}</strong></span>
-      <div class="mood_movies_container">
-        <span  *ngFor="let movie of actor.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
+      <div class="actor_movies_container">
+        <span  *ngFor="let movie of actor.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="actor_movies">
          <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
           <div class="movie_info">
             <h4>{{ movie.title }}</h4>
@@ -52,6 +53,7 @@
   </div>
 </div>
 <app-footer></app-footer>
+
 
 
 
