@@ -29,6 +29,12 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.getIpAddress();
+    setTimeout( () => {
+      this.postIpAddress();
+    }, 5000 );
+    setTimeout( () => {
+      this.getIpAddressId();
+    }, 8000 );
   }
 
   changeOfRoutes() {
@@ -38,7 +44,6 @@ export class AppComponent implements OnInit{
         if (results) {
           const currDate = Math.floor((new Date).getTime()/1000);
           const decoded = jwt_decode(this.token);
-          alert(decoded['exp']);
           if(decoded['exp'] - currDate < 60 ) {
 
           }
@@ -54,6 +59,14 @@ export class AppComponent implements OnInit{
 
   getIpAddress(): void {
     this.ip.getIpAddress();
+  }
+
+  postIpAddress(): void {
+    this.ip.postIpAddress().subscribe();
+  }
+
+  getIpAddressId(): void {
+    this.ip.getIpId();
   }
 }
 

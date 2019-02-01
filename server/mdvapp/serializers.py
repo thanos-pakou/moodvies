@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 import re
 
 from .models import Genre, Movie, Actor, Director, Mood, Review, RatingMovie, ReviewLike, UserMovieList, \
-    UserMovieListComment, UserMovieListLike
+    UserMovieListComment, UserMovieListLike, IPAddress
 from django.contrib.auth.models import User
 
 
@@ -71,11 +71,33 @@ class UserSearchSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password')
 
 
+class IpAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IPAddress
+        fields = '__all__'
+
+
+class SimpleMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = '__all__'
+
+
+
 class ActorSerializer(serializers.ModelSerializer):
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
+    movies = serializers.SerializerMethodField()
+    visits_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Actor
-        fields = ('idActor', 'name', 'last_name', 'description', 'image')
+        ordering = 'visits_count'
+        fields = ('idActor', 'name', 'last_name', 'description', 'visit', 'visit_details', 'visits_count', 'image', 'movies')
+
+    def get_movies(self, obj):
+        movies = Movie.objects.filter(actor=obj)
+        serialized_movies = SimpleMovieSerializer(movies, many=True)
+        return serialized_movies.data
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -151,10 +173,12 @@ class GenreMoviesSerializer(serializers.ModelSerializer):
 class ActorMoviesSerializer(serializers.ModelSerializer):
     date_of_birth = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     movies = serializers.SerializerMethodField()
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
 
     class Meta:
         model = Actor
-        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'image', 'movies')
+        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'image', 'visit', 'visit_details',
+                  'movies')
 
     def get_movies(self, obj):
         movies = Movie.objects.filter(actor=obj)

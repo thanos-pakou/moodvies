@@ -1,3 +1,60 @@
 <app-navbar></app-navbar>
-
+<div class=container>
+  <br><br>
+  <div class="mood_header">
+    <h1> What's your mood today?</h1>
+    <h3>Select from our list to find a movie related to that mood</h3>
+  </div>
+  <div class="movie-container">
+    <h2>Mood List</h2>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div class="mood" *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
+      <hr>
+      <img class="mood_image" [attr.src]="actor.image">
+      <span class="mood_name" routerLink="/actors/{{ actor.idActor }}">
+        {{ actor.name + ' ' + actor.last_name }}
+      </span>
+      <div class="mood_description">
+        {{ actor.description }}
+      </div>
+      <span class="num-of-movies">Total number of movies having that mood: <strong>{{ actor.movies.length }}</strong></span>
+      <div class="mood_movies_container">
+        <span  *ngFor="let movie of actor.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
+         <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
+          <div class="movie_info">
+            <h4>{{ movie.title }}</h4>
+            <br>
+            Year Published: <strong>{{ movie.pub_year }}</strong>
+            <br>
+            Duration <strong>{{ movie.duration }} mins </strong>
+            <br>
+            Director: <strong *ngFor="let dir of movie.director_details; let b=index">{{dir.name + ' ' + dir.l_name}}<span *ngIf="movie.director_details.length - 1 != b">, </span></strong>
+            <br>
+            Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
+            <br>
+            Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+            <br>
+            Description: <br>
+            <span class="movie_description">
+              <strong>{{ movie.description }}</strong>
+          </span>
+          </div>
+          <br *ngIf="i === 2"><br *ngIf="i === 2">
+        </span>
+        <div style=" margin-top:15px; margin-right: 60px; margin-bottom:50px; font-size:10px;">
+          <pagination-controls  [maxSize]="5" previousLabel="" nextLabel="" class="my-pagination" *ngIf="actor.movies.length > 4" style="text-align: center" (pageChange)="p[j] = $event" [id]="j">
+          </pagination-controls>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <pagination-controls style="text-align: center" (pageChange)="p1 = $event" id="first"></pagination-controls>
+  </div>
+</div>
 <app-footer></app-footer>
+
+
+
+
+
+

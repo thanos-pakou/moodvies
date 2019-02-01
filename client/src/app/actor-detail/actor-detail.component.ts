@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ActorService} from '../actor.service';
 
 import { Actor } from '../actor';
+import {IpService} from "../ip.service";
 
 @Component({
   selector: 'app-actor-detail',
@@ -15,16 +16,24 @@ export class ActorDetailComponent implements OnInit {
 
   @Input()
   actor: Actor;
+  actorId: number;
 
   constructor(private route: ActivatedRoute,
-              private actorService: ActorService) { }
+              private actorService: ActorService,
+              private ip: IpService,
+  ) { }
 
   ngOnInit() {
     this.getActor();
+    setTimeout( () => {
+      this.actorVisit();
+    }, 5000 );
+
   }
 
   getActor(): void {
     const id = +this.route.snapshot.paramMap.get('id');
+    this.actorId = id;
     this.actorService.getActor(id).subscribe(actor => this.actor = actor);
   }
 
@@ -35,6 +44,12 @@ export class ActorDetailComponent implements OnInit {
     } else {
       return [wTitle];
     }
+  }
+
+  actorVisit() {
+
+    this.actor['visit'].push(this.ip.idIpAddress);
+    this.ip.actorVisit(this.actor, this.actorId).subscribe();
   }
 
 }

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^movie-list/?(?P<pk>[0-9]+)/?$', views.UserMovieListDetail.as_view()),
     url(r'^user/?$', views.User.as_view()),
     url(r'^rating/?$', views.Rating.as_view()),
+    url(r'^ip-address/?$', views.IpAddressList.as_view()),
 
 
 

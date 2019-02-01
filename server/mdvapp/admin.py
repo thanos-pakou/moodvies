@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Movie, Actor, Director, Genre, Images, Mood, Review, RatingMovie, ReviewLike, UserMovieListComment, \
-    UserMovieList, UserMovieListLike
+from .models import Movie, Actor, Director, Genre, Images, Mood, Review, RatingMovie, ReviewLike, UserMovieListComment,\
+    UserMovieList, UserMovieListLike, IPAddress
 
 admin.site.register(Movie)
 admin.site.register(Actor)
@@ -15,3 +15,4 @@ admin.site.register(ReviewLike)
 admin.site.register(UserMovieListComment)
 admin.site.register(UserMovieList)
 admin.site.register(UserMovieListLike)
+admin.site.register(IPAddress)

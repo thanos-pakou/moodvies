@@ -2,12 +2,11 @@ from django.db.models import Q, Count, Avg
 from django.http import request
 
 from .models import Movie, Actor, Mood, Genre, Director, Review, UserMovieList as UserMovieListModel, UserMovieListLike, \
-    UserMovieListComment, \
-    RatingMovie, CustomUser, ReviewLike as ReviewLikeModel
+    UserMovieListComment, RatingMovie, CustomUser, ReviewLike as ReviewLikeModel, IPAddress
 from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, GenreMoviesSerializer, GenreSerializer, \
     ActorMoviesSerializer, DirectorSerializer, DirectorMoviesSerializer, MoodMoviesSerializer, MoviesReviewsSerializer, \
     ReviewSerializer, UserMovieListSerializer, UserSerializer, RatingMovieSerializer, UserSearchSerializer, \
-    ReviewLikeSerializer, ReviewListLikeSerializer
+    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
@@ -57,11 +56,22 @@ class GenreList(generics.ListCreateAPIView):
     serializer_class = GenreSerializer
 
 
+class IpAddressList(generics.ListCreateAPIView):
+    serializer_class = IpAddressSerializer
+
+    def get_queryset(self):
+        queryset = IPAddress.objects.all()
+        spec_ip = self.request.query_params.get('spec_ip', None)
+        if spec_ip is not None:
+            queryset = queryset.filter(ip=spec_ip)
+        return queryset
+
+
 class ActorList(generics.ListCreateAPIView):
     serializer_class = ActorSerializer
 
     def get_queryset(self):
-        queryset = Actor.objects.all()
+        queryset = Actor.objects.all().annotate(visits_count=Count('visit')).order_by('-visits_count')
         search = self.request.query_params.get('search', None)
         if search is not None:
             queryset = queryset.filter(search_field__icontains=search)

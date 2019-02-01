@@ -11,6 +11,8 @@ import { ActorService } from '../actor.service';
 export class ActorComponent implements OnInit {
 
   actors: Actor[];
+  p1 = 1;
+  p: number[] = [];
 
   constructor(private actorService: ActorService) { }
 
