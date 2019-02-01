@@ -5,7 +5,7 @@
     <h1> What mood you wanna get by watching a movie??</h1>
     <h3>Select from our list to find a movie related to that mood</h3>
   </div>
-  <div class="movie-container">
+  <div class="mood-container">
     <h2>Mood List</h2>
     <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div id="{{j.toString()+'a'}}" (mouseenter)="getBackImage(j+'a', mood.back_image)" (mouseleave)="delBackImage(j+'a')" class="mood" *ngFor="let mood of moods | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let j = index;" [attr.data-index]="j">

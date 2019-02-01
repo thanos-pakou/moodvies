@@ -2,8 +2,7 @@
 <div class=container>
   <br><br>
   <div class="movie_header">
-    <h1> What movie would you like too investigate?</h1>
-    <h3>Select from our list and find it</h3>
+    <h1>The top movies according to IMDB rating</h1>
   </div>
   <div class="movies-container">
     <h2>Movie List</h2>
@@ -37,6 +36,7 @@
       </span>
       <hr>
     </div>
+    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

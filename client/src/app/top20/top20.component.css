@@ -4,11 +4,9 @@
 }
 
 .movies-container {
-  margin-top:100px;
-  padding:20px 20px;
+  padding: 20px 20px 100px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-  margin-right: 55px;
-  margin-left: 55px;
+  margin: 100px 55px;
   background-image: url("../../assets/mood/mood_image_background.png");
   background-repeat: no-repeat;
   background-position: center center;

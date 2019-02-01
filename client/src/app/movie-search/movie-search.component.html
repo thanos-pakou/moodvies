@@ -1,6 +1,6 @@
 <form class="navbar-form navbar-left">
   <div class="form-group">
-    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search.." style="background-color:black"  (blur)="searchBox.value = ''; search(searchBox.value)">
+    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search.." style="background-color:black"  (blur)="searchBox.value = ''; search(searchBox.value)" autocomplete="off">
   </div>
   <span class="glyphicon glyphicon-search search_icon"></span>
 </form>

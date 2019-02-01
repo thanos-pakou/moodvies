@@ -5,11 +5,11 @@
     <h1> Actors</h1>
     <h3>This page contains all the actors starring in the movies of our website </h3>
   </div>
-  <div class="movie-container">
+  <div class="actor-container">
     <h2>Actor List</h2>
     <app-actor-search></app-actor-search><br><br><br>
     <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
-    <div class="" *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
+    <div *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
       <hr>
       <img class="actor_image" [attr.src]="actor.image">
       <span class="actor_name" routerLink="/actors/{{ actor.idActor }}">
@@ -18,7 +18,7 @@
       <div class="actor_description">
         {{ actor.description }}
       </div>
-      <span class="num-of-movies">Total number of movies having that mood: <strong>{{ actor.movies.length }}</strong></span>
+      <span class="num-of-movies">{{ actor.name + ' ' + actor.last_name }} stars in <strong>{{ actor.movies.length }} movie<span *ngIf="actor.movies.length > 1">s</span></strong></span>
       <div class="actor_movies_container">
         <span  *ngFor="let movie of actor.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="actor_movies">
          <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
