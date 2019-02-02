@@ -88,7 +88,9 @@
     <br><br>
     <br><br>
 
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div id="{{j.toString()+'a'}}"  class="mood" *ngFor="let umList of userMovieLists | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
       <hr>
       <span class="mood_name" routerLink="/movie-lists/{{ umList.idUserMovieList }}">
@@ -133,7 +135,9 @@
       </div>
       <hr>
     </div>
-    <pagination-controls style="text-align: center" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div class="create-new-list-window">
       <button *ngIf="authService.isLoggedIn" (click)="listWindow(true)">Create New List</button>
       <span *ngIf="!authService.isLoggedIn">You must first <a routerLink="/login">login</a> to create a movie list</span>

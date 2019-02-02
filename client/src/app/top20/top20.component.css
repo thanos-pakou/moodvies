@@ -100,6 +100,13 @@
   width:200px;
 }
 
+.my-pagination /deep/ ul.ngx-pagination {
+
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center
+}
+
 
 @media only screen and (max-width: 1199px) {
   .movie_name{

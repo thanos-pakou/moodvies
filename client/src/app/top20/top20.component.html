@@ -6,7 +6,9 @@
   </div>
   <div class="movies-container">
     <h2>Movie List</h2>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div  class="movie" *ngFor="let movie of movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let j = index;" [attr.data-index]="j">
       <hr>
       <img *ngIf="movie.logo" class="movie_image" [attr.src]="movie.logo">
@@ -36,7 +38,9 @@
       </span>
       <hr>
     </div>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

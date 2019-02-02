@@ -150,6 +150,13 @@
   visibility: visible;
 }
 
+.my-pagination /deep/ ul.ngx-pagination {
+
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center;
+}
+
 iframe {
   width:740px;
   height:400px;

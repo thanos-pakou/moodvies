@@ -11,7 +11,9 @@
     <h3 class="mood_description_h">Movies relevant to {{ mood.mood }} mood</h3><br><br><br>
     <span style="text-align: center; width:5%; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div  class="movie" *ngFor="let movie of mood.movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
       <hr>
       <img *ngIf="movie.logo" class="movie_image" [attr.src]="movie.logo">
@@ -38,7 +40,9 @@
     </div>
     <span style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

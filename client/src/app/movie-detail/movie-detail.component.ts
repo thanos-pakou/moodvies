@@ -34,7 +34,7 @@ export class MovieDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private messageService: MessageService,
               private auth: AuthService,
-              private movieService: MovieService,
+              public movieService: MovieService,
               private location: Location,
               private sanitizer: DomSanitizer
   ) {
@@ -94,12 +94,10 @@ export class MovieDetailComponent implements OnInit {
 
   }
 
-  checkIfLiked(b: number): boolean {
-    if (document.getElementById("users-like-cont"+ b) == null) {
-      return true
-    } else {
-      return false
-    }
+  checkIfLiked(user: number, review: number): void {
+    this.movieService.reviewCheckIfLiked(user, review).subscribe(res => {
+      alert(res);
+    })
   }
 
 

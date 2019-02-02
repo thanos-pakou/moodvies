@@ -8,7 +8,9 @@
   <div class="actor-container">
     <h2>Actor List</h2>
     <app-actor-search></app-actor-search><br><br><br>
-    <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
       <hr>
       <img class="actor_image" [attr.src]="actor.image">
@@ -49,7 +51,9 @@
       </div>
       <hr>
     </div>
-    <pagination-controls style="text-align: center" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

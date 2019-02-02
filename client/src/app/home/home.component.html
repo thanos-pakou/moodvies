@@ -8,7 +8,7 @@
   </div>
 
   <img class="main-img" src="../../assets/home_images/image_main.png">
-  <p style=" font-family:'Century Gothic', CenturyGothic, AppleGothic, sans-serif ; color: rgba(0, 0, 0, 1); margin: 10px; " class="pull-right">Our Reccomendations</p>
+  <p  class="pull-right our-recommendations"><img src="../../assets/home_images/recom.png"></p>
 
   <div class="carousel-container">
     <!-- Carousel -->
@@ -37,7 +37,10 @@
           <div class="item">
             <ul>
               <ng-container *ngFor="let movie of movies; let i = index" >
-                <li *ngIf="i >= 4 && i < 8" style="display:inline-block"><img routerLink="/movies/{{ movie.id }}" [attr.src]="movie.logo"><br>{{ getTitle(movie.title, movie.pub_year)[0] }}<br><span class="director_name">F. Darabont</span></li>
+                <li *ngIf="i >= 4 && i < 8" style="display:inline-block"><img routerLink="/movies/{{ movie.id }}" [attr.src]="movie.logo"><br>{{ getTitle(movie.title, movie.pub_year)[0] }}<br>
+                  <span class="director_name" *ngFor="let direct of movie.director_details">
+                    {{ direct.name.substring(0,1) + '. ' + direct.l_name }}<span *ngIf="movie.director_details.length > 1">,</span>
+                  </span></li>
               </ng-container>
             </ul>
           </div>

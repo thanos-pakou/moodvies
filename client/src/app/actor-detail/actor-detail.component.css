@@ -89,3 +89,10 @@
 .movie-name:hover .movie-name-pop{
   visibility: visible;
 }
+
+.my-pagination /deep/ ul.ngx-pagination {
+
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center
+}

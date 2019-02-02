@@ -119,10 +119,11 @@
   visibility: visible;
 }
 
-.my-pagination /deep/ .ngx-pagination .current {
+.my-pagination /deep/ ul.ngx-pagination {
 
-  color: black;
-
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center
 }
 
 .movie_description {
@@ -130,6 +131,7 @@
   height:100px;
   overflow: auto;
 }
+
 
 
 @media (max-width: 1199px) {

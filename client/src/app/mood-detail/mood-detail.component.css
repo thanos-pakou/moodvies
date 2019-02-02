@@ -78,9 +78,11 @@
 }
 
 
-.my-pagination /deep/ .ngx-pagination .current {
+.my-pagination /deep/ ul.ngx-pagination {
 
-  color: black;
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center;
 
 }
 

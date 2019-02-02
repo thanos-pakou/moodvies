@@ -68,7 +68,9 @@
     <h3>Reviews</h3><hr>
 
     <ng-container *ngIf="movie.reviews.length != 0; else noreviews">
-      <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+      <span style="text-align: center; margin: auto; display: block">Page</span>
+      <br>
+      <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
       <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b=index">
         <h5>
           <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie:
@@ -107,7 +109,9 @@
 
         </div>
       </div>
-      <pagination-controls style="position:relative; margin: auto; text-align: center " (pageChange)="p1 = $event" id="first"></pagination-controls>
+      <span style="text-align: center; margin: auto; display: block">Page</span>
+      <br>
+      <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     </ng-container>
     <ng-template #noreviews>There are no reviews yet for this movie...</ng-template>
     <button style="margin-left:40%; margin-top:50px;" (click)="toggleCreateReview()" *ngIf="!createReview && user">Create a Review</button>

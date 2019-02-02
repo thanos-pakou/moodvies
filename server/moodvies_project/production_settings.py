@@ -142,7 +142,7 @@ STATIC_URL = '/'
 STATICFILES_DIRS = (
     os.path.join(str(Path(BASE_DIR).parents[0]), os.path.join('client', 'dist')),
 )
-STATIC_ROOT = os.path.join(BASE_DIR, '')
+STATIC_ROOT = os.path.join(BASE_DIR, '/home/user/srv/movies/')
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads', '')

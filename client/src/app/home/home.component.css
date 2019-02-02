@@ -6,7 +6,10 @@
   position: absolute;
   text-align: center;
   top: 15%;
-  left: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
   color:white;
 }
 .btnLogo{
@@ -29,6 +32,12 @@
     rgba(38, 0, 77, 0.45)
   ), url(../../assets/home_images/logo.png);
   opacity: 0.5;
+}
+
+.our-recommendations {
+  font-family:'Century Gothic', CenturyGothic, AppleGothic, sans-serif ;
+  color: rgba(0, 0, 0, 1);
+  padding:7px;
 }
 
 .carousel.slide {
@@ -129,22 +138,14 @@
 
 @media only screen and (max-width: 1200px) {
   .moodSearch{
-    position: absolute;
-    text-align: center;
     top: 11%;
-    left: 33%;
-    color:white;
   }
 }
 
 
 @media only screen and (max-width: 992px) {
   .moodSearch{
-    position: absolute;
-    text-align: center;
     top: 80px;
-    left: 31%;
-    color:white;
   }
 
   .moodSearch>h1{
@@ -172,11 +173,7 @@
 
 @media only screen and (max-width: 768px) {
   .moodSearch {
-    position: absolute;
-    text-align: center;
     top: 380px;
-    left: 25vw;
-    color: white;
   }
 }
 
@@ -196,11 +193,7 @@
 
 @media only screen and (max-width: 535px) {
   .moodSearch {
-    position: absolute;
-    text-align: center;
     top: 380px;
-    left: 22vw;
-    color: white;
     font-size: 70%;
   }
 

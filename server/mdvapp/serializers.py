@@ -172,7 +172,7 @@ class GenreMoviesSerializer(serializers.ModelSerializer):
 
 
 class ActorMoviesSerializer(serializers.ModelSerializer):
-    date_of_birth = serializers.DateField(format="%d-%m-%Y")
+    date_of_birth = serializers.DateField(format='%d-%m-%Y', input_formats='%d-%m-%Y')
     movies = serializers.SerializerMethodField()
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
 
