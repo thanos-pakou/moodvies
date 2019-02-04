@@ -61,14 +61,17 @@ export class MovieDetailComponent implements OnInit {
   getMovie(): void {
     let j:any;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.movieService.getMovie(id).subscribe(movie => {
-      this.movie = movie;
-      setTimeout( () => {
-        for (j in movie.reviews) {
-          this.checkIfLiked(this.user[0].id, movie.reviews[j].idReview);
+    this.movieService.getMovie(id).subscribe(
+      movie => {
+        this.movie = movie;
+      },
+      () => {},
+      () => {
+        for (j in this.movie.reviews) {
+          this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
         }
-      }, 800 );
-    });
+      }
+    );
   }
 
   getUrl() {
@@ -102,34 +105,40 @@ export class MovieDetailComponent implements OnInit {
 
   likeReview(like: boolean, user: number, review: number): void {
     this.reviewLike = new ReviewLike(like, user, review);
-    this.movieService.likeReview(like, user, review).subscribe(liked => this.liked = liked);
-    setTimeout( () => {
-      this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(movie => {
-        this.movie = null;
-        this.movie = movie;
-        this.reviewLikeForCheck.push(review);
-      });
-    }, 800 );
-
+    this.movieService.likeReview(like, user, review).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(movie => {
+          this.movie = null;
+          this.movie = movie;
+          this.reviewLikeForCheck.push(review);
+        });
+      }
+    );
   }
 
   deleteLikeReview(reviewLike: ReviewLike): void {
-    const index: number = this.reviewLikeForCheck.indexOf(reviewLike.idReviewLike, 0);
-    let arr = this.reviewLikeForCheck;
-    this.movieService.deleteLikeReview(reviewLike).subscribe();
-    setTimeout( () => {
-      this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(movie => {
-        this.movie = null;
-        this.reviewLikeForCheck = [];
-        this.movie = movie;
-        for (let i in arr) {
-          if (parseInt(i) != reviewLike.idReviewLike) {
-            this.reviewLikeForCheck.push(i);
+    this.movieService.deleteLikeReview(reviewLike).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(
+          movie => {
+            this.movie = null;
+            this.reviewLikeForCheck = [];
+            this.movie = movie;
+          },
+          err => console.error('Observer got an error: ' + err),
+          () => {
+            for (let j in this.movie.reviews) {
+              this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
+            }
+            console.log(this.reviewLikeForCheck);
           }
-        }
-      });
-    }, 800 );
-
+        );
+      }
+    );
   }
 
   checkIfLiked(user: number, review: number): void {
@@ -139,11 +148,5 @@ export class MovieDetailComponent implements OnInit {
       }
     });
   }
-
-
-  checkIfRev(b: number): void {
-    this.isRevChecked[b] = true;
-  }
-
 }
 
