@@ -10,7 +10,7 @@ import {AuthService} from '../auth.service';
 import {User} from '../user';
 import {MessageService} from '../message.service';
 import {ReviewLike} from '../review-like';
-import {Observable, Subscription} from 'rxjs';
+
 
 
 @Component({
@@ -29,7 +29,8 @@ export class MovieDetailComponent implements OnInit {
   res;
   liked;
   reviewLike: ReviewLike;
-  x: boolean[];
+  reviewLikeForCheck: any[] = [];
+
 
   constructor(private route: ActivatedRoute,
               private messageService: MessageService,
@@ -45,18 +46,29 @@ export class MovieDetailComponent implements OnInit {
   userRatee = false;
 
   ngOnInit() {
+    this.getMovie();
     this.movieService.createReview = false;
     this.messageService.clear();
-    this.getMovie();
-    if (this.auth.isLoggedIn === true) {
-      this.auth.getUser().subscribe(user => this.user = user);
-    }
+    setTimeout( () => {
+      if (this.auth.isLoggedIn === true) {
+        this.auth.getUser().subscribe(user => this.user = user);
+      }
+    }, 400 );
+
   }
 
 
   getMovie(): void {
+    let j:any;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.movieService.getMovie(id).subscribe(movie => this.movie = movie);
+    this.movieService.getMovie(id).subscribe(movie => {
+      this.movie = movie;
+      setTimeout( () => {
+        for (j in movie.reviews) {
+          this.checkIfLiked(this.user[0].id, movie.reviews[j].idReview);
+        }
+      }, 800 );
+    });
   }
 
   getUrl() {
@@ -67,7 +79,7 @@ export class MovieDetailComponent implements OnInit {
     if (total === 0) {
       return 'No one liked yet';
     } else {
-      return String('Likes: ' + positive / total * 100) + '%';
+      return String('Likes: ' +  (positive / total * 100).toFixed(2)) + '%';
     }
   }
 
@@ -91,18 +103,47 @@ export class MovieDetailComponent implements OnInit {
   likeReview(like: boolean, user: number, review: number): void {
     this.reviewLike = new ReviewLike(like, user, review);
     this.movieService.likeReview(like, user, review).subscribe(liked => this.liked = liked);
+    setTimeout( () => {
+      this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(movie => {
+        this.movie = null;
+        this.movie = movie;
+        this.reviewLikeForCheck.push(review);
+      });
+    }, 800 );
+
+  }
+
+  deleteLikeReview(reviewLike: ReviewLike): void {
+    const index: number = this.reviewLikeForCheck.indexOf(reviewLike.idReviewLike, 0);
+    let arr = this.reviewLikeForCheck;
+    this.movieService.deleteLikeReview(reviewLike).subscribe();
+    setTimeout( () => {
+      this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(movie => {
+        this.movie = null;
+        this.reviewLikeForCheck = [];
+        this.movie = movie;
+        for (let i in arr) {
+          if (parseInt(i) != reviewLike.idReviewLike) {
+            this.reviewLikeForCheck.push(i);
+          }
+        }
+      });
+    }, 800 );
 
   }
 
   checkIfLiked(user: number, review: number): void {
     this.movieService.reviewCheckIfLiked(user, review).subscribe(res => {
-      alert(res);
-    })
+      if(res[0]) {
+        this.reviewLikeForCheck.push(res[0].review);
+      }
+    });
   }
 
 
   checkIfRev(b: number): void {
     this.isRevChecked[b] = true;
   }
+
 }
 

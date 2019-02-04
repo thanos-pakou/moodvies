@@ -49,13 +49,18 @@
       <hr>
       Uers Rating<br>{{movie.ratings[0] }}<br><span style="font-size:70%; opacity:0.7">by {{movie.ratings[1]}} Users</span>
     </div>
+    <br>
+    <br>
+    <h4>Duration</h4>
+    <strong>{{ movie.strDuration }} </strong>
+    <br><br>
+    <h3>Plot</h3>
     <div class="movie_desc">
       <p>{{ movie.description }}</p>
 
     </div>
 
-
-
+    <br><br><hr>
     <h3>Casting:</h3>
     <div class="movie_desc">
       <span class="actor" *ngFor="let actor_data of movie.actor_details; let i = index" [attr.data-index]='i' style="font-size:110%">
@@ -71,9 +76,9 @@
       <span style="text-align: center; margin: auto; display: block">Page</span>
       <br>
       <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
-      <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b=index">
+      <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b = index" [attr.data-index]='b'>
         <h5>
-          <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie:
+          <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie: {{ review.idReview }}
           <span class="likes">
             {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} <br>
             <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
@@ -86,25 +91,44 @@
         </p>
         <p class="date_posted">Posted {{review.created.substring(0,10)}} &nbsp; Time {{review.created.substring(11,19)}}</p>
         <div class="like-butt" *ngIf="user">
+
           <ng-container *ngFor="let userL of review.users_liked">
-            <span *ngIf="userL.user == user[0].id">
-              <span *ngIf="userL.like == true; else dislikeContent">
-                <button style="background-color: green" (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
-                <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
-              </span>
-              <ng-template #dislikeContent>
-                <span>
-                  <button (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
-                  <button style="background-color: red" (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
+            <div *ngIf="userL.user == user[0].id">
+              <div *ngIf="userL.like == true; else dislikeContent">
+                <img class="like-button" src="../../assets/movie-detail/like%20green.png" (click)="deleteLikeReview(userL)">
+                <span class="num-likes">
+                  {{ review.likes[0].positive_likes }}
                 </span>
+                <img class="dislike-button" src="../../assets/movie-detail/dislike%20gray.png" (click)="likeReview(false, user[0].id, review.idReview)">
+                <span class="num-dislikes">
+                  {{ review.likes[1].total_likes - review.likes[0].positive_likes }}
+                </span>
+              </div>
+              <ng-template #dislikeContent>
+                <div>
+                  <img class="like-button" src="../../assets/movie-detail/like%20gray.png"  (click)="likeReview(true, user[0].id, review.idReview)">
+                  <span class="num-likes">
+                    {{ review.likes[0].positive_likes }}
+                  </span>
+                  <img class="dislike-button" src="../../assets/movie-detail/dislike%20red.png" (click)="deleteLikeReview(userL)">
+                  <span class="num-dislikes">
+                  {{ review.likes[1].total_likes - review.likes[0].positive_likes }}
+                </span>
+                </div>
               </ng-template>
-            </span>
+            </div>
 
           </ng-container>
-          <span *ngIf="isRevChecked[b] != true">
-            <button (click)="likeReview(true, user[0].id, review.idReview)">Like</button>
-            <button (click)="likeReview(false, user[0].id, review.idReview)">Dislike</button>
-          </span>
+          <div *ngIf="!this.reviewLikeForCheck.includes(review.idReview)">
+            <img class="like-button" src="../../assets/movie-detail/like%20gray.png" (click)="likeReview(true, user[0].id, review.idReview)">
+                <span class="num-likes">
+                  {{ review.likes[0].positive_likes }}
+                </span>
+                <img class="dislike-button" src="../../assets/movie-detail/dislike%20gray.png" (click)="likeReview(false, user[0].id, review.idReview)">
+                <span class="num-dislikes">
+                  {{ review.likes[1].total_likes - review.likes[0].positive_likes }}
+                </span>
+          </div>
 
 
         </div>

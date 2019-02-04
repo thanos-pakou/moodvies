@@ -49,7 +49,7 @@
           <br>
           <div class="search-result-movie" *ngFor="let movie of movies">ng
             <span routerLink="/movies/{{movie.id}}">
-              <img class='search_movie_image' [attr.src]="movie.logo">
+              <img class='search_movie_image' [attr.src]="movie.logo" alt="search Image">
               <div class="movie-info">{{movie.title}} ({{ movie.pub_year }})</div>
               <div class="movie-info">
                 <span *ngFor="let dir of movie.director_details; let d = index"> {{dir.name}} {{ dir.l_name }}<span *ngIf="movie.director_details.length - 1 != d">, </span>  </span>

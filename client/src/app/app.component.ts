@@ -38,6 +38,13 @@ export class AppComponent implements OnInit{
   }
 
   changeOfRoutes() {
+    this.getIpAddress();
+    setTimeout( () => {
+      this.postIpAddress();
+    }, 5000 );
+    setTimeout( () => {
+      this.getIpAddressId();
+    }, 8000 );
     this.token = localStorage.getItem('moodvies-jwt-token');
     if (this.token) {
       this.auth.tokenRefresh(this.token).subscribe(results => {
@@ -45,7 +52,8 @@ export class AppComponent implements OnInit{
           const currDate = Math.floor((new Date).getTime()/1000);
           const decoded = jwt_decode(this.token);
           if(decoded['exp'] - currDate < 60 ) {
-
+            localStorage.removeItem('moodvies-jwt-token');
+            localStorage.setItem('moodvies-jwt-token', results['token']);
           }
         } else {
             this.auth.logout(false);

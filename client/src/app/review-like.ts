@@ -5,6 +5,7 @@ export class ReviewLike {
     this. reviewId = reviewId;
   }
 
+  idReviewLike: number;
   like: boolean;
   userId: number;
   reviewId: number;

@@ -263,6 +263,7 @@ class RatingMovieSerializer(serializers.ModelSerializer):
 
 
 class MoviesReviewsSerializer(serializers.ModelSerializer):
+    strDuration = serializers.SerializerMethodField()
     ratings = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
     director_details = DirectorSerializer(many=True, read_only=True, source='director')
@@ -287,9 +288,16 @@ class MoviesReviewsSerializer(serializers.ModelSerializer):
         ratings = [total, ratingsCount]
         return ratings
 
+    def get_strDuration(self, obj):
+        duration = obj.duration
+        hours = duration // 60
+        mins = duration % 60
+        toReturn = str(hours) + " Hours and " + str(mins) + " Minutes"
+        return toReturn
+
     class Meta:
         model = Movie
-        fields = ('id', 'user', 'user_details', 'title', 'description', 'pub_year', 'duration',
+        fields = ('id', 'user', 'user_details', 'title', 'description', 'pub_year', 'duration', 'strDuration',
                   'country', 'trailer_url', 'logo', 'mood', 'mood_details', 'genre', 'genre_details', 'actor',
                   'actor_details', 'director', 'director_details', 'reviews', 'ratings', 'imdb_score', 'recommended')
 

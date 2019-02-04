@@ -162,6 +162,31 @@ iframe {
   height:400px;
 }
 
+.like-button, .dislike-button{
+  height: 31px;
+  width: 36px;
+  margin-right:10px;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  opacity: 0.6;
+}
+
+.dislike-button:hover {
+  opacity: 0.6;
+}
+
+.num-likes, .num-dislikes {
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+.num-likes {
+  margin-right: 20px;
+}
+
 
 
 .carousel-inner>.item>ul>li {

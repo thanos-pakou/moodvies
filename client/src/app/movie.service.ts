@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Movie } from './movie';
 import {Observable, of} from 'rxjs/index';
-import {User} from './user';
 import {catchError, map} from 'rxjs/operators';
 import {ErrorHandlingService} from './errorhandling.service';
 import {Review} from './review';
@@ -104,18 +103,17 @@ export class MovieService {
     );
   }
 
-  reviewCheckIfLiked(user: number, review: number): Observable<boolean> {
-    const url = `api/review-like/?user=${user}&review=${review}`;
-      return this.http.get<ReviewLike>(url).pipe(
-      map(
-      res => {
-        if (res) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    ));
+  /** DELETE: delete the book from the server */
+  deleteLikeReview(reviewLike: ReviewLike): Observable<ReviewLike> {
+    const id =  reviewLike.idReviewLike;
+    const url = `api/review-like/${id}`;
+
+    return this.http.delete<ReviewLike>(url, httpOptions).pipe();
+  }
+
+  reviewCheckIfLiked(user: number, review: number): Observable<ReviewLike> {
+    const url = `api/review-like?user=${user}&review=${review}`;
+      return this.http.get<ReviewLike>(url);
   }
 
 
