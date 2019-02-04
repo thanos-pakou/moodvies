@@ -182,6 +182,28 @@ export class MovieDetailComponent implements OnInit {
     );
   }
 
+  updateLikeReview(reviewLike: ReviewLike, bool: boolean): void {
+    this.movieService.updateLikeReview(reviewLike, bool).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.movieService.getMovie(+this.route.snapshot.paramMap.get('id')).subscribe(
+          movie => {
+            this.movie = null;
+            this.reviewLikeForCheck = [];
+            this.movie = movie;
+          },
+          err => console.error('Observer got an error: ' + err),
+          () => {
+            for (let j in this.movie.reviews) {
+              this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
+            }
+          }
+        );
+      }
+    );
+  }
+
   checkIfLiked(user: number, review: number): void {
     this.movieService.reviewCheckIfLiked(user, review).subscribe(res => {
       if(res[0]) {

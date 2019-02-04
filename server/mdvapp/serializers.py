@@ -83,7 +83,6 @@ class SimpleMovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class ActorSerializer(serializers.ModelSerializer):
     date_of_birth = serializers.DateField(format="%d-%m-%Y")
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
@@ -124,8 +123,8 @@ class MovieSerializer(serializers.ModelSerializer):
     ratings_count = serializers.SerializerMethodField()
     director_details = DirectorSerializer(many=True, read_only=True, source='director')
     genre_details = GenreSerializer(many=True, read_only=True, source='genre')
-    actor_details = ActorSerializer(many=True, read_only=True, source='actor')
-    user_details = UserSerializer(read_only=True, source='user')
+
+
     mood_details = MoodSerializer(read_only=True, many=True, source='mood')
     strDuration = serializers.SerializerMethodField()
 
@@ -151,9 +150,9 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('id', 'user', 'user_details', 'title', 'description', 'pub_year', 'strDuration',
+        fields = ('id', 'user', 'title', 'description', 'pub_year', 'strDuration',
                   'country', 'trailer_url', 'logo', 'mood', 'mood_details', 'genre', 'genre_details', 'actor',
-                  'actor_details', 'director', 'director_details', 'total_rate', 'imdb_score', 'duration',
+                   'director', 'director_details', 'total_rate', 'imdb_score', 'duration',
                   'search_field', 'ratings_count', 'recommended')
         ordering = ('total_rate',)
 
@@ -319,6 +318,7 @@ class UserMovieListSerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         required=True,
         min_length=6,
+        max_length=40,
         validators=[UniqueValidator(queryset=UserMovieList.objects.all())]
     )
     description = serializers.CharField(

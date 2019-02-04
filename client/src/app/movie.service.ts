@@ -111,6 +111,15 @@ export class MovieService {
     return this.http.delete<ReviewLike>(url, httpOptions).pipe();
   }
 
+  /** DELETE: delete the book from the server */
+  updateLikeReview(reviewLike: ReviewLike, bol: boolean): Observable<ReviewLike> {
+    const id =  reviewLike.idReviewLike;
+    reviewLike.like = bol;
+    const url = `api/review-like/${id}`;
+
+    return this.http.put<ReviewLike>(url, reviewLike, httpOptions).pipe();
+  }
+
   reviewCheckIfLiked(user: number, review: number): Observable<ReviewLike> {
     const url = `api/review-like?user=${user}&review=${review}`;
       return this.http.get<ReviewLike>(url);

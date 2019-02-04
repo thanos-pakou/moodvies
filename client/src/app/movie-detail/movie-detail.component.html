@@ -82,7 +82,7 @@
         <h5 class="review-creator">
           <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie
           <span class="likes">
-            {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} 
+            {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}}
             <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
             </span>
           </span>
@@ -104,14 +104,14 @@
                 <span class="num-likes">
                   {{ review.likes[0].positive_likes }}
                 </span>
-                <img class="dislike-button" src="../../assets/movie-detail/dislike%20gray.png" (click)="likeReview(false, user[0].id, review.idReview)">
+                <img class="dislike-button" src="../../assets/movie-detail/dislike%20gray.png" (click)="updateLikeReview(userL, false)">
                 <span class="num-dislikes">
                   {{ review.likes[1].total_likes - review.likes[0].positive_likes }}
                 </span>
               </div>
               <ng-template #dislikeContent>
                 <div>
-                  <img class="like-button" src="../../assets/movie-detail/like%20gray.png"  (click)="likeReview(true, user[0].id, review.idReview)">
+                  <img class="like-button" src="../../assets/movie-detail/like%20gray.png"  (click)="updateLikeReview(userL, true)">
                   <span class="num-likes">
                     {{ review.likes[0].positive_likes }}
                   </span>
