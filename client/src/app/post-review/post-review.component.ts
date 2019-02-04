@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Review} from '../review';
 import {MovieService} from '../movie.service';
 import {MessageService} from '../message.service';
@@ -12,6 +12,7 @@ export class PostReviewComponent implements OnInit {
 
   @Input() idUser: number;
   @Input() idMovie: number;
+  @Output() posted = new EventEmitter<boolean>();
 
   review: Review;
 
@@ -29,6 +30,7 @@ export class PostReviewComponent implements OnInit {
     this.movieService.postReview(this.review).subscribe(res => {
       if (res) {
         this.movieService.createReview = false;
+        this.posted.emit(true);
       } else {
         window.setTimeout(function() {
           window.scrollTo(3000, document.body.scrollHeight);

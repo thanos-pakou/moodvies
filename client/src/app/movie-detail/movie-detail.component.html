@@ -76,19 +76,24 @@
       <span style="text-align: center; margin: auto; display: block">Page</span>
       <br>
       <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
-      <div class="movie_review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b = index" [attr.data-index]='b'>
-        <h5>
-          <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie: {{ review.idReview }}
+      <div class="movie-review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b = index" [attr.data-index]='b'>
+        <progress class="progress-cus-bar" value="{{ getLikesNum(review.likes[0].positive_likes, review.likes[1].total_likes) }}" max="100">
+        </progress>
+        <h5 class="review-creator">
+          <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie
           <span class="likes">
-            {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} <br>
+            {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}} 
             <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>
             </span>
           </span>
         </h5>
         <br>
-        <p>
+        <h4>Title: <strong>{{ review.title }}</strong></h4>
+        <p></p>
+        <h4>Content</h4>
+        <div class="review-content">
           {{review.content}}
-        </p>
+        </div>
         <p class="date_posted">Posted {{review.created.substring(0,10)}} &nbsp; Time {{review.created.substring(11,19)}}</p>
         <div class="like-butt" *ngIf="user">
 
@@ -138,10 +143,12 @@
       <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     </ng-container>
     <ng-template #noreviews>There are no reviews yet for this movie...</ng-template>
-    <button style="margin-left:40%; margin-top:50px;" (click)="toggleCreateReview()" *ngIf="!createReview && user">Create a Review</button>
+    <div class="create-review-button">
+      <button (click)="toggleCreateReview()" *ngIf="!createReview && user">Create a Review</button>
+    </div>
     <div style="margin-left:40%; margin-top:50px;" *ngIf="!user"><a routerLink="/login">Login</a> to create a review</div>
     <div *ngIf="movieService.createReview">
-      <app-post-review [idUser]="user[0].id" [idMovie]="movie.id"></app-post-review>
+      <app-post-review (posted)="getMovie()" [idUser]="user[0].id" [idMovie]="movie.id"></app-post-review>
 
     </div>
   </div>

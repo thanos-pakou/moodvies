@@ -28,6 +28,24 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.token = localStorage.getItem('moodvies-jwt-token');
+    if (this.token) {
+      this.auth.tokenRefresh(this.token).subscribe(results => {
+        if (results) {
+          const currDate = Math.floor((new Date).getTime()/1000);
+          const decoded = jwt_decode(this.token);
+          if(decoded['exp'] - currDate < 60 ) {
+            localStorage.removeItem('moodvies-jwt-token');
+            localStorage.setItem('moodvies-jwt-token', results['token']);
+          }
+        } else {
+          this.auth.logout(false);
+          this.router.navigate(['/login']);
+        }
+      });
+    } else {
+      this.auth.logout(false);
+    }
     this.getIpAddress();
     setTimeout( () => {
       this.postIpAddress();

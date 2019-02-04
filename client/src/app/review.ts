@@ -25,5 +25,6 @@ export class Review {
   content: string;
   likes: TotalLikes[];
   users_liked: ReviewLike[];
+  created: string;
 
 }

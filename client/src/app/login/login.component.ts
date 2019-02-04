@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy{
   }
 
   login(username, password) {
-    this.messageService.clear();
     this.auth.login(username, password)
       .subscribe(res => {
         if (res) {

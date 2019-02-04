@@ -129,7 +129,7 @@ class Review(models.Model):
     idReview = models.AutoField(db_column='idReview', primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    title = models.CharField(db_column='titleReview', max_length=150)
+    title = models.CharField(db_column='titleReview', max_length=50)
     content = models.CharField(db_column='contentReview', max_length=4000)
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)

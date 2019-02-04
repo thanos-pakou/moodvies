@@ -203,7 +203,8 @@ class DirectorMoviesSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         required=True,
-        min_length=8
+        min_length=8,
+        max_length=45
     )
     content = serializers.CharField(
         required=True,

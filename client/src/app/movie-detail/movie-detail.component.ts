@@ -10,7 +10,8 @@ import {AuthService} from '../auth.service';
 import {User} from '../user';
 import {MessageService} from '../message.service';
 import {ReviewLike} from '../review-like';
-
+import * as jwt_decode from "jwt-decode";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -30,6 +31,7 @@ export class MovieDetailComponent implements OnInit {
   liked;
   reviewLike: ReviewLike;
   reviewLikeForCheck: any[] = [];
+  token: string;
 
 
   constructor(private route: ActivatedRoute,
@@ -37,7 +39,8 @@ export class MovieDetailComponent implements OnInit {
               private auth: AuthService,
               public movieService: MovieService,
               private location: Location,
-              private sanitizer: DomSanitizer
+              private sanitizer: DomSanitizer,
+              private router: Router,
   ) {
     this.sanitizer = sanitizer;
   }
@@ -46,28 +49,59 @@ export class MovieDetailComponent implements OnInit {
   userRatee = false;
 
   ngOnInit() {
-    this.getMovie();
-    this.movieService.createReview = false;
-    this.messageService.clear();
-    setTimeout( () => {
-      if (this.auth.isLoggedIn === true) {
-        this.auth.getUser().subscribe(user => this.user = user);
-      }
-    }, 400 );
+    this.token = localStorage.getItem('moodvies-jwt-token');
+    if (this.token) {
+      this.auth.tokenRefresh(this.token).subscribe(results => {
+        if (results) {
+          const currDate = Math.floor((new Date).getTime()/1000);
+          const decoded = jwt_decode(this.token);
+          if(decoded['exp'] - currDate < 60 ) {
+            localStorage.removeItem('moodvies-jwt-token');
+            localStorage.setItem('moodvies-jwt-token', results['token']);
+          }
+        } else {
+          this.auth.logout(false);
+          this.router.navigate(['/login']);
+        }
+      },
+        () => {},
+        () => {
+          this.getMovie();
+          this.movieService.createReview = false;
+          this.messageService.clear();
+          if (this.auth.isLoggedIn === true) {
+            this.auth.getUser().subscribe(user => this.user = user);
+          }
+        }
+
+        );
+    } else {
+      this.auth.logout(false);
+      this.getMovie();
+      this.movieService.createReview = false;
+      this.messageService.clear();
+
+
+    }
+
+
+
+
 
   }
 
 
   getMovie(): void {
-    let j:any;
     const id = +this.route.snapshot.paramMap.get('id');
     this.movieService.getMovie(id).subscribe(
       movie => {
+        this.movie = null;
+        this.reviewLikeForCheck = [];
         this.movie = movie;
       },
       () => {},
       () => {
-        for (j in this.movie.reviews) {
+        for (let j in this.movie.reviews) {
           this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
         }
       }
@@ -83,6 +117,14 @@ export class MovieDetailComponent implements OnInit {
       return 'No one liked yet';
     } else {
       return String('Likes: ' +  (positive / total * 100).toFixed(2)) + '%';
+    }
+  }
+
+  getLikesNum(positive, total): number {
+    if (total === 0) {
+      return 0;
+    } else {
+      return parseFloat((positive / total * 100).toFixed(2));
     }
   }
 
@@ -134,7 +176,6 @@ export class MovieDetailComponent implements OnInit {
             for (let j in this.movie.reviews) {
               this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
             }
-            console.log(this.reviewLikeForCheck);
           }
         );
       }
