@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Mood } from '../mood';
 import { MoodService } from '../mood.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-mood',
@@ -14,14 +15,20 @@ export class MoodComponent implements OnInit {
   p: number[] = [];
   moods: Mood[];
 
-  constructor(private moodService: MoodService) { }
+  constructor(private moodService: MoodService,
+              private titleService: Title) { }
 
   ngOnInit() {
     this.getMoods();
+    this.titleService.setTitle('Moodvies--Mood Page');
   }
 
   getMoods(): void {
-    this.moodService.getMoods().subscribe(moods => this.moods = moods);
+    this.moodService.getMoods().subscribe(
+      moods => this.moods = moods,
+      () => {},
+      () => {}
+    );
   }
 
   getBackImage(id, url): void {

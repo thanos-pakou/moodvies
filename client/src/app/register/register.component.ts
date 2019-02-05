@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import { MessageService } from '../message.service';
 import {catchError} from 'rxjs/operators';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-register',
@@ -18,12 +19,14 @@ export class RegisterComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private router: Router,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private titleService: Title,
   ) { }
 
   ngOnInit( ) {
     this.user = new User();
     this.messageService.clear();
+    this.titleService.setTitle('Moodvies --  Register Page');
   }
 
   register(username, email, password, first_name, last_name) {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Movie} from '../movie';
 import {MovieService} from '../movie.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-top20',
@@ -12,7 +13,8 @@ export class Top20Component implements OnInit {
   p1 = 1;
   movies: Movie[];
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService,
+              private titleService: Title,) { }
 
   ngOnInit() {
     this.getTop20Movies();
@@ -20,6 +22,7 @@ export class Top20Component implements OnInit {
 
   getTop20Movies(): void {
     this.movieService.getTopMovies().subscribe(movies => this.movies = movies);
+    this.titleService.setTitle('Moodvies --  Top 20 movies by our users');
   }
 
   getTitle(title, pub_year): String[] {

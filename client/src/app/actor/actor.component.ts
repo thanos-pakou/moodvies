@@ -4,6 +4,7 @@ import { Actor } from '../actor';
 import { ActorService } from '../actor.service';
 import {debounceTime, delay, distinctUntilChanged, startWith, switchMap} from "rxjs/operators";
 import {Observable, Subject} from "rxjs";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-actor',
@@ -20,13 +21,16 @@ export class ActorComponent implements OnInit {
   actors$: Observable<Actor[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private actorService: ActorService) { }
+  constructor(private actorService: ActorService,
+              private titleService: Title,
+  ) { }
 
   search(term: string): void {
     this.searchTerms.next(term);
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Moodvies--Actor Page');
     this.getActors();
     this.actors$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term

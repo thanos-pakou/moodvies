@@ -8,6 +8,7 @@ import {User} from '../user';
 import {UserMovieListService} from '../user-movie-list.service';
 import {UserMovieList} from '../user-movie-list';
 import {MessageService} from '../message.service';
+import {Title} from "@angular/platform-browser";
 
 
 
@@ -35,7 +36,9 @@ export class UserMovieListComponent implements OnInit {
   constructor(private movieService: MovieService,
               public messageService: MessageService,
               public authService: AuthService,
-              private umlService: UserMovieListService) {}
+              private umlService: UserMovieListService,
+              private titleService: Title,
+              ) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -44,6 +47,7 @@ export class UserMovieListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.titleService.setTitle('Moodvies --  Movie list from users');
     this.messageService.clear();
     this.getLists();
     this.movies$ = this.searchTerms.pipe(

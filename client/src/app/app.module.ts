@@ -43,6 +43,7 @@ import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import {IpService} from "./ip.service";
 import { ActorSearchComponent } from './actor-search/actor-search.component';
+import { Page404Component } from './page404/page404.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ActorSearchComponent } from './actor-search/actor-search.component';
     PostReviewComponent,
     AboutComponent,
     FooterComponent,
-    ActorSearchComponent
+    ActorSearchComponent,
+    Page404Component
   ],
   imports: [
     BrowserModule,

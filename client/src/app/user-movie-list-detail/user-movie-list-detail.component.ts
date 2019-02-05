@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {UserMovieListService} from '../user-movie-list.service';
 import {UserMovieList} from '../user-movie-list';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-user-movie-list-detail',
@@ -14,7 +15,8 @@ export class UserMovieListDetailComponent implements OnInit {
   userMovieList: UserMovieList;
 
   constructor(public route: ActivatedRoute,
-              private umlService: UserMovieListService) { }
+              private umlService: UserMovieListService,
+              private titleService: Title) { }
 
   ngOnInit() {
     this.getUserMovieList();
@@ -22,7 +24,13 @@ export class UserMovieListDetailComponent implements OnInit {
 
   getUserMovieList(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.umlService.getUserMovieList(id).subscribe(userMovieList => this.userMovieList = userMovieList);
+    this.umlService.getUserMovieList(id).subscribe(
+      userMovieList => this.userMovieList = userMovieList,
+      () => {},
+      () => {
+        this.titleService.setTitle('Movie List:  ' + this.userMovieList.title);
+      }
+    );
   }
 
   getTitle(title, pub_year): String[] {

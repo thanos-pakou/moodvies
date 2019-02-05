@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 import {MessageService} from '../message.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -19,9 +20,11 @@ export class LoginComponent implements OnInit, OnDestroy{
     private router: Router,
     private location: Location,
     public messageService: MessageService,
+    private titleService: Title,
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Moodvies--Login Page');
   }
 
   ngOnDestroy() {

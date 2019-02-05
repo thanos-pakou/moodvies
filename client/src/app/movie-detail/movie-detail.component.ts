@@ -5,7 +5,7 @@ import { Movie } from '../movie';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, Title} from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
 import {User} from '../user';
 import {MessageService} from '../message.service';
@@ -41,6 +41,7 @@ export class MovieDetailComponent implements OnInit {
               private location: Location,
               private sanitizer: DomSanitizer,
               private router: Router,
+              private titleService: Title,
   ) {
     this.sanitizer = sanitizer;
   }
@@ -101,6 +102,7 @@ export class MovieDetailComponent implements OnInit {
       },
       () => {},
       () => {
+        this.titleService.setTitle( this.movie.title + ' (' + this.movie.pub_year + ')');
         for (let j in this.movie.reviews) {
           this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
         }

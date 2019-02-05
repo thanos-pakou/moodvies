@@ -1,0 +1,41 @@
+.main-img {
+  width: 100%;
+  height: auto;
+}
+
+.moodSearch{
+  position: absolute;
+  text-align: center;
+  top: 15%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  color:white;
+  font-size: 20px;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif !important;
+}
+
+.go-back {
+  cursor: pointer;
+  font-weight: bold;
+  color: #9acfea;
+  font-size: 21px;
+  opacity: 0.8;
+}
+
+.go-home {
+  cursor: pointer;
+  font-weight: bold;
+  color: #9acfea;
+  font-size: 17px;
+  opacity: 0.4;
+}
+
+.go-back-par {
+  font-size: 18px;
+}
+
+.go-home-par {
+  font-size: 15px;
+}

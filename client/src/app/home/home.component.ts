@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {MovieService} from '../movie.service';
 import {Movie} from '../movie';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,12 @@ export class HomeComponent implements OnInit {
   movies: Movie[];
 
   constructor(private auth: AuthService,
-              private movieService: MovieService) { }
+              private movieService: MovieService,
+              private titleService: Title) { }
 
   ngOnInit() {
     this.getMovies();
+    this.titleService.setTitle('Moodvies--Home Page');
   }
 
   getMovies(): void {

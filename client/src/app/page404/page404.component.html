@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="moodSearch">
+    <h1>We are sorry...</h1>
+    <p>the page you are trying to reach cannot be found</p>
+    <p class="go-back-par">
+      click
+      <span class="go-back" (click)="goBack()" >
+        here
+      </span>
+      to return to the previous page
+    </p>
+    <p class="go-home-par">
+      or
+      <span class="go-home" routerLink="/home">here</span>
+      to return to the home page
+    </p>
+
+  </div>
+  <img class="main-img" src="../../assets/home_images/image_main.png">
+
+
+
+
+</div>
+<div style="margin-top: 300px">
+  <app-footer></app-footer>
+</div>

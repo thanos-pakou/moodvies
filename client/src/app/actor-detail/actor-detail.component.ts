@@ -5,6 +5,7 @@ import {ActorService} from '../actor.service';
 
 import { Actor } from '../actor';
 import {IpService} from "../ip.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-actor-detail',
@@ -21,20 +22,25 @@ export class ActorDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private actorService: ActorService,
               private ip: IpService,
+              private titleService: Title,
   ) { }
 
   ngOnInit() {
     this.getActor();
-    setTimeout( () => {
-      this.actorVisit();
-    }, 5000 );
 
   }
 
   getActor(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.actorId = id;
-    this.actorService.getActor(id).subscribe(actor => this.actor = actor);
+    this.actorService.getActor(id).subscribe(
+      actor => this.actor = actor,
+      () => {},
+      () => {
+        this.actorVisit();
+        this.titleService.setTitle('Actor: ' + this.actor.name + ' ' + this.actor.last_name);
+      }
+    );
   }
 
   getTitle(title, pub_year): String[] {

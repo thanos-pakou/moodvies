@@ -4,6 +4,7 @@ import { Mood } from '../mood';
 import { MoodService} from '../mood.service';
 
 import { ActivatedRoute } from '@angular/router';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-mood-detail',
@@ -14,7 +15,8 @@ export class MoodDetailComponent implements OnInit {
   p1 = 1;
 
   constructor(private route: ActivatedRoute,
-              private moodService: MoodService) { }
+              private moodService: MoodService,
+              private titleService: Title) { }
 
   @Input()
   mood: Mood;
@@ -26,7 +28,13 @@ export class MoodDetailComponent implements OnInit {
 
   getMood(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.moodService.getMood(id).subscribe(mood => this.mood = mood);
+    this.moodService.getMood(id).subscribe(
+      mood => this.mood = mood,
+      () => {},
+      () => {
+        this.titleService.setTitle('Mood: ' + this.mood.mood);
+      }
+    );
   }
 
   getTitle(title, pub_year): String[] {

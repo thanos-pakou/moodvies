@@ -17,6 +17,7 @@ import {UserMovieListComponent} from './user-movie-list/user-movie-list.componen
 import {Top20Component} from './top20/top20.component';
 import {UserMovieListDetailComponent} from './user-movie-list-detail/user-movie-list-detail.component';
 import {AboutComponent} from './about/about.component';
+import {Page404Component} from "./page404/page404.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,7 +36,9 @@ const routes: Routes = [
   { path: 'directors', component: DirectorComponent },
   { path: 'directors/:id', component: DirectorDetailComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  {path: '404', component: Page404Component},
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({
