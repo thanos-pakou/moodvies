@@ -12,6 +12,8 @@ import {MessageService} from '../message.service';
 import {ReviewLike} from '../review-like';
 import * as jwt_decode from "jwt-decode";
 import { Router } from "@angular/router";
+import {UserMovieList} from "../user-movie-list";
+import {Review} from "../review";
 
 
 @Component({
@@ -32,6 +34,7 @@ export class MovieDetailComponent implements OnInit {
   reviewLike: ReviewLike;
   reviewLikeForCheck: any[] = [];
   token: string;
+  reviewToDelete: Review;
 
 
   constructor(private route: ActivatedRoute,
@@ -81,16 +84,8 @@ export class MovieDetailComponent implements OnInit {
       this.getMovie();
       this.movieService.createReview = false;
       this.messageService.clear();
-
-
     }
-
-
-
-
-
   }
-
 
   getMovie(): void {
     const id = +this.route.snapshot.paramMap.get('id');
@@ -145,6 +140,21 @@ export class MovieDetailComponent implements OnInit {
 
   toggleCreateReview(): void {
     this.movieService.createReview = true;
+  }
+
+  confirmDeleteReview(review: Review): void {
+    this.reviewToDelete = review;
+  }
+
+  deleteReview(review: Review): void {
+    this.movieService.deleteReview(review).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.reviewToDelete = null;
+        this.getMovie();
+      }
+    );
   }
 
   likeReview(like: boolean, user: number, review: number): void {

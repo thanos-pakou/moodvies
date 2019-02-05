@@ -106,7 +106,7 @@ export class AuthService {
         map(results => {
           if (results['token']) {
             const currDate = Math.floor((new Date).getTime()/1000);
-            if(jwt_decode(token)['exp'] - currDate < 60 ) {
+            if(jwt_decode(token)['exp'] - currDate < 6000 ) {
               localStorage.setItem('moodvies-jwt-token', results['token']);
             }
             const decoded = jwt_decode(token);

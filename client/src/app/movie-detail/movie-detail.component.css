@@ -149,6 +149,36 @@
   margin-top:50px;
 }
 
+.delete-review {
+  float: right;
+  margin-right: -95px;
+}
+
+.confirm-del-button {
+  color:black;
+}
+
+.delete-cont {
+  padding:20px;
+  color: white;
+  top: 200px;
+  text-align: center;
+  position:fixed;
+  height:160px;
+  width:400px;
+  margin-left:240px;
+  background: rgba(0,0,0, 0.9);
+  z-index: 100;
+}
+
+.btn-warning {
+  background: rgba(100, 32, 32, 0.6);
+}
+
+.btn-warning:hover {
+  background: rgba(42, 14, 14, 0.5);
+}
+
 .create-review-button {
   margin-top: 50px;
   text-align: center;

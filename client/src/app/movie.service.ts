@@ -87,6 +87,12 @@ export class MovieService {
     );
   }
 
+  deleteReview(review: Review): Observable<Review> {
+    const id =  review.idReview;
+    const url = `api/review/${id}`;
+    return this.http.delete<Review>(url, httpOptions).pipe();
+  }
+
   likeReview(like: boolean, userId: number, reviewId: number): Observable<boolean> {
     const url = `api/review-like`;
     return this.http.post(url, {
@@ -103,7 +109,7 @@ export class MovieService {
     );
   }
 
-  /** DELETE: delete the book from the server */
+  /** DELETE: delete the review like from the server */
   deleteLikeReview(reviewLike: ReviewLike): Observable<ReviewLike> {
     const id =  reviewLike.idReviewLike;
     const url = `api/review-like/${id}`;
@@ -111,7 +117,7 @@ export class MovieService {
     return this.http.delete<ReviewLike>(url, httpOptions).pipe();
   }
 
-  /** DELETE: delete the book from the server */
+  /** UPDATE: update the review like from like to dislike or the otther way around  */
   updateLikeReview(reviewLike: ReviewLike, bol: boolean): Observable<ReviewLike> {
     const id =  reviewLike.idReviewLike;
     reviewLike.like = bol;
