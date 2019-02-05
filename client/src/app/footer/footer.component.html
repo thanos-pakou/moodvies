@@ -33,9 +33,10 @@
       <p>If you feel like giving us feedback then do not hesitate!</p>
       <p>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Type your message...">
+        <input #email type="email" class="form-control" placeholder="Type your email..."><br>
+        <input #content type="text" class="form-control" placeholder="Type your message...">
         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
+                        <button (click)="postFeedback(email.value, content.value)" style="height:68px; width: 80px" class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
                       </span>
       </div><!-- /input-group -->
     </div>

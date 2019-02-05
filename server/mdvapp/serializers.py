@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 import re
 
 from .models import Genre, Movie, Actor, Director, Mood, Review, RatingMovie, ReviewLike, UserMovieList, \
-    UserMovieListComment, UserMovieListLike, IPAddress
+    UserMovieListComment, UserMovieListLike, IPAddress, Feedback
 from django.contrib.auth.models import User
 
 
@@ -366,3 +366,8 @@ class MoodMoviesSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FeedbackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Feedback
+        fields = '__all__'

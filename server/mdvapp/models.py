@@ -230,3 +230,18 @@ class CustomUser(User):
 
     class Meta:
         proxy = True
+
+
+# --------------------- Feedback Model ---------------------
+class Feedback(models.Model):
+    idFeedback = models.AutoField(primary_key=True)
+    email = models.EmailField(blank=True, null=True,)
+    content = models.CharField(max_length=500)
+    ip_address = models.ForeignKey(IPAddress, blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'feedback'
+
+    def __str__(self):
+        return "%s" % self.idFeedback
+

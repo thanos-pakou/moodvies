@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^mood/?$', views.MoodList.as_view()),
     url(r'^mood/(?P<pk>[0-9]+)/?$', views.MoodDetail.as_view()),
     url(r'^review/?$', views.ReviewList.as_view()),
-    url(r'^review/(?P<pk>[0-9]+)/?$', views.ReviewListLike.as_view()),
+    url(r'^review/(?P<pk>[0-9]+)/?$', views.ReviewListDetail.as_view()),
     url(r'^review-like/?$', views.ReviewLike.as_view()),
     url(r'^review-like/(?P<pk>[0-9]+)/?$', views.ReviewLikeModify.as_view()),
     url(r'^movie-list/?$', views.UserMovieList.as_view()),
@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^user/?$', views.User.as_view()),
     url(r'^rating/?$', views.Rating.as_view()),
     url(r'^ip-address/?$', views.IpAddressList.as_view()),
+    url(r'^feedback/?$', views.FeedbackList.as_view()),
+    url(r'^feedback/?(?P<pk>[0-9]+)/?$', views.FeedbackListDetail.as_view()),
 
 
 

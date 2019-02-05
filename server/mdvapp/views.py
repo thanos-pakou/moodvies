@@ -2,11 +2,11 @@ from django.db.models import Q, Count, Avg
 from django.http import request
 
 from .models import Movie, Actor, Mood, Genre, Director, Review, UserMovieList as UserMovieListModel, UserMovieListLike, \
-    UserMovieListComment, RatingMovie, CustomUser, ReviewLike as ReviewLikeModel, IPAddress
+    UserMovieListComment, RatingMovie, CustomUser, ReviewLike as ReviewLikeModel, IPAddress, Feedback
 from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, GenreMoviesSerializer, GenreSerializer, \
     ActorMoviesSerializer, DirectorSerializer, DirectorMoviesSerializer, MoodMoviesSerializer, MoviesReviewsSerializer, \
     ReviewSerializer, UserMovieListSerializer, UserSerializer, RatingMovieSerializer, UserSearchSerializer, \
-    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer
+    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
@@ -109,7 +109,7 @@ class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MoviesReviewsSerializer
 
 
-class ReviewListLike(generics.RetrieveUpdateDestroyAPIView):
+class ReviewListDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewListLikeSerializer
 
@@ -173,3 +173,13 @@ class User(generics.ListCreateAPIView):
 class Rating(generics.ListCreateAPIView):
     queryset = RatingMovie.objects.all()
     serializer_class = RatingMovieSerializer
+
+
+class FeedbackList(generics.ListCreateAPIView):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+
+
+class FeedbackListDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer

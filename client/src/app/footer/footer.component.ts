@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FeedbackService} from "../feedback.service";
+import {IpService} from "../ip.service";
+import {Feedback} from "../feedback";
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private feedService: FeedbackService,
+    private ip: IpService,
+  ) { }
 
   ngOnInit() {
+  }
+
+  postFeedback(email: string, cont: string) {
+    const ip = this.ip.idIpAddress;
+    const feed = new Feedback(email, cont, ip);
+    this.feedService.postFeedback(feed).subscribe();
   }
 
 }
