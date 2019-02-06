@@ -130,9 +130,9 @@ ul.ngx-pagination  {
   list-style-type: none;
 }
 
-.movie_description {
-  width:300px;
-  height:100px;
+.movie-description {
+  width:250px;
+  height:90px;
   overflow: auto;
 }
 

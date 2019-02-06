@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Director } from '../director';
 import {DirectorService} from '../director.service';
+import {Title} from "@angular/platform-browser";
+
 
 
 
@@ -12,11 +14,16 @@ import {DirectorService} from '../director.service';
 })
 export class DirectorComponent implements OnInit {
 
+  p1 = 1;
+  p: number[] = [];
   directors: Director[];
 
-  constructor(private directorService: DirectorService) { }
+  constructor(private directorService: DirectorService,
+              private titleService: Title,
+              ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Moodvies--Director Page');
     this.getDirectors();
   }
 

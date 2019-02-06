@@ -34,8 +34,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise ValidationError("Ensure this field doesn't contain any special characters")
         return value
 
-    def validate_email(self, value):
-        return value
 
     def validate_first_name(self, value):
         data = self.get_initial()
@@ -92,11 +90,12 @@ class ActorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
         ordering = 'visits_count'
-        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'visit', 'visit_details', 'visits_count', 'image', 'movies')
+        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'visit', 'visit_details',
+                  'visits_count', 'image', 'movies')
 
     def get_movies(self, obj):
         movies = Movie.objects.filter(actor=obj)
-        serialized_movies = SimpleMovieSerializer(movies, many=True)
+        serialized_movies = MovieSerializer(movies, many=True)
         return serialized_movies.data
 
 
@@ -106,10 +105,33 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = ('idGenre', 'genre', 'description',)
 
 
-class DirectorSerializer(serializers.ModelSerializer):
+class MoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mood
+        fields = ('id', 'mood', 'description')
+
+
+class SimpleDirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = ('idDirector', 'name', 'l_name',)
+        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field')
+
+
+class DirectorSerializer(serializers.ModelSerializer):
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
+    movies = serializers.SerializerMethodField()
+    visits_count = serializers.IntegerField(read_only=True)
+
+
+    class Meta:
+        model = Director
+        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
+                  'visits_count', 'movies')
+
+    def get_movies(self, obj):
+        movies = Movie.objects.filter(director=obj)
+        serialized_movies = MovieSerializer(movies, many=True)
+        return serialized_movies.data
 
 
 class MoodSerializer(serializers.ModelSerializer):
@@ -121,10 +143,8 @@ class MoodSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     total_rate = serializers.SerializerMethodField()
     ratings_count = serializers.SerializerMethodField()
-    director_details = DirectorSerializer(many=True, read_only=True, source='director')
+    director_details = SimpleDirectorSerializer(many=True, read_only=True, source='director')
     genre_details = GenreSerializer(many=True, read_only=True, source='genre')
-
-
     mood_details = MoodSerializer(read_only=True, many=True, source='mood')
     strDuration = serializers.SerializerMethodField()
 
@@ -187,11 +207,16 @@ class ActorMoviesSerializer(serializers.ModelSerializer):
 
 
 class DirectorMoviesSerializer(serializers.ModelSerializer):
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
     movies = serializers.SerializerMethodField()
+    visits_count = serializers.IntegerField(read_only=True)
+    director_details = DirectorSerializer(many=True, read_only=True, source='director')
+    genre_details = GenreSerializer(many=True, read_only=True, source='genre')
 
     class Meta:
         model = Director
-        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'movies')
+        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
+                  'visits_count',  'movies', 'director_details', 'genre_details')
 
     def get_movies(self, obj):
         movies = Movie.objects.filter(director=obj)

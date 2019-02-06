@@ -34,6 +34,12 @@
         <br>
         Duration: <strong>{{ movie.strDuration }}</strong>
       </span>
+      <span class="imdb">
+        <img class="imdb-img" src="../../assets/imdb/imdb2.png">
+        {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
+        <img class="moodvies-img" src="../../favicon.ico">
+        {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
+      </span>
       <hr>
     </div>
     <span style="text-align: center; margin: auto; display: block">Page</span>

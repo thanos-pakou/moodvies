@@ -78,7 +78,11 @@ export class ErrorHandlingService {
         this.messageService.add('Your token seems to be incorrect. Please try to log in again')
       }
 
-      console.error(error); // log to console instead
+      if(String(error.error.ip) === 'ip address with this ip already exists.') {
+        return of(null as T);
+      }
+
+      console.log(error);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

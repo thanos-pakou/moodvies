@@ -139,7 +139,7 @@
 
 
         </div>
-        <div class="delete-review" *ngIf="user[0]">
+        <div class="delete-review" *ngIf="user">
           <button class="btn btn-warning" *ngIf="review.user_details['id'] === user[0].id" (click)="confirmDeleteReview(review)">Delete</button>
         </div>
         <div class="delete-cont" *ngIf="reviewToDelete">

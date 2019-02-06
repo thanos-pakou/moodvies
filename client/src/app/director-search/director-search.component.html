@@ -1,0 +1,23 @@
+<form class="navbar-form navbar-right">
+  <div class="form-group">
+    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search for actors.." (blur)="searchBox.value = ''; search(searchBox.value)" autocomplete="off">
+  </div>
+  <span class="glyphicon glyphicon-search search_icon"></span>
+</form>
+
+<ng-container *ngIf="directors$ | async; let directors">
+  <div  *ngIf="directors.length>0" class="search-result">
+    <span class="results-length">Results of directors(<strong>{{ directors.length }}</strong>) </span>
+    <div class="search-result-movie" *ngFor="let dir of directors" routerLink="/actors/{{dir.idDirector}}">
+      <a>
+        <img class='search_movie_image' [attr.src]="dir.image">
+        <div class="movie-info">
+          <span>{{dir.name + ' ' + dir.l_name}}</span>
+          <br>
+          <span>{{ dir.date_of_birth }}</span>
+          <br>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-container>

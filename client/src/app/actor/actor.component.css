@@ -106,11 +106,11 @@
   font-size: 14px;
   position: absolute;
   border-radius: 20px;
-  padding: 50px;
+  padding: 50px 50px 50px;
   visibility: hidden;
   width:350px;
-  height: 400px;
-  margin-top:-480px;
+  height:458px;
+  margin-top:-550px;
   background-color: white;
   opacity:0.85;
 }
@@ -126,12 +126,20 @@
   text-align: center
 }
 
-.movie_description {
-  width:300px;
-  height:100px;
+.movie-description {
+  width:250px;
+  height:120px;
   overflow: auto;
 }
 
+.strong-director, .strong-mood {
+  cursor: pointer;
+}
+
+.strong-director:hover, .strong-mood:hover {
+  color: #1b3249;
+  opacity: 0.5;
+}
 
 
 @media (max-width: 1199px) {

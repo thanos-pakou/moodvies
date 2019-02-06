@@ -43,7 +43,9 @@ class Director(models.Model):
     l_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
-    image = models.ImageField(default='')
+    image = models.ImageField(default='', null=True)
+    search_field = models.CharField(max_length=200, blank=True, null=True)
+    visit = models.ManyToManyField(IPAddress)
     created = models.DateTimeField(auto_now_add=True, blank=False, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 

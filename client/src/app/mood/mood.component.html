@@ -37,9 +37,9 @@
             Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
             <br>
             Description: <br>
-            <span class="movie_description">
+            <div class="movie-description">
               <strong>{{ movie.description }}</strong>
-          </span>
+            </div>
           </div>
           <br *ngIf="i === 2"><br *ngIf="i === 2">
         </span>

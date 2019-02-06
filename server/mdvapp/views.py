@@ -78,20 +78,26 @@ class ActorList(generics.ListCreateAPIView):
         return queryset
 
 
-
 class ActorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Actor.objects.all()
     serializer_class = ActorMoviesSerializer
 
 
 class DirectorList(generics.ListCreateAPIView):
-    queryset = Director.objects.all()
-    serializer_class = DirectorSerializer
+    serializer_class = DirectorMoviesSerializer
+
+    def get_queryset(self):
+        queryset = Director.objects.all().annotate(visits_count=Count('visit')).order_by('-visits_count')
+        search = self.request.query_params.get('search', None)
+        if search is not None:
+            queryset = queryset.filter(search_field__icontains=search)
+        return queryset
+
 
 
 class DirectorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Director.objects.all()
-    serializer_class = DirectorMoviesSerializer
+    serializer_class = DirectorSerializer
 
 
 class MoodList(generics.ListCreateAPIView):
@@ -141,8 +147,6 @@ class ReviewLike(generics.ListCreateAPIView):
             queryset = queryset.filter(user=user)
             queryset = queryset.filter(review=review)
         return queryset
-
-
 
 
 class UserMovieListDetail(generics.RetrieveUpdateDestroyAPIView):

@@ -1,3 +1,68 @@
 <app-navbar></app-navbar>
-
+<div class=container>
+  <br><br>
+  <div class="director-header">
+    <h1>Directors</h1>
+    <h3>This page contains all the directors that involved with movies of our website </h3>
+  </div>
+  <div class="director-container">
+    <h2>Director List</h2>
+    <app-director-search></app-director-search><br><br><br>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <div *ngFor="let dir of directors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
+      <hr>
+      <img class="director-image" [attr.src]="dir.image" routerLink="/directors/{{ dir.idDirector}}">
+      <span class="director-name" routerLink="/directors/{{ dir.idDirector}}">
+        {{ dir.name + ' ' + dir.l_name }}
+      </span>
+      <div class="director-description">
+        {{ dir.description }}
+      </div>
+      <span class="num-of-movies">{{ dir.name + ' ' + dir.l_name }} directed  <strong>{{ dir.movies.length }} movie<span *ngIf="dir.movies.length > 1">s </span></strong> that we recommend</span>
+      <div class="director-movies-container">
+        <span  *ngFor="let movie of dir.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="director-movies">
+         <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
+          <div class="movie_info">
+            <h4>{{ movie.title }}</h4>
+            <br>
+            Year Published: <strong>{{ movie.pub_year }}</strong>
+            <br>
+            Duration <strong>{{ movie.duration }} mins </strong>
+            <br>
+            Director: <strong class="strong-director" routerLink="/directors/{{dir.id}}" *ngFor="let dir of movie.director_details; let b=index">{{dir.name + ' ' + dir.l_name}}<span *ngIf="movie.director_details.length - 1 != b">, </span></strong>
+            <br>
+            Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
+            <br>
+            Mood: <strong class="strong-mood" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+            <br>
+            IMDB: <strong>{{movie.imdb_score}}</strong>
+            <br>
+            Description: <br>
+            <div class="movie-description">
+              <strong>{{ movie.description }}</strong>
+          </div>
+          </div>
+          <br *ngIf="i === 2"><br *ngIf="i === 2">
+        </span>
+        <div style=" margin-top:15px; margin-right: 60px; margin-bottom:50px; font-size:10px;">
+          <pagination-controls  [maxSize]="5" previousLabel="" nextLabel="" class="my-pagination" *ngIf="dir.movies.length > 4" style="text-align: center" (pageChange)="p[j] = $event" [id]="j">
+          </pagination-controls>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <br>
+    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+  </div>
+</div>
 <app-footer></app-footer>
+
+
+
+
+
+
+

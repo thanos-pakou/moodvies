@@ -99,7 +99,10 @@ export class MovieDetailComponent implements OnInit {
       () => {
         this.titleService.setTitle( this.movie.title + ' (' + this.movie.pub_year + ')');
         for (let j in this.movie.reviews) {
-          this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
+          if (this.user) {
+            this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
+          }
+
         }
       }
     );

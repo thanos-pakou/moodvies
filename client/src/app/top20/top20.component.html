@@ -29,6 +29,8 @@
         Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
         <br>
         Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+        <br>
+        Duration: <strong>{{ movie.strDuration }}</strong>
       </span>
       <span class="imdb">
         <img class="imdb-img" src="../../assets/imdb/imdb2.png">

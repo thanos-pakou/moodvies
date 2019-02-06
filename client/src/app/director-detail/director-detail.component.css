@@ -1,0 +1,119 @@
+.container {
+  background-image: url("../../assets/movie-images/background_movie.png");
+  background-size: auto;
+}
+
+.actor-container {
+  padding: 20px 20px 100px;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  margin: 100px 55px;
+  background-image: url("../../assets/mood/mood_image_background.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  opacity: 0.99;
+}
+
+.actor-container>h2 {
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.actor-image {
+  margin: 0 auto;
+  height: 300px;
+  width: 200px;
+  display: block;
+}
+
+.actor-description {
+  display: block;
+  margin-top: 50px;
+  margin-left: 90px;
+  width: 80%;
+  height: 100px;
+}
+
+.actor-description-h {
+  text-align: center;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.movie-image {
+  height: 190px;
+  width: 130px;
+}
+
+.actor-date-of-birth {
+  display: block;
+  margin-top: 50px;
+  height: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.movie-name{
+  position: absolute;
+  margin-right:100px;
+  margin-left: 50px;
+  width:650px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.movie-description {
+  margin-top:50px;
+  margin-left:90px;
+  position: absolute;
+  width:300px;
+  height:100px;
+  overflow: auto;
+}
+
+.movie-name-pop {
+  visibility: hidden;
+  width: 500px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  left:0px;
+  top:50px;
+  position: absolute;
+  z-index: 1;
+  font-size:20px;
+}
+
+.movie-name:hover .movie-name-pop{
+  visibility: visible;
+}
+
+.my-pagination /deep/ ul.ngx-pagination {
+
+  list-style-type: none !important;
+  padding: 0 !important;
+  text-align: center
+}
+
+.imdb {
+  border-radius: 20px;
+  padding:8px;
+  margin-left: 700px;
+  margin-right: 50px;
+  position: absolute;
+  color: black;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.imdb-img {
+  height:40px;
+  width: 50px;
+}
+
+.moodvies-img {
+  height: 20px;
+  width: 20px;
+  margin-left:40px;
+}

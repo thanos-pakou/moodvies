@@ -147,7 +147,7 @@ STATICFILES_DIRS = (
     os.path.join(str(Path(BASE_DIR).parents[0]), os.path.join('client', 'dist')),
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '../moodvies', 'dist/moodvies/assets/image-uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads', '')
 MEDIA_URL = '/media/'
 
 try:

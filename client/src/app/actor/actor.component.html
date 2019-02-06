@@ -31,16 +31,22 @@
             <br>
             Duration <strong>{{ movie.duration }} mins </strong>
             <br>
-            Director: <strong *ngFor="let dir of movie.director_details; let b=index">{{dir.name + ' ' + dir.l_name}}<span *ngIf="movie.director_details.length - 1 != b">, </span></strong>
+            Director: <strong routerLink="/directors/{{ dir.idDirector }}" *ngFor="let dir of movie.director_details; let b=index" class="strong-director">
+            {{dir.name + ' ' + dir.l_name}}<span *ngIf="movie.director_details.length - 1 != b">, </span>
+          </strong>
             <br>
             Genre: <strong *ngFor="let genre of movie.genre_details; let b=index">{{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span></strong>
             <br>
-            Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+            Mood: <strong class="strong-mood" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
+            <br>
+            IMDB <strong>{{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span></strong>
+            <br>
+            Moodvies <strong>{{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span></strong>
             <br>
             Description: <br>
-            <span class="movie_description">
+            <div class="movie-description">
               <strong>{{ movie.description }}</strong>
-          </span>
+            </div>
           </div>
           <br *ngIf="i === 2"><br *ngIf="i === 2">
         </span>
