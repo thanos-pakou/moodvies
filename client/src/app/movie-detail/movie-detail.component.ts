@@ -81,7 +81,7 @@ export class MovieDetailComponent implements OnInit {
                   this.ip.getIpId().subscribe(
                     res => this.ip.idIpAddress = res[0]['id'],
                     () => {},
-                    () => {this.actorVisit();}
+                    () => {this.movieVisit();}
                   );
                 },
               );
@@ -102,6 +102,20 @@ export class MovieDetailComponent implements OnInit {
       this.movieService.createReview = false;
       this.messageService.clear();
     }
+    this.ip.getIpAddress().subscribe(
+      res => {
+        this.ip.ipAddress = res.ip;
+        this.ip.postIpAddress().subscribe(
+          () => {
+            this.ip.getIpId().subscribe(
+              res => this.ip.idIpAddress = res[0]['id'],
+              () => {},
+              () => {this.movieVisit();}
+            );
+          },
+        );
+      },
+    );
   }
 
   getMovie(): void {
@@ -245,7 +259,7 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
-  actorVisit() {
+  movieVisit() {
     this.movie['visit'].push(this.ip.idIpAddress);
     this.ip.movieVisit(this.movie, this.movieId).subscribe();
   }
