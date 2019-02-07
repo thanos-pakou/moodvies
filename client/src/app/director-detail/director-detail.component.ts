@@ -26,6 +26,20 @@ export class DirectorDetailComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    this.ip.getIpAddress().subscribe(
+      res => {
+        this.ip.ipAddress = res.ip;
+        this.ip.postIpAddress().subscribe(
+          () => {
+            this.ip.getIpId().subscribe(
+              res => this.ip.idIpAddress = res[0]['id'],
+              () => {},
+              () => {this.directorVisit();}
+            );
+          },
+        );
+      },
+    );
     this.getDirector();
   }
 
@@ -36,7 +50,6 @@ export class DirectorDetailComponent implements OnInit {
       actor => this.director = actor,
       () => {},
       () => {
-        this.directorVisit();
         this.titleService.setTitle('Director: ' + this.director.name + ' ' + this.director.l_name);
       }
     );

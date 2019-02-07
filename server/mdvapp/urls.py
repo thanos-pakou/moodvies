@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^genre/?$', views.GenreList.as_view()),
     url(r'^actor/?$', views.ActorList.as_view()),
     url(r'^actor/(?P<pk>[0-9]+)/?$', views.ActorDetail.as_view()),
+    url(r'^actor-update/(?P<pk>[0-9]+)/?$', views.ActorListUpdate.as_view()),
     url(r'^director/?$', views.DirectorList.as_view()),
     url(r'^director/(?P<pk>[0-9]+)/?$', views.DirectorDetail.as_view()),
     url(r'^mood/?$', views.MoodList.as_view()),

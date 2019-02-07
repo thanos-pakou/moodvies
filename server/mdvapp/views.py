@@ -6,7 +6,7 @@ from .models import Movie, Actor, Mood, Genre, Director, Review, UserMovieList a
 from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, GenreMoviesSerializer, GenreSerializer, \
     ActorMoviesSerializer, DirectorSerializer, DirectorMoviesSerializer, MoodMoviesSerializer, MoviesReviewsSerializer, \
     ReviewSerializer, UserMovieListSerializer, UserSerializer, RatingMovieSerializer, UserSearchSerializer, \
-    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer
+    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer, IpActorSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
@@ -81,6 +81,11 @@ class ActorList(generics.ListCreateAPIView):
 class ActorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Actor.objects.all()
     serializer_class = ActorMoviesSerializer
+
+
+class ActorListUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Actor.objects.all()
+    serializer_class = IpActorSerializer
 
 
 class DirectorList(generics.ListCreateAPIView):

@@ -45,6 +45,7 @@ import {IpService} from "./ip.service";
 import { ActorSearchComponent } from './actor-search/actor-search.component';
 import { Page404Component } from './page404/page404.component';
 import { DirectorSearchComponent } from './director-search/director-search.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { DirectorSearchComponent } from './director-search/director-search.compo
     MessageService,
     UserMovieListService,
     IpService,
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

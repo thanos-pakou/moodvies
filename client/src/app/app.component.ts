@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthService} from "./auth.service";
 import { Router } from "@angular/router";
-import {ErrorHandlingService} from "./errorhandling.service";
+import { CookieService } from 'ngx-cookie-service';
 import {HttpClient} from "@angular/common/http";
 import * as jwt_decode from "jwt-decode";
 import {IpService} from "./ip.service";
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit{
     private auth: AuthService,
     private router: Router,
     private ip: IpService,
+    private cookieService: CookieService,
   ) {
 
   }
@@ -47,22 +48,9 @@ export class AppComponent implements OnInit{
       this.auth.logout(false);
     }
     this.getIpAddress();
-    setTimeout( () => {
-      this.postIpAddress();
-    }, 5000 );
-    setTimeout( () => {
-      this.getIpAddressId();
-    }, 8000 );
   }
 
   changeOfRoutes() {
-    this.getIpAddress();
-    setTimeout( () => {
-      this.postIpAddress();
-    }, 5000 );
-    setTimeout( () => {
-      this.getIpAddressId();
-    }, 8000 );
     this.token = localStorage.getItem('moodvies-jwt-token');
     if (this.token) {
       this.auth.tokenRefresh(this.token).subscribe(results => {
@@ -85,14 +73,6 @@ export class AppComponent implements OnInit{
 
   getIpAddress(): void {
     this.ip.getIpAddress();
-  }
-
-  postIpAddress(): void {
-    this.ip.postIpAddress().subscribe();
-  }
-
-  getIpAddressId(): void {
-    this.ip.getIpId();
   }
 }
 

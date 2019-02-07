@@ -81,16 +81,22 @@ class SimpleMovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class IpActorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Actor
+        fields = ('idActor', 'name', 'last_name', 'description', 'visit',)
+
+
 class ActorSerializer(serializers.ModelSerializer):
     date_of_birth = serializers.DateField(format="%d-%m-%Y")
-    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Actor
         ordering = 'visits_count'
-        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'visit', 'visit_details',
+        fields = ('idActor', 'name', 'last_name', 'description', 'date_of_birth', 'visit',
                   'visits_count', 'image', 'movies')
 
     def get_movies(self, obj):
@@ -225,6 +231,7 @@ class DirectorMoviesSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    created = serializers.DateTimeField(format="%d-%m-%YT%H:%M:%S")
     title = serializers.CharField(
         required=True,
         min_length=8,

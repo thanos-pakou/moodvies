@@ -26,6 +26,20 @@ export class ActorDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.ip.getIpAddress().subscribe(
+      res => {
+        this.ip.ipAddress = res.ip;
+        this.ip.postIpAddress().subscribe(
+          () => {
+            this.ip.getIpId().subscribe(
+              res => this.ip.idIpAddress = res[0]['id'],
+              () => {},
+              () => {this.actorVisit();}
+            );
+            },
+        );
+      },
+    );
     this.getActor();
 
   }
@@ -37,7 +51,6 @@ export class ActorDetailComponent implements OnInit {
       actor => this.actor = actor,
       () => {},
       () => {
-        this.actorVisit();
         this.titleService.setTitle('Actor: ' + this.actor.name + ' ' + this.actor.last_name);
       }
     );

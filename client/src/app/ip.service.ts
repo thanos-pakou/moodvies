@@ -29,13 +29,11 @@ export class IpService {
               private eh: ErrorHandlingService
   ) { }
 
-  getIpAddress(): void {
+  getIpAddress(): Observable<any> {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = "https://api.ipify.org?format=json"; // site that doesn’t send Access-Control-*
-    fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-      .then(response => response.text())
-      .then(contents => { if (contents) {this.ipAddress = JSON.parse(contents).ip} })
-      .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+    return this.http.get(proxyurl + url);
+
   }
 
   postIpAddress(): Observable<boolean> {
@@ -52,13 +50,13 @@ export class IpService {
     )
   }
 
-  getIpId(): void {
+  getIpId(): Observable<string> {
     const url = `api/ip-address?spec_ip=${this.ipAddress}`;
-    this.http.get<string>(url).subscribe(res => this.idIpAddress = res[0]['id']);
+    return this.http.get<string>(url);
   }
 
   actorVisit(actor: Actor, actorId: number): Observable<boolean> {
-    const url = `api/actor/${actorId}`;
+    const url = `api/actor-update/${actorId}`;
     return this.http.put(url, actor, httpOptions).pipe(
       catchError(this.eh.handleError<boolean>('post ip address', false)),
       map(res => {
