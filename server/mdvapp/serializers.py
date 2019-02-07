@@ -81,6 +81,12 @@ class SimpleMovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SimpleDirectorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Director
+        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field')
+
+
 class IpActorSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -111,23 +117,16 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = ('idGenre', 'genre', 'description',)
 
 
-class MoodSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Mood
-        fields = ('id', 'mood', 'description')
-
-
-class SimpleDirectorSerializer(serializers.ModelSerializer):
+class IpDirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field')
+        fields = ('idDirector', 'name', 'l_name', 'visit')
 
 
 class DirectorSerializer(serializers.ModelSerializer):
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
-
 
     class Meta:
         model = Director
@@ -146,6 +145,12 @@ class MoodSerializer(serializers.ModelSerializer):
         fields = ('id', 'mood', 'description')
 
 
+class IpMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('id', 'title', 'description', 'visit')
+
+
 class MovieSerializer(serializers.ModelSerializer):
     total_rate = serializers.SerializerMethodField()
     ratings_count = serializers.SerializerMethodField()
@@ -153,6 +158,8 @@ class MovieSerializer(serializers.ModelSerializer):
     genre_details = GenreSerializer(many=True, read_only=True, source='genre')
     mood_details = MoodSerializer(read_only=True, many=True, source='mood')
     strDuration = serializers.SerializerMethodField()
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
+    visits_count = serializers.IntegerField(read_only=True)
 
     def get_total_rate(self, obj):
 
@@ -179,7 +186,7 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'title', 'description', 'pub_year', 'strDuration',
                   'country', 'trailer_url', 'logo', 'mood', 'mood_details', 'genre', 'genre_details', 'actor',
                    'director', 'director_details', 'total_rate', 'imdb_score', 'duration',
-                  'search_field', 'ratings_count', 'recommended')
+                  'search_field', 'ratings_count', 'recommended', 'visit', 'visit_details', 'visits_count')
         ordering = ('total_rate',)
 
 
@@ -303,6 +310,8 @@ class MoviesReviewsSerializer(serializers.ModelSerializer):
     actor_details = ActorSerializer(many=True, read_only=True, source='actor')
     user_details = UserSerializer(read_only=True, source='user')
     mood_details = MoodSerializer(read_only=True, many=True, source='mood')
+    visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
+    visits_count = serializers.IntegerField(read_only=True)
 
     def get_reviews(self, obj):
         reviews = Review.objects.filter(movie=obj)
@@ -331,7 +340,8 @@ class MoviesReviewsSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ('id', 'user', 'user_details', 'title', 'description', 'pub_year', 'duration', 'strDuration',
                   'country', 'trailer_url', 'logo', 'mood', 'mood_details', 'genre', 'genre_details', 'actor',
-                  'actor_details', 'director', 'director_details', 'reviews', 'ratings', 'imdb_score', 'recommended')
+                  'actor_details', 'director', 'director_details', 'reviews', 'ratings', 'imdb_score', 'recommended',
+                  'visit', 'visit_details', 'visits_count')
 
 
 class UserMovieListLikeSerializer(serializers.ModelSerializer):

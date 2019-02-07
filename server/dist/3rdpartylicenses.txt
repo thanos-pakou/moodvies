@@ -294,6 +294,9 @@ MIT
 @angular/common
 MIT
 
+ngx-cookie-service
+MIT
+
 @angular/platform-browser
 MIT
 

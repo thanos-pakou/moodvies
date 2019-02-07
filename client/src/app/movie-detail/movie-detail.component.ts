@@ -14,6 +14,7 @@ import * as jwt_decode from "jwt-decode";
 import { Router } from "@angular/router";
 import {UserMovieList} from "../user-movie-list";
 import {Review} from "../review";
+import {IpService} from "../ip.service";
 
 
 @Component({
@@ -45,12 +46,14 @@ export class MovieDetailComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private router: Router,
               private titleService: Title,
+              private ip: IpService,
   ) {
     this.sanitizer = sanitizer;
   }
 
   createReview = false;
   userRatee = false;
+  movieId: number;
 
   ngOnInit() {
     this.token = localStorage.getItem('moodvies-jwt-token');
@@ -70,6 +73,20 @@ export class MovieDetailComponent implements OnInit {
       },
         () => {},
         () => {
+          this.ip.getIpAddress().subscribe(
+            res => {
+              this.ip.ipAddress = res.ip;
+              this.ip.postIpAddress().subscribe(
+                () => {
+                  this.ip.getIpId().subscribe(
+                    res => this.ip.idIpAddress = res[0]['id'],
+                    () => {},
+                    () => {this.actorVisit();}
+                  );
+                },
+              );
+            },
+          );
           this.getMovie();
           this.movieService.createReview = false;
           this.messageService.clear();
@@ -89,6 +106,7 @@ export class MovieDetailComponent implements OnInit {
 
   getMovie(): void {
     const id = +this.route.snapshot.paramMap.get('id');
+    this.movieId = id;
     this.movieService.getMovie(id).subscribe(
       movie => {
         this.movie = null;
@@ -225,6 +243,11 @@ export class MovieDetailComponent implements OnInit {
         this.reviewLikeForCheck.push(res[0].review);
       }
     });
+  }
+
+  actorVisit() {
+    this.movie['visit'].push(this.ip.idIpAddress);
+    this.ip.movieVisit(this.movie, this.movieId).subscribe();
   }
 }
 

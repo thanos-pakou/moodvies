@@ -6,7 +6,8 @@ from .models import Movie, Actor, Mood, Genre, Director, Review, UserMovieList a
 from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, GenreMoviesSerializer, GenreSerializer, \
     ActorMoviesSerializer, DirectorSerializer, DirectorMoviesSerializer, MoodMoviesSerializer, MoviesReviewsSerializer, \
     ReviewSerializer, UserMovieListSerializer, UserSerializer, RatingMovieSerializer, UserSearchSerializer, \
-    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer, IpActorSerializer
+    ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer, IpActorSerializer, \
+    IpDirectorSerializer, IpMovieSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
@@ -29,20 +30,25 @@ class MovieList(generics.ListCreateAPIView):
     serializer_class = MovieSerializer
 
     def get_queryset(self):
-        queryset = Movie.objects.all()
+        queryset = Movie.objects.all().annotate(visits_count=Count('visit')).order_by('-visits_count')
         search = self.request.query_params.get('search', None)
         top20_imdb = self.request.query_params.get('top20_imdb', None)
         top20 = self.request.query_params.get('top20', None)
-        reccomended = self.request.query_params.get('rec', None)
+        recommended = self.request.query_params.get('rec', None)
         if top20_imdb is not None:
-            queryset = queryset.order_by('-imdb_score')[:20]
+            queryset = Movie.objects.all().order_by('-imdb_score')[:20]
         if top20 is not None:
-            queryset = queryset.annotate(rating=Avg('ratingmovie__rating')).order_by('-rating')[:20]
+            queryset = Movie.objects.all().annotate(rating=Avg('ratingmovie__rating')).order_by('-rating')[:20]
         if search is not None:
             queryset = queryset.filter(search_field__icontains=search)
-        if reccomended is not None:
+        if recommended is not None:
             queryset = queryset.filter(recommended=True)
         return queryset
+
+
+class MovieListUpdate(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = IpMovieSerializer
+    queryset = Movie.objects.all()
 
 
 class GenreDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -99,10 +105,14 @@ class DirectorList(generics.ListCreateAPIView):
         return queryset
 
 
-
 class DirectorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
+
+
+class DirectorListUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Director.objects.all()
+    serializer_class = IpDirectorSerializer
 
 
 class MoodList(generics.ListCreateAPIView):
