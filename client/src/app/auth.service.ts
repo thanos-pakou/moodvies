@@ -50,7 +50,7 @@ export class AuthService {
 
   login(username, password): Observable<boolean> {
     const authUrl = `/api-token-auth/`;
-    const credentials = new Credentials(username, password)
+    const credentials = new Credentials(username, password);
     return this.http
       .post(authUrl, credentials, httpOptions ).pipe(
         map(results => {
@@ -126,5 +126,24 @@ export class AuthService {
   getUser(): Observable<User[]> {
     const getUserUrl = `/api/user`;
     return this.http.get<User[]>(getUserUrl);
+  }
+
+  updateUserProfile(user: User): Observable<any> {
+    const url = `api/user/${user.id}`;
+    return this.http.put(url, user, httpOptions);
+  }
+
+  updateUserProfileNoPw(user: User): Observable<any> {
+    const url = `api/user-nopw/${user.id}`;
+    return this.http.put(url, user, httpOptions).pipe(
+      map(results => {
+        if (results['token']) {
+          localStorage.setItem('moodvies-jwt-token', results['token']);
+          const decoded = jwt_decode(results['token']);
+          this.username = decoded['username'];
+          this.isLoggedIn = true;
+        }
+      })
+    );
   }
 }

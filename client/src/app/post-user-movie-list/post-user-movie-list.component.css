@@ -1,0 +1,171 @@
+.create-list-container {
+  overflow: scroll;
+  position: fixed;
+  top:0;
+  bottom:0;
+  background-image: url("../../assets/background/user-movie-list/black-close-up-dark-396547.jpg ");
+  background-size: cover;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+  padding:50px;
+  width: 80%;
+  z-index: 10;
+}
+
+.create-list-container-2 {
+  background-color: rgba(34, 33, 31, 0.4);
+  padding:1%;
+
+}
+
+.movie-info {
+  margin-left:70px;
+  color: white;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.addMovie {
+  margin-left:70px;
+  position: absolute;
+}
+
+.remove-movie {
+  margin-right: 25px;
+  float:right;
+  height:20px;
+  padding-top:0 !important;
+  opacity: 0.7;
+}
+
+.error-messages {
+  position: absolute;
+  padding:40px;
+  width:30%;
+  text-align: center;
+  margin-top:50px;
+  left:70%;
+  background-color: rgba(255,255,255, 0.9);
+}
+
+.error-messages>h4 {
+  color:#484545;
+}
+
+.btn-close-list-window {
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  float:right;
+  opacity:0.7;
+}
+
+.movie-list-input {
+  width: 40%;
+  margin:auto;
+  text-align: center;
+}
+
+.user-list-header {
+  color:white;
+  margin-left: 53%;
+  font-size:18px;
+  text-align: center;
+}
+
+.user-list-movie {
+  padding-top:30px;
+  height:80px;
+  width:100%;
+  background-color: rgba(77, 156, 159, 0.21);
+
+}
+
+.user-list-movie-info {
+  margin-left:25px;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-size:25px;
+}
+
+.userList{
+  padding-top:30px;
+  padding-bottom:30px;
+  margin-top: 60px;
+  text-align: center;
+  float: right;
+  width:48%;
+  background-color: #0f0f0f;
+  border: solid white 1px;
+}
+
+.remove-movie {
+  margin-right: 25px;
+  float:right;
+  height:20px;
+  padding-top:0 !important;
+  opacity: 0.7;
+}
+
+.create-list-but{
+  background-image: url("../../assets/user-movie-list/buttons/coUQtBy1.jpg");
+  background-size: cover;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-weight: bold;
+  color:black;
+  margin-top:30px;
+}
+
+.create-list-but:hover {
+  background-image: url("../../assets/user-movie-list/buttons/coUQtBy.jpg");
+}
+
+.search-result {
+  background-color: rgba(10, 10, 10,0.6);
+  width:48%;
+  float:left;
+  border: solid gray 0.5px;
+
+}
+
+.search-result-movie {
+  position: relative;
+  padding-bottom:40px;
+}
+
+.search-result-movie:hover {
+  background-color: rgba(0, 88, 89,0.1);
+}
+
+.search_movie_image {
+  width:65px;
+  height:100px;
+  position: absolute;
+}
+
+.movie-info {
+  margin-left:70px;
+  color: white;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.imdb {
+  margin-left: 450px;
+  margin-right: 50px;
+  position: absolute;
+  color:white;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.imdb-img {
+  height:40px;
+  width: 50px;
+}
+
+.moodvies-img {
+  height: 20px;
+  width: 20px;
+  margin-left:40px;
+}
+
+.addMovie {
+  margin-left:70px;
+  position: absolute;
+}

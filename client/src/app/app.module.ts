@@ -46,6 +46,7 @@ import { ActorSearchComponent } from './actor-search/actor-search.component';
 import { Page404Component } from './page404/page404.component';
 import { DirectorSearchComponent } from './director-search/director-search.component';
 import { CookieService } from 'ngx-cookie-service';
+import { PostUserMovieListComponent } from './post-user-movie-list/post-user-movie-list.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { CookieService } from 'ngx-cookie-service';
     FooterComponent,
     ActorSearchComponent,
     Page404Component,
-    DirectorSearchComponent
+    DirectorSearchComponent,
+    PostUserMovieListComponent
   ],
   imports: [
     BrowserModule,

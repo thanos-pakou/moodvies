@@ -94,28 +94,27 @@ export class MovieDetailComponent implements OnInit {
             this.auth.getUser().subscribe(user => this.user = user);
           }
         }
-
         );
     } else {
       this.auth.logout(false);
+      this.ip.getIpAddress().subscribe(
+        res => {
+          this.ip.ipAddress = res.ip;
+          this.ip.postIpAddress().subscribe(
+            () => {
+              this.ip.getIpId().subscribe(
+                res => this.ip.idIpAddress = res[0]['id'],
+                () => {},
+                () => {this.movieVisit();}
+              );
+            },
+          );
+        },
+      );
       this.getMovie();
       this.movieService.createReview = false;
       this.messageService.clear();
     }
-    this.ip.getIpAddress().subscribe(
-      res => {
-        this.ip.ipAddress = res.ip;
-        this.ip.postIpAddress().subscribe(
-          () => {
-            this.ip.getIpId().subscribe(
-              res => this.ip.idIpAddress = res[0]['id'],
-              () => {},
-              () => {this.movieVisit();}
-            );
-          },
-        );
-      },
-    );
   }
 
   getMovie(): void {

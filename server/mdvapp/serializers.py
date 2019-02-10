@@ -15,16 +15,20 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     username = serializers.CharField(
-        min_length=6,
+        min_length=4,
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
-    password = serializers.CharField(min_length=8)
+    password = serializers.CharField(
+        min_length=8,
+        write_only=True,
+        required=False
+    )
     first_name = serializers.CharField(
-        required=True,
+        required=False,
         min_length=2
     )
     last_name = serializers.CharField(
-        required=True,
+        required=False,
         min_length=2
     )
 
@@ -49,7 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         username = validated_data['username']
-        email = validated_data['email']
+        email = validated_data['email'].lower()
         password = validated_data['password']
         first_name = validated_data['first_name']
         last_name = validated_data['last_name']
@@ -58,9 +62,71 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return validated_data
 
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        if validated_data.get('password') is not None:
+            instance.password = validated_data.get('password', instance.password)
+            instance.set_password(instance.password)
+        instance.save()
+        return instance
+
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password', 'first_name', 'last_name')
+
+
+class UserNoPwSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    username = serializers.CharField(
+        min_length=4,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    first_name = serializers.CharField(
+        required=False,
+        min_length=2
+    )
+    last_name = serializers.CharField(
+        required=False,
+        min_length=2
+    )
+
+    def validate_username(self, value):
+        data = self.get_initial()
+        if not (re.match("^[a-zA-Z0-9_]*$", value)):
+            raise ValidationError("Ensure this field doesn't contain any special characters")
+        return value
+
+
+    def validate_first_name(self, value):
+        data = self.get_initial()
+        if not (re.match("^[a-zA-Z0-9_]*$", value)):
+            raise ValidationError("Ensure this field doesn't contain any special characters")
+        return value
+
+    def validate_last_name(self, value):
+        data = self.get_initial()
+        if not (re.match("^[a-zA-Z0-9_]*$", value)):
+            raise ValidationError("Ensure this field doesn't contain any special characters")
+        return value
+
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+        return instance
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')
 
 
 class UserSearchSerializer(serializers.ModelSerializer):
@@ -95,7 +161,7 @@ class IpActorSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.ModelSerializer):
-    date_of_birth = serializers.DateField(format="%d-%m-%Y")
+    date_of_birth = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
 
@@ -238,7 +304,7 @@ class DirectorMoviesSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    created = serializers.DateTimeField(format="%d-%m-%YT%H:%M:%S")
+    created = serializers.DateTimeField(format="%d-%m-%YT%H:%M:%S", read_only=True)
     title = serializers.CharField(
         required=True,
         min_length=8,
@@ -371,6 +437,7 @@ class UserMovieListSerializer(serializers.ModelSerializer):
     movies_details = MovieSerializer(read_only=True, many=True, source='movies')
     likes = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
+    created = serializers.DateTimeField(format="%d-%m-%YT%H:%M:%S", read_only=True)
 
     def validate_title(self, value):
         return value
@@ -391,8 +458,8 @@ class UserMovieListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserMovieList
-        fields = ('idUserMovieList', 'user', 'user_details', 'title', 'description', 'movies', 'movies_details',
-                  'likes', 'comments', 'created')
+        fields = ('idUserMovieList', 'user', 'user_details', 'title', 'description', 'created', 'movies', 'movies_details',
+                  'likes', 'comments')
 
 
 class MoodMoviesSerializer(serializers.ModelSerializer):

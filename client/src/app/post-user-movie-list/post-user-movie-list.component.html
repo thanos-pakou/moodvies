@@ -1,0 +1,62 @@
+
+
+<h1 style="color:white;">Create a Movie List</h1>
+<br><br><br>
+<div class="create-list-container-2">
+  <div class="movie-list-input">
+    <h4>Give your movie list a title</h4>
+    <input #titleList class="form-control" placeholder="Title..">
+    <h4>Don't forget to add a description</h4>
+    <textarea #titleDesc type="text" class="form-control" placeholder="Description of your movie list.." rows="5"></textarea>
+  </div>
+</div>
+<hr>
+<h4>Select the movies you want for your movie list below..</h4>
+<form class="navbar-form navbar-left">
+  <div class="form-group">
+    <input #searchBox id="search-box" [value]="searchValue" (keyup)="search(searchBox.value)" class="form-control" placeholder="Search for movies..">
+  </div>
+  <span class="glyphicon glyphicon-search search_icon"></span>
+</form>
+<div class="user-list-header">Your List</div>
+<div class="userList">
+  <span *ngIf="!userMovieList[0]">No movies have been added to your list yet..</span>
+  <div *ngFor="let movie of userMovieList; let i = index" class="user-list-movie">
+
+        <span class="user-list-movie-info" style="color:white; font-family: 'Berlin Sans FB'; font-size: 16px; float: left">
+          <strong>{{ i+1 }})</strong> {{movie['title']}} ({{movie['pub_year']}})
+        </span>
+    <button type="button" class="btn btn-danger remove-movie" (click)="deleteMovie(i)">Remove Movie</button>
+  </div>
+  <span *ngIf="userMovieList[0]">
+      <button class="btn btn-warning create-list-but" (click)="postList(user[0].id, titleList.value, titleDesc.value)" >Create Movie List</button>
+    </span>
+</div>
+<br><br><br>
+
+<ng-container *ngIf="movies$ | async; let movies;">
+  <div  *ngIf="movies.length>0" class="search-result">
+    <h4 style="text-align: center; color:white">Results ({{ movies.length }}) </h4>
+    <br>
+    <div class="search-result-movie" *ngFor="let movie of movies">ng
+      <div routerLink="/movies/{{movie.id}}">
+        <img class='search_movie_image' [attr.src]="movie.logo">
+        <div class="movie-info">{{movie.title}} ({{ movie.pub_year }})</div>
+        <div class="movie-info">
+          <span *ngFor="let dir of movie.director_details; let d = index"> {{dir.name}} {{ dir.l_name }}<span *ngIf="movie.director_details.length - 1 != d">, </span>  </span>
+        </div>
+        <div class="movie-info">
+          <span *ngFor="let genre of movie.genre_details; let b = index"> {{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span>  </span>
+        </div>
+        <span class="imdb">
+                <img class="imdb-img" src="../../assets/imdb/imdb.png">
+          {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
+                <img class="moodvies-img" src="../../favicon.ico">
+          {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
+              </span>
+      </div>
+      <button type="button" class="btn btn-success addMovie movie-info" *ngIf="!containedMovie.includes(movie.id)" (click)="addMovie(movie.id, movie.title, movie.pub_year)">Add Movie +</button>
+      <button type="button" class="btn btn-success addMovie movie-info" *ngIf="containedMovie.includes(movie.id)" disabled>Movie Added</button>
+    </div>
+  </div>
+</ng-container>

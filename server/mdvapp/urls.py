@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^movie-list/?$', views.UserMovieList.as_view()),
     url(r'^movie-list/?(?P<pk>[0-9]+)/?$', views.UserMovieListDetail.as_view()),
     url(r'^user/?$', views.User.as_view()),
+    url(r'^user/?(?P<pk>[0-9]+)/?$', views.UserModify.as_view()),
+    url(r'^user-nopw/?(?P<pk>[0-9]+)/?$', views.UserModifyNoPw.as_view()),
     url(r'^rating/?$', views.Rating.as_view()),
     url(r'^ip-address/?$', views.IpAddressList.as_view()),
     url(r'^feedback/?$', views.FeedbackList.as_view()),

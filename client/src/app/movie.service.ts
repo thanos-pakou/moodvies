@@ -7,6 +7,7 @@ import {catchError, map} from 'rxjs/operators';
 import {ErrorHandlingService} from './errorhandling.service';
 import {Review} from './review';
 import {ReviewLike} from './review-like';
+import {UserMovieList} from "./user-movie-list";
 
 class Rating {
   constructor(public user: number, public movie: number, public rating: number) {}
@@ -132,7 +133,7 @@ export class MovieService {
   }
 
 
-  postMovieList(userId: number, title: string, description: string, movieList: number[]): Observable<boolean> {
+  postMovieList(userId: number, title: string, description: string, movieList: number[]): Observable<UserMovieList> {
     const url = 'api/movie-list';
     const sth = {
       'user': userId,
@@ -140,12 +141,14 @@ export class MovieService {
       'description': description,
       'movies': movieList
     };
-    return this.http.post(url, sth, httpOptions).pipe(
-      catchError(this.eh.handleError<boolean>('addUser', false)),
+    return this.http.post<UserMovieList>(url, sth, httpOptions).pipe(
       map(res => {
-        if (res) {
-          return true;
+        if(res) {
+          return res;
+        } else {
+          return null;
         }
+
       })
     );
   }

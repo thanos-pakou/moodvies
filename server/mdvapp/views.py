@@ -1,13 +1,16 @@
+import jwt
 from django.db.models import Q, Count, Avg
-from django.http import request
+from django.http import request, JsonResponse
+from rest_framework_jwt.serializers import jwt_payload_handler
 
+from moodvies_project import site_config
 from .models import Movie, Actor, Mood, Genre, Director, Review, UserMovieList as UserMovieListModel, UserMovieListLike, \
     UserMovieListComment, RatingMovie, CustomUser, ReviewLike as ReviewLikeModel, IPAddress, Feedback
 from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, GenreMoviesSerializer, GenreSerializer, \
     ActorMoviesSerializer, DirectorSerializer, DirectorMoviesSerializer, MoodMoviesSerializer, MoviesReviewsSerializer, \
     ReviewSerializer, UserMovieListSerializer, UserSerializer, RatingMovieSerializer, UserSearchSerializer, \
     ReviewLikeSerializer, ReviewListLikeSerializer, IpAddressSerializer, FeedbackSerializer, IpActorSerializer, \
-    IpDirectorSerializer, IpMovieSerializer
+    IpDirectorSerializer, IpMovieSerializer, UserNoPwSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
@@ -174,9 +177,12 @@ class UserMovieList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = UserMovieListModel.objects.all()
+        title = self.request.query_params.get('title', None)
         user_id = self.request.query_params.get('user', None)
         if user_id is not None:
             queryset = queryset.filter(user=user_id)
+        if title is not None:
+            queryset = queryset.filter(title=title)
         return queryset
 
 
@@ -187,6 +193,31 @@ class User(generics.ListCreateAPIView):
         if self.request.user.is_superuser:
             return CustomUser.objects.all()
         return CustomUser.objects.filter(username=self.request.user)
+
+
+class UserModify(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserModifyNoPw(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserNoPwSerializer
+    def put(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.get_object(), data=request.data, partial=True)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            # Generate a new token
+            payload = jwt_payload_handler(instance)
+            token = jwt.encode(payload, site_config.SECRET_KEY)
+            response = JsonResponse({'token': token.decode('unicode_escape')})
+            response.status = 200
+            return response
+        else:
+            response = JsonResponse({'errors': serializer.errors})
+            response.status = 500
+            return response
 
 
 class Rating(generics.ListCreateAPIView):

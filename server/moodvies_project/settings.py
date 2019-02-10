@@ -52,11 +52,13 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
+    "DATE_INPUT_FORMATS": ["%d-%m-%Y"],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+
 }
 
 JWT_AUTH = {

@@ -31,7 +31,7 @@
 }
 
 .selected-option-cont {
-  height:400px;
+  height:550px;
   overflow: scroll;
   position: absolute;
   width:60%;
@@ -69,4 +69,18 @@
 
 .my-0 {
   cursor: pointer;
+}
+
+.empty-movie-list {
+  margin-top: 50px;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.update-profile {
+  text-align: center;
+}
+
+#password-li {
+  visibility: hidden;
 }
