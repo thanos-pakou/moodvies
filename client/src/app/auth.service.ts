@@ -69,6 +69,19 @@ export class AuthService {
       );
   }
 
+  verifyPassword(username, password): Observable<boolean> {
+    const authUrl = `/api-token-auth/`;
+    const credentials = new Credentials(username, password);
+    return this.http
+      .post(authUrl, credentials, httpOptions ).pipe(
+        map(results => {
+          return !!results['token'];
+        }),
+        catchError(this.eh.handleError<boolean>(`Server Error`,
+          false))
+      );
+  }
+
 
 
   logout(mess: boolean): void {
@@ -130,7 +143,10 @@ export class AuthService {
 
   updateUserProfile(user: User): Observable<any> {
     const url = `api/user/${user.id}`;
-    return this.http.put(url, user, httpOptions);
+    return this.http.put(url, user, httpOptions).pipe(
+      catchError(this.eh.handleError<boolean>(`Server Error`,
+        false))
+    );
   }
 
   updateUserProfileNoPw(user: User): Observable<any> {
@@ -142,8 +158,13 @@ export class AuthService {
           const decoded = jwt_decode(results['token']);
           this.username = decoded['username'];
           this.isLoggedIn = true;
+          return true;
+        } else {
+          return false;
         }
-      })
+      }),
+      catchError(this.eh.handleError<boolean>(`Server Error`,
+        false))
     );
   }
 }

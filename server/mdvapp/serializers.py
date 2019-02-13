@@ -65,7 +65,7 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
         instance.email = validated_data.get('email', instance.email)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.first_name = validated_data.get('first_name', instance.first_name).lower()
         instance.last_name = validated_data.get('last_name', instance.last_name)
         if validated_data.get('password') is not None:
             instance.password = validated_data.get('password', instance.password)

@@ -1,6 +1,7 @@
 import jwt
 from django.db.models import Q, Count, Avg
 from django.http import request, JsonResponse
+from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
 
 from moodvies_project import site_config
@@ -13,7 +14,7 @@ from .serializers import MovieSerializer, ActorSerializer, MoodSerializer, Genre
     IpDirectorSerializer, IpMovieSerializer, UserNoPwSerializer
 
 from django.contrib.auth.models import User
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, status
 from django.db import connection
 
 from rest_framework import permissions
@@ -203,6 +204,7 @@ class UserModify(generics.RetrieveUpdateDestroyAPIView):
 class UserModifyNoPw(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserNoPwSerializer
+
     def put(self, request, *args, **kwargs):
         serializer = self.serializer_class(self.get_object(), data=request.data, partial=True)
 
@@ -215,8 +217,7 @@ class UserModifyNoPw(generics.RetrieveUpdateDestroyAPIView):
             response.status = 200
             return response
         else:
-            response = JsonResponse({'errors': serializer.errors})
-            response.status = 500
+            response = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return response
 
 

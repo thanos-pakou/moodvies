@@ -3,7 +3,7 @@
   <div class="profile-option" [class.selected-option]="'prof' === selectedOption" (click)="onSelect('prof')">
     <h3>Profile</h3>
   </div>
-  <div class="movie-list-option" [class.selected-option]="'m-list' === selectedOption" (click)="onSelect('m-list'); getUserMovieLists(user[0].id)">
+  <div class="movie-list-option" [class.selected-option]="'m-list' === selectedOption" (click)="onSelect('m-list'); getUserMovieLists(user[0].id); toggleUpdateProfile(false)">
     <h3>Movie Lists</h3>
   </div>
 
@@ -18,7 +18,7 @@
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <h5 class="my-0">E-mail </h5>
+          <h5 class="my-0">E-mail </h5><span *ngIf="profileFieldsToUpdate1.email">{{profileFieldsToUpdate1.email}}</span>
           <small class="text-muted">{{ user[0].email }}</small>
         </div>
       </li>
@@ -41,52 +41,125 @@
   </div>
   <div class="selected-option-cont" *ngIf="selectedOption === 'prof' && togUpProfile">
     <h4>Profile</h4>
+    <div class="error-messages" *ngIf="messageService.messages.length > 0">
+      <h4>Something went wrong..</h4>
+      <h5>please check the fields that have a trouble below..</h5>
+      <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+      <br>
+      <button (click)="messageService.clear()">OK</button>
+    </div>
     <form>
     <ul class="list-group mb-4">
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
+          <div class="field-change" *ngIf="profileFieldsToUpdate1.username">
+            You changed your username from
+            <span class="old-new-field-value">
+              {{user[0].username}}
+            </span>
+            to
+            <span class="old-new-field-value">
+              {{profileFieldsToUpdate1.username}}
+            </span>
+          </div>
           <h5 class="my-0">Username </h5>
           <label>
-            <input #username value="{{ user[0].username }}" class="text-muted">
+            <input #username value="{{ user[0].username }}" (keyup)="keyUpFieldsToUpdate(user[0].username, username.value, 'username')"
+                   (focusout)="focusOutFieldsToUpdate(user[0].username, username.value, 'username')" class="text-muted">
           </label>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
+          <div class="field-change" *ngIf="profileFieldsToUpdate1.email">
+            You changed your email from
+            <span class="old-new-field-value">
+              {{user[0].email}}
+            </span>
+            to
+            <span class="old-new-field-value">
+              {{profileFieldsToUpdate1.email}}
+            </span>
+          </div>
           <h5 class="my-0">E-mail </h5>
           <label>
-            <input type="email" #email value="{{ user[0].email }}" class="text-muted">
+            <input type="email" #email value="{{ user[0].email }}" (focusout)="focusOutFieldsToUpdate(user[0].email, email.value, 'email')"
+                   (keyup)="keyUpFieldsToUpdate(user[0].email, email.value, 'email')" class="text-muted">
           </label>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <h5 class="my-0">First Name </h5>
+          <div class="field-change" *ngIf="profileFieldsToUpdate1.firstName">
+            You changed your first name from
+            <span class="old-new-field-value">
+              {{user[0].first_name}}
+            </span>
+            to
+            <span class="old-new-field-value">
+              {{profileFieldsToUpdate1.firstName}}
+            </span>
+          </div>
+          <h5 class="my-0">First Name</h5>
           <label>
-            <input #firstName value="{{ user[0].first_name }}" class="text-muted">
+            <input #firstName value="{{ user[0].first_name }}" (focusout)="focusOutFieldsToUpdate(user[0].first_name, firstName.value, 'firstName')"
+                   (keyup)="keyUpFieldsToUpdate(user[0].first_name, firstName.value, 'firstName')" class="text-muted">
           </label>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <h5 class="my-0">Last Name </h5>
+          <div class="field-change" *ngIf="profileFieldsToUpdate1.lastName">
+            You changed your last name from
+            <span class="old-new-field-value">
+              {{user[0].last_name}}
+            </span>
+            to
+            <span class="old-new-field-value">
+              {{profileFieldsToUpdate1.lastName}}
+            </span>
+          </div>
+          <h5 class="my-0">Last Name</h5>
           <label>
-            <input #lastName value="{{ user[0].last_name }}"  class="text-muted">
+            <input #lastName value="{{ user[0].last_name }}" (focusout)="focusOutFieldsToUpdate(user[0].last_name, lastName.value, 'lastName')"
+                   (keyup)="keyUpFieldsToUpdate(user[0].last_name, lastName.value, 'lastName')" class="text-muted" >
           </label>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between">
         <div>
-          <h5 class="my-0">Password</h5>
+          <h5 class="my-0">Password</h5>{{messageService.messagesProfile}}
           <button *ngIf="!changePass" class="button" (click)="toggleChangePassword(true)">Change Password</button>
           <div id="password-li">
             <label>
-              <input type="password" #newPassword id="newPassword" placeholder="New Password"  class="text-muted" />
+              <input type="password" #newPassword id="newPassword" placeholder="New Password"  class="text-muted" (keyup)="verifyNewPassword(newPassword.value, repeatPassword.value)"/>
               <br>
             </label>
             <br>
             <label>
-              <input type="password" #repeatPassword placeholder="Repeat Password" class="text-muted">
+              <input type="password" #repeatPassword placeholder="Repeat Password" class="text-muted" (keyup)="verifyNewPassword(newPassword.value, repeatPassword.value)">
+              <span class="password-verify" *ngIf="passwordVerify === null else: pwVerify">
+                Password should be at least 8 character long.
+              </span>
+              <ng-template #pwVerify>
+                <ng-container *ngIf="passwordVerify else: pwVerifyFalse">
+                  <span class="password-verify">
+                    <span class="password-verify-true">
+                      Passwords match <img class="check-image" src="../../assets/profile/Check_icon.png">
+                    </span>
+                  </span>
+                </ng-container>
+              </ng-template>
+              <ng-template #pwVerifyFalse>
+                <ng-container>
+                  <span class="password-verify">
+                    <span class="password-verify-false">
+                      Passwords doesnt match <img class="check-image" src="../../assets/profile/X_icon.png">
+                    </span>
+                  </span>
+                </ng-container>
+              </ng-template>
+
             </label>
           </div>
           <button *ngIf="changePass" class="button" (click)="toggleChangePassword(false)">Cancel</button>
@@ -96,8 +169,18 @@
 
     </form>
     <div class="update-profile">
+      <button class="button" *ngIf="(profileFieldsToUpdate1 | json) != '{}'" (click)="UpdateProfileConfirm(true, username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
+      <button class="button" (click)="toggleUpdateProfile(false); toggleChangePassword(false)">Cancel Update</button>
+    </div>
+    <div class="update-profile-confirm" *ngIf="profileUpdateConfirmToggle">
+      Are you sure you want to update the fields below?
+      <br>
+      <span>Type your password to confirm</span>
+      <input #passwordConfirm type="password" placeholder="Password">
+      <br>
+      <button class="button" (click)="passwordVerification(passwordConfirm.value)">Save Changes</button>
       <button class="button" (click)="updateProfile(username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
-      <button class="button" (click)="toggleUpdateProfile(false)">Cancel Update</button>
+      <button class="button" (click)="UpdateProfileConfirmToggle(false)">Cancel</button>
     </div>
   </div>
   <div class="selected-option-cont" *ngIf="selectedOption === 'm-list'">
