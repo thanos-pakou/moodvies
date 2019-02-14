@@ -18,9 +18,31 @@ export class ErrorHandlingService {
    */
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+
+      if(operation === 'updateUserProfile' || (operation === 'updateUserProfileNoPw')) {
+        if (error.error.username) {
+          this.messageService.addMessagesProfile('Username' + error.error.username);
+        }
+        if (error.error.password) {
+          this.messageService.addMessagesProfile('Password: ' + error.error.password);
+        }
+
+        if (error.error.email) {
+          this.messageService.addMessagesProfile('Email: ' + error.error.email);
+        }
+
+        if (error.error.first_name) {
+          this.messageService.addMessagesProfile('First Name: ' + error.error.first_name);
+        }
+
+        if (error.error.last_name) {
+          this.messageService.addMessagesProfile('Last Name: ' + error.error.last_name);
+        }
+      }
       if (error.error.username) {
         if (String(error.error.username) === 'This field must be unique.') {
           this.messageService.add('Username: This username is already taken');
+          console.log(operation);
         } else {
           this.messageService.add('Username: ' + error.error.username);
         }
@@ -43,6 +65,7 @@ export class ErrorHandlingService {
       }
 
       if (error.error.non_field_errors) {
+        this.messageService.clear();
         if (String(error.error.non_field_errors) === 'The fields user, movie must make a unique set.') {
           this.messageService.add('You have already rated this movie.');
         } else if (String(error.error.non_field_errors) === 'Signature has expired.') {

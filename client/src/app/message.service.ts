@@ -5,22 +5,22 @@ import {MessageProfile} from "./message-profile";
 export class MessageService {
 
   messages: string[] = [];
-  messagesProfile: MessageProfile;
+  messagesProfile: string[] = [];
 
   add(message: string) {
     this.messages.push(message);
   }
 
-  addmessagesProfile(field: string, cont: string) {
-    this.messagesProfile[field] = cont;
+  addMessagesProfile(message: string) {
+    this.messagesProfile.push(message);
   }
 
   clear() {
     this.messages.length = 0;
   }
 
-  clearmessagesProfile() {
-    this.messagesProfile = null;
+  clearMessagesProfile() {
+    this.messagesProfile.length = 0;
   }
 
   constructor() { }

@@ -47,6 +47,7 @@ import { Page404Component } from './page404/page404.component';
 import { DirectorSearchComponent } from './director-search/director-search.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PostUserMovieListComponent } from './post-user-movie-list/post-user-movie-list.component';
+import { ProfileService } from "./profile.service";
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { PostUserMovieListComponent } from './post-user-movie-list/post-user-mov
     UserMovieListService,
     IpService,
     CookieService,
+    ProfileService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

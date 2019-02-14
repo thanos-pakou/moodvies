@@ -41,12 +41,12 @@
   </div>
   <div class="selected-option-cont" *ngIf="selectedOption === 'prof' && togUpProfile">
     <h4>Profile</h4>
-    <div class="error-messages" *ngIf="messageService.messages.length > 0">
+    <div class="error-messages" *ngIf="messageService.messagesProfile.length > 0">
       <h4>Something went wrong..</h4>
       <h5>please check the fields that have a trouble below..</h5>
-      <strong *ngFor="let mess of messageService.messages">{{ mess }}<br></strong>
+      <strong *ngFor="let mess of messageService.messagesProfile">{{ mess }}<br></strong>
       <br>
-      <button (click)="messageService.clear()">OK</button>
+      <button (click)="messageService.clearMessagesProfile()">OK</button>
     </div>
     <form>
     <ul class="list-group mb-4">
@@ -64,9 +64,14 @@
           </div>
           <h5 class="my-0">Username </h5>
           <label>
-            <input #username value="{{ user[0].username }}" (keyup)="keyUpFieldsToUpdate(user[0].username, username.value, 'username')"
-                   (focusout)="focusOutFieldsToUpdate(user[0].username, username.value, 'username')" class="text-muted">
+            <input #username [value]="user[0].username" (keyup)="keyUpFieldsToUpdate(user[0].username, username.value, 'username'); search(username.value, 'username')"
+                   (focusout)="focusOutFieldsToUpdate(user[0].username, username.value, 'username'); search(username.value, 'username')" class="text-muted">
           </label>
+          <ng-container *ngIf="username$ | async; let usernames">
+            <span class="error-update-field" *ngIf="usernames.length > 0 && usernames[0].username !== user[0].username">
+              Username: {{username.value}} is already taken.
+            </span>
+          </ng-container>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -83,9 +88,14 @@
           </div>
           <h5 class="my-0">E-mail </h5>
           <label>
-            <input type="email" #email value="{{ user[0].email }}" (focusout)="focusOutFieldsToUpdate(user[0].email, email.value, 'email')"
-                   (keyup)="keyUpFieldsToUpdate(user[0].email, email.value, 'email')" class="text-muted">
+            <input type="email" #email value="{{ user[0].email }}" (focusout)="focusOutFieldsToUpdate(user[0].email, email.value, 'email'); search(email.value, 'email')"
+                   (keyup)="keyUpFieldsToUpdate(user[0].email, email.value, 'email'); search(email.value, 'email')" class="text-muted" >
           </label>
+          <ng-container *ngIf="email$ | async; let emails">
+            <span class="error-update-field" *ngIf="emails.length > 0 && emails[0].email !== user[0].email">
+              Email: {{email.value}} is already registered.
+            </span>
+          </ng-container>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -169,7 +179,7 @@
 
     </form>
     <div class="update-profile">
-      <button class="button" *ngIf="(profileFieldsToUpdate1 | json) != '{}'" (click)="UpdateProfileConfirm(true, username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
+      <button class="button" *ngIf="(profileFieldsToUpdate1 | json) != '{}' && profService.isUsernameValidForUpdate && profService.isEmailValidForUpdate" (click)="UpdateProfileConfirm(true, username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
       <button class="button" (click)="toggleUpdateProfile(false); toggleChangePassword(false)">Cancel Update</button>
     </div>
     <div class="update-profile-confirm" *ngIf="profileUpdateConfirmToggle">
@@ -179,7 +189,6 @@
       <input #passwordConfirm type="password" placeholder="Password">
       <br>
       <button class="button" (click)="passwordVerification(passwordConfirm.value)">Save Changes</button>
-      <button class="button" (click)="updateProfile(username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
       <button class="button" (click)="UpdateProfileConfirmToggle(false)">Cancel</button>
     </div>
   </div>

@@ -6,15 +6,10 @@ import { map, catchError } from 'rxjs/operators';
 import {ErrorHandlingService} from './errorhandling.service';
 import { User } from './user';
 import * as jwt_decode from 'jwt-decode';
-import {Mood} from './mood';
-
-
 
 
 class Credentials {
-  constructor(public username: string, public password: string) {
-
-  }
+  constructor(public username: string, public password: string) {}
 }
 
 const httpOptions = {
@@ -68,21 +63,6 @@ export class AuthService {
           false))
       );
   }
-
-  verifyPassword(username, password): Observable<boolean> {
-    const authUrl = `/api-token-auth/`;
-    const credentials = new Credentials(username, password);
-    return this.http
-      .post(authUrl, credentials, httpOptions ).pipe(
-        map(results => {
-          return !!results['token'];
-        }),
-        catchError(this.eh.handleError<boolean>(`Server Error`,
-          false))
-      );
-  }
-
-
 
   logout(mess: boolean): void {
     this.isLoggedIn = false;
@@ -144,15 +124,8 @@ export class AuthService {
   updateUserProfile(user: User): Observable<any> {
     const url = `api/user/${user.id}`;
     return this.http.put(url, user, httpOptions).pipe(
-      catchError(this.eh.handleError<boolean>(`Server Error`,
-        false))
-    );
-  }
-
-  updateUserProfileNoPw(user: User): Observable<any> {
-    const url = `api/user-nopw/${user.id}`;
-    return this.http.put(url, user, httpOptions).pipe(
       map(results => {
+        console.log(results);
         if (results['token']) {
           localStorage.setItem('moodvies-jwt-token', results['token']);
           const decoded = jwt_decode(results['token']);
@@ -163,7 +136,7 @@ export class AuthService {
           return false;
         }
       }),
-      catchError(this.eh.handleError<boolean>(`Server Error`,
+      catchError(this.eh.handleError<boolean>(`updateUserProfile`,
         false))
     );
   }

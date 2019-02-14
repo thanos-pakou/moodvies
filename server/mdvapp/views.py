@@ -191,14 +191,38 @@ class User(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        search_user_name = self.request.query_params.get('search_user_name', None)
+        search_email = self.request.query_params.get('search_email', None)
+
+        if search_user_name is not None or search_email is not None:
+            if search_user_name is None:
+                return CustomUser.objects.all().filter(email=search_email)
+            else:
+                return CustomUser.objects.all().filter(username=search_user_name)
+        elif self.request.user.is_superuser:
             return CustomUser.objects.all()
-        return CustomUser.objects.filter(username=self.request.user)
+        else:
+            return CustomUser.objects.filter(username=self.request.user)
 
 
 class UserModify(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.get_object(), data=request.data, partial=True)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            # Generate a new token
+            payload = jwt_payload_handler(instance)
+            token = jwt.encode(payload, site_config.SECRET_KEY)
+            response = JsonResponse({'token': token.decode('unicode_escape')})
+            response.status = 200
+            return response
+        else:
+            response = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return response
 
 
 class UserModifyNoPw(generics.RetrieveUpdateDestroyAPIView):

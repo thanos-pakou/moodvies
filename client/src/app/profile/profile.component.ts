@@ -5,6 +5,9 @@ import { UserMovieListService } from '../user-movie-list.service';
 import {User} from '../user';
 import {MessageService} from "../message.service";
 import {MessageProfile} from "../message-profile";
+import {ProfileService} from "../profile.service";
+import {debounceTime, distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -26,20 +29,73 @@ export class ProfileComponent implements OnInit {
   profileUpdateConfirmToggle = false;
   profileFieldsToUpdate: String[] = [];
   profileFieldsToUpdate1: MessageProfile = new MessageProfile();
-  profileFieldsToUpdate1Null = true;
   togUpProfile = false;
   changePass = false;
   passwordVerify = null;
+  username$: Observable<User[]>;
+  email$: Observable<User[]>;
+
+  private usernameSearchTerms = new Subject<string>();
+  private emailSearchTerms = new Subject<string>();
+
+  search(term: string, type: string): void {
+    if (type === 'email') {
+      this.emailSearchTerms.next(term);
+    } else {
+      this.usernameSearchTerms.next(term);
+    }
+  }
 
   constructor(private auth: AuthService,
               private umlService: UserMovieListService,
               public messageService: MessageService,
-              private el: ElementRef) { }
+              private profService: ProfileService) { }
 
   ngOnInit() {
+    this.messageService.clearMessagesProfile();
     if (this.auth.isLoggedIn == true) {
-      this.auth.getUser().subscribe(user => this.user = user);
+      this.auth.getUser().subscribe(
+        user => this.user = user,
+        () => {},
+        () => {}
+        );
     }
+
+    this.username$ = this.usernameSearchTerms.pipe(
+      // wait 300ms after each keystroke before considering the term
+      debounceTime(300),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+
+      // switch to new search observable each time the term changes
+      switchMap((term: string) => this.profService.searchUsername(term)),
+      map(res => {
+          if (res.length !== 0) {
+            this.profileFieldsToUpdate1.username = undefined;
+          }
+          return res;
+        }
+      )
+    );
+
+    this.email$ = this.emailSearchTerms.pipe(
+      // wait 300ms after each keystroke before considering the term
+      debounceTime(300),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+
+      // switch to new search observable each time the term changes
+      switchMap((term: string) => this.profService.searchEmail(term)),
+      map(res => {
+          if (res.length !== 0) {
+            this.profileFieldsToUpdate1.email = undefined;
+          }
+          return res;
+        }
+      )
+    )
   }
 
   getUserMovieLists(id: number): void {
@@ -95,8 +151,14 @@ export class ProfileComponent implements OnInit {
     this.messageService.clear();
     if (newPassword === ''){
       const user = new User(this.user[0].id, username, email, fName, lName);
-      this.auth.updateUserProfileNoPw(user).subscribe(
-        res => {console.log(res)},
+      this.profService.updateUserProfileNoPw(user).subscribe(
+        res => {
+          if (res) {
+            this.profileFieldsToUpdate1 = new MessageProfile();
+            this.toggleChangePassword(false);
+            this.profileUpdateConfirmToggle = false;
+          }
+        },
         () => {},
         () => {
           if (this.auth.isLoggedIn == true) {
@@ -105,9 +167,15 @@ export class ProfileComponent implements OnInit {
         }
         );
     } else if (newPassword  === repeatPassword) {
-      const user = new User(this.user[0].id, username, email, newPassword, fName, lName);
-      this.auth.updateUserProfile(user).subscribe(
-        () => {},
+      const user = new User(this.user[0].id, username, email, fName, lName, newPassword);
+      this.profService.updateUserProfile(user).subscribe(
+        res => {
+          if (res) {
+            this.profileFieldsToUpdate1 = new MessageProfile();
+            this.toggleChangePassword(false);
+            this.profileUpdateConfirmToggle = false;
+          }
+        },
         () => {},
         () => {
           if (this.auth.isLoggedIn == true) {
@@ -123,28 +191,10 @@ export class ProfileComponent implements OnInit {
 
   UpdateProfileConfirm(bol: boolean, username: string, email: string, newPassword: string, repeatPassword: string, fName: string, lName: string) {
     this.profileUpdateConfirmToggle = bol;
-    if (username != this.user[0].username) {
-      this.profileFieldsToUpdate1.username = username;
-    }
-    if (email != this.user[0].email) {
-      this.profileFieldsToUpdate1.email = email;
-    }
-    if (fName != this.user[0].first_name) {
-      this.profileFieldsToUpdate1.firstName = fName;
-    }
-    if (lName != this.user[0].last_name) {
-      this.profileFieldsToUpdate1.lastName = lName;
-    }
-    if (newPassword != '' && repeatPassword != '' && newPassword === repeatPassword) {
-    } else if (newPassword !== repeatPassword) {
-      this.messageService.add('Passwords do not match.')
-      this.profileUpdateConfirmToggle = false;
-    }
   }
 
   UpdateProfileConfirmToggle(bol: boolean) {
     this.profileUpdateConfirmToggle = bol;
-    this.profileFieldsToUpdate.length = 0;
   }
 
   keyUpFieldsToUpdate(oldField: string, newField: string, fieldName: string): void {
@@ -165,7 +215,7 @@ export class ProfileComponent implements OnInit {
 
   passwordVerification(password: string) {
     alert(<string>this.username.nativeElement);
-    this.auth.verifyPassword(this.user[0].username, password).subscribe(
+    this.profService.verifyPassword(this.user[0].username, password).subscribe(
       res => {
         if(res) {
           alert(this.username.nativeElement.value);
