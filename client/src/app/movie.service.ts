@@ -28,40 +28,56 @@ export class MovieService {
   constructor(private http: HttpClient,
               private eh: ErrorHandlingService) { }
 
-  /* Get a movie from the server by id */
+  /**
+   * Get a movie from the server by id
+   * */
   getMovie(id: number): Observable<Movie> {
     const url = `${this.movieUrl}/${id}`;
     return this.http.get<Movie>(url);
   }
 
-  /* Get a list of all movies inside the server */
+  /**
+   * Get all movies from the server
+   */
   getMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(this.movieUrl);
   }
 
-
+  /**
+   * Get the top 20 movies according to imdb users from the server
+   */
   getTopImdbMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>('api/movie/?top20_imdb=true');
   }
 
+  /**
+   * Get the top 20 movies according to moodvies users from the server
+   */
   getTopMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>('api/movie/?top20=true');
   }
 
+  /**
+   * Get movies recommended from admin
+   */
   getRecommendedMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>('api/movie/?rec=true');
   }
 
-  /* Get books whose title contains search term */
+  /**
+   * Searches for movies whose name contains search term
+   */
   searchMovies(term: string): Observable<Movie[]> {
     if (!term.trim()) {
-      // if not search term, return empty book array.
+      // if not search term, return empty movie array.
       return of([]);
     }
     return this.http.get<Movie[]>(`api/movie/?search=${term}`);
   }
 
-  /* Rate a movie by its id and saves the user id */
+  /**
+   * Rate a movie by its id and saves the user id
+   */
   rateMovie(idMovie: number, idUser: number, rating: number): Observable<boolean> {
     const url = `api/rating`;
     const ratings = new Rating(idUser, idMovie, rating)
@@ -76,6 +92,9 @@ export class MovieService {
       );
   }
 
+  /**
+   * Posts review into the server
+   */
   postReview(review: Review): Observable<boolean> {
     const url = 'api/review';
     return this.http.post(url, review, httpOptions).pipe(
@@ -88,12 +107,18 @@ export class MovieService {
     );
   }
 
+  /**
+   * Deletes review from the server
+   */
   deleteReview(review: Review): Observable<Review> {
     const id =  review.idReview;
     const url = `api/review/${id}`;
     return this.http.delete<Review>(url, httpOptions).pipe();
   }
 
+  /**
+   * Posts a review like into the server
+   */
   likeReview(like: boolean, userId: number, reviewId: number): Observable<boolean> {
     const url = `api/review-like`;
     return this.http.post(url, {
@@ -110,7 +135,9 @@ export class MovieService {
     );
   }
 
-  /** DELETE: delete the review like from the server */
+  /**
+   * Deletes the review like from the server
+   * */
   deleteLikeReview(reviewLike: ReviewLike): Observable<ReviewLike> {
     const id =  reviewLike.idReviewLike;
     const url = `api/review-like/${id}`;
@@ -118,7 +145,9 @@ export class MovieService {
     return this.http.delete<ReviewLike>(url, httpOptions).pipe();
   }
 
-  /** UPDATE: update the review like from like to dislike or the otther way around  */
+  /**
+   * Updates the review like from the server
+   * */
   updateLikeReview(reviewLike: ReviewLike, bol: boolean): Observable<ReviewLike> {
     const id =  reviewLike.idReviewLike;
     reviewLike.like = bol;
@@ -127,12 +156,18 @@ export class MovieService {
     return this.http.put<ReviewLike>(url, reviewLike, httpOptions).pipe();
   }
 
+  /**
+   * Checks if user liked this review
+   * */
   reviewCheckIfLiked(user: number, review: number): Observable<ReviewLike> {
     const url = `api/review-like?user=${user}&review=${review}`;
       return this.http.get<ReviewLike>(url);
   }
 
 
+  /**
+   * Posts movie list into the server
+   * */
   postMovieList(userId: number, title: string, description: string, movieList: number[]): Observable<UserMovieList> {
     const url = 'api/movie-list';
     const sth = {

@@ -29,6 +29,9 @@ export class AuthService {
     private eh: ErrorHandlingService
   ) { }
 
+  /**
+   * Registers a new user into the server
+   */
   register(user: User): Observable<boolean> {
     const userUrl = `/api/user`;
      return this.http
@@ -43,6 +46,9 @@ export class AuthService {
   }
 
 
+  /**
+   * Logs user into the server with verified credentials
+   */
   login(username, password): Observable<boolean> {
     const authUrl = `/api-token-auth/`;
     const credentials = new Credentials(username, password);
@@ -64,6 +70,9 @@ export class AuthService {
       );
   }
 
+  /**
+   * Logs user out of the server
+   */
   logout(mess: boolean): void {
     this.isLoggedIn = false;
     if (mess) {
@@ -71,6 +80,7 @@ export class AuthService {
     }
     localStorage.removeItem('moodvies-jwt-token');
   }
+
 
   tokenVerify(token: string): Observable<boolean> {
     const verUrl = `/api-token-verify/`;
@@ -92,6 +102,9 @@ export class AuthService {
       );
   }
 
+  /**
+   * Refreshes token if it is still valid and if its expiration time is not above 6000 secs
+   */
   tokenRefresh(token: string): Observable<boolean> {
     const refUrl = `/api-token-refresh/`;
     return this.http
@@ -99,9 +112,9 @@ export class AuthService {
         map(results => {
           if (results['token']) {
             const currDate = Math.floor((new Date).getTime()/1000);
-            if(jwt_decode(token)['exp'] - currDate < 6000 ) {
+
               localStorage.setItem('moodvies-jwt-token', results['token']);
-            }
+
             const decoded = jwt_decode(token);
             this.username = decoded['username'];
             this.isLoggedIn = true;
@@ -116,28 +129,11 @@ export class AuthService {
   }
 
 
+  /**
+   * Gets user who is logged in
+   */
   getUser(): Observable<User[]> {
     const getUserUrl = `/api/user`;
     return this.http.get<User[]>(getUserUrl);
-  }
-
-  updateUserProfile(user: User): Observable<any> {
-    const url = `api/user/${user.id}`;
-    return this.http.put(url, user, httpOptions).pipe(
-      map(results => {
-        console.log(results);
-        if (results['token']) {
-          localStorage.setItem('moodvies-jwt-token', results['token']);
-          const decoded = jwt_decode(results['token']);
-          this.username = decoded['username'];
-          this.isLoggedIn = true;
-          return true;
-        } else {
-          return false;
-        }
-      }),
-      catchError(this.eh.handleError<boolean>(`updateUserProfile`,
-        false))
-    );
   }
 }

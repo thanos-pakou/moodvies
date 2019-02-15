@@ -64,7 +64,7 @@ REST_FRAMEWORK = {
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=3),
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=4000),
 }
 
 ROOT_URLCONF = 'moodvies_project.urls'

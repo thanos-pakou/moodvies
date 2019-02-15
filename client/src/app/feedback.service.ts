@@ -15,6 +15,9 @@ export class FeedbackService {
 
   constructor(private http: HttpClient,) { }
 
+  /**
+   * Posts feedback into the server
+   */
   postFeedback(feedback: Feedback): Observable<boolean> {
     const url = `api/feedback`;
     return this.http.post(url, feedback, httpOptions).pipe(

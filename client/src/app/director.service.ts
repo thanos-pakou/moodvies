@@ -16,18 +16,27 @@ export class DirectorService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Gets list with all directors from the server
+   * */
   getDirectors(): Observable<Director[]> {
     return this.http.get<Director[]>(this.directorUrl);
   }
 
+  /**
+   * Gets director from the server by id
+   * */
   getDirector(id: number): Observable<Director> {
     const url = `${this.directorUrl}/${id}`;
     return this.http.get<Director>(url);
   }
 
+  /**
+   * Searches for director whose search field contains search term
+   */
   searchDirectors(term: string): Observable<Director[]> {
     if (!term.trim()) {
-      // if not search term, return empty book array.
+      // if not search term, return empty director array.
       return of([]);
     }
     return this.http.get<Director[]>(`api/director/?search=${term}`);

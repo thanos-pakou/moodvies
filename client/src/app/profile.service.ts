@@ -6,7 +6,6 @@ import {ErrorHandlingService} from "./errorhandling.service";
 import {User} from "./user";
 import * as jwt_decode from 'jwt-decode';
 import {AuthService} from "./auth.service";
-import {Director} from "./director";
 
 
 class Credentials {
@@ -36,6 +35,10 @@ export class ProfileService implements OnInit{
 
   }
 
+  /**
+   * Verifies password in the server for updating profile
+   * Returns Observable boolean for result
+   */
   verifyPassword(username, password): Observable<boolean> {
     const authUrl = `/api-token-auth/`;
     const credentials = new Credentials(username, password);
@@ -49,6 +52,10 @@ export class ProfileService implements OnInit{
       );
   }
 
+  /**
+   * Updates user in the server with new password and returns Observable
+   * If password is ok returns new token with the updated information
+   */
   updateUserProfile(user: User): Observable<any> {
     const url = `api/user/${user.id}`;
     return this.http.put(url, user, httpOptions).pipe(
@@ -69,6 +76,10 @@ export class ProfileService implements OnInit{
     );
   }
 
+  /**
+   * Updates user in the server without new password and returns Observable
+   * If password is ok returns new token with the updated information
+   */
   updateUserProfileNoPw(user: User): Observable<any> {
     const url = `api/user-nopw/${user.id}`;
     return this.http.put(url, user, httpOptions).pipe(
@@ -88,6 +99,10 @@ export class ProfileService implements OnInit{
     );
   }
 
+  /**
+   * Searches username in the server and returns a user[] with or without result in it
+   * If no result found sets username true for update
+   */
   searchUsername(term: string): Observable<User[]> {
     if (!term.trim()) {
       // if not search term, return empty book array.
@@ -109,6 +124,10 @@ export class ProfileService implements OnInit{
     );
   }
 
+  /**
+   * Searches email in the server and returns a user[] with or without result in it
+   * If no result found sets email true for update
+   */
   searchEmail(term: string): Observable<User[]> {
     if (!term.trim()) {
       // if not search term, return empty book array.

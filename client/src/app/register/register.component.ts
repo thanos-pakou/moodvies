@@ -29,6 +29,9 @@ export class RegisterComponent implements OnInit {
     this.titleService.setTitle('Moodvies --  Register Page');
   }
 
+  /**
+   * Registers a new user into the server
+   */
   register(username, email, password, first_name, last_name) {
     this.messageService.clear();
     this.user.username = username;

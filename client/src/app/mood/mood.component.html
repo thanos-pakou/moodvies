@@ -21,7 +21,7 @@
       </div>
       <span class="num-of-movies">Total number of movies having that mood: <strong>{{ mood.movies.length }}</strong></span>
       <div class="mood_movies_container">
-        <span  *ngFor="let movie of mood.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
+        <div  *ngFor="let movie of mood.movies | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
          <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
           <div class="movie_info">
             <h4>{{ movie.title }}</h4>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <br *ngIf="i === 2"><br *ngIf="i === 2">
-        </span>
+        </div>
         <div style=" margin-top:15px; margin-right: 60px; margin-bottom:50px; font-size:10px;">
           <pagination-controls  [maxSize]="5" previousLabel="" nextLabel="" class="my-pagination" *ngIf="mood.movies.length > 4" style="text-align: center" (pageChange)="p[j] = $event" [id]="j">
           </pagination-controls>

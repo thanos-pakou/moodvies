@@ -1,8 +1,8 @@
 <div class="profile-container">
-
   <div class="profile-option" [class.selected-option]="'prof' === selectedOption" (click)="onSelect('prof')">
     <h3>Profile</h3>
   </div>
+
   <div class="movie-list-option" [class.selected-option]="'m-list' === selectedOption" (click)="onSelect('m-list'); getUserMovieLists(user[0].id); toggleUpdateProfile(false)">
     <h3>Movie Lists</h3>
   </div>
@@ -18,7 +18,7 @@
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <h5 class="my-0">E-mail </h5><span *ngIf="profileFieldsToUpdate1.email">{{profileFieldsToUpdate1.email}}</span>
+          <h5 class="my-0">E-mail </h5><span *ngIf="profileFieldsToUpdate.email">{{profileFieldsToUpdate.email}}</span>
           <small class="text-muted">{{ user[0].email }}</small>
         </div>
       </li>
@@ -39,6 +39,7 @@
       <button class="button" (click)="toggleUpdateProfile(true)">Update Profile</button>
     </div>
   </div>
+
   <div class="selected-option-cont" *ngIf="selectedOption === 'prof' && togUpProfile">
     <h4>Profile</h4>
     <div class="error-messages" *ngIf="messageService.messagesProfile.length > 0">
@@ -52,14 +53,14 @@
     <ul class="list-group mb-4">
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <div class="field-change" *ngIf="profileFieldsToUpdate1.username">
+          <div class="field-change" *ngIf="profileFieldsToUpdate.username">
             You changed your username from
             <span class="old-new-field-value">
               {{user[0].username}}
             </span>
             to
             <span class="old-new-field-value">
-              {{profileFieldsToUpdate1.username}}
+              {{profileFieldsToUpdate.username}}
             </span>
           </div>
           <h5 class="my-0">Username </h5>
@@ -76,14 +77,14 @@
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <div class="field-change" *ngIf="profileFieldsToUpdate1.email">
+          <div class="field-change" *ngIf="profileFieldsToUpdate.email">
             You changed your email from
             <span class="old-new-field-value">
               {{user[0].email}}
             </span>
             to
             <span class="old-new-field-value">
-              {{profileFieldsToUpdate1.email}}
+              {{profileFieldsToUpdate.email}}
             </span>
           </div>
           <h5 class="my-0">E-mail </h5>
@@ -100,14 +101,14 @@
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <div class="field-change" *ngIf="profileFieldsToUpdate1.firstName">
+          <div class="field-change" *ngIf="profileFieldsToUpdate.firstName">
             You changed your first name from
             <span class="old-new-field-value">
               {{user[0].first_name}}
             </span>
             to
             <span class="old-new-field-value">
-              {{profileFieldsToUpdate1.firstName}}
+              {{profileFieldsToUpdate.firstName}}
             </span>
           </div>
           <h5 class="my-0">First Name</h5>
@@ -119,14 +120,14 @@
       </li>
       <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
-          <div class="field-change" *ngIf="profileFieldsToUpdate1.lastName">
+          <div class="field-change" *ngIf="profileFieldsToUpdate.lastName">
             You changed your last name from
             <span class="old-new-field-value">
               {{user[0].last_name}}
             </span>
             to
             <span class="old-new-field-value">
-              {{profileFieldsToUpdate1.lastName}}
+              {{profileFieldsToUpdate.lastName}}
             </span>
           </div>
           <h5 class="my-0">Last Name</h5>
@@ -179,7 +180,7 @@
 
     </form>
     <div class="update-profile">
-      <button class="button" *ngIf="(profileFieldsToUpdate1 | json) != '{}' && profService.isUsernameValidForUpdate && profService.isEmailValidForUpdate" (click)="UpdateProfileConfirm(true, username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
+      <button class="button" *ngIf="(profileFieldsToUpdate | json) != '{}' && profService.isUsernameValidForUpdate && profService.isEmailValidForUpdate" (click)="UpdateProfileConfirm(true, username.value, email.value, newPassword.value, repeatPassword.value, firstName.value, lastName.value)">Save Changes</button>
       <button class="button" (click)="toggleUpdateProfile(false); toggleChangePassword(false)">Cancel Update</button>
     </div>
     <div class="update-profile-confirm" *ngIf="profileUpdateConfirmToggle">
@@ -192,6 +193,7 @@
       <button class="button" (click)="UpdateProfileConfirmToggle(false)">Cancel</button>
     </div>
   </div>
+
   <div class="selected-option-cont" *ngIf="selectedOption === 'm-list'">
     <h4>Your Movie Lists</h4>
     <div class="empty-movie-list" *ngIf="uMovieLists.length === 0; else movieListNotEmpty">

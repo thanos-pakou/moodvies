@@ -27,8 +27,7 @@ export class ProfileComponent implements OnInit {
   selectedOption = 'prof';
   movieListToDelete: UserMovieList;
   profileUpdateConfirmToggle = false;
-  profileFieldsToUpdate: String[] = [];
-  profileFieldsToUpdate1: MessageProfile = new MessageProfile();
+  profileFieldsToUpdate: MessageProfile = new MessageProfile();
   togUpProfile = false;
   changePass = false;
   passwordVerify = null;
@@ -38,6 +37,10 @@ export class ProfileComponent implements OnInit {
   private usernameSearchTerms = new Subject<string>();
   private emailSearchTerms = new Subject<string>();
 
+
+  /**
+   * // Push a username search term into the observable stream.
+   */
   search(term: string, type: string): void {
     if (type === 'email') {
       this.emailSearchTerms.next(term);
@@ -61,6 +64,9 @@ export class ProfileComponent implements OnInit {
         );
     }
 
+    /**
+     * Username Observable for verification
+     */
     this.username$ = this.usernameSearchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
@@ -72,13 +78,16 @@ export class ProfileComponent implements OnInit {
       switchMap((term: string) => this.profService.searchUsername(term)),
       map(res => {
           if (res.length !== 0) {
-            this.profileFieldsToUpdate1.username = undefined;
+            this.profileFieldsToUpdate.username = undefined;
           }
           return res;
         }
       )
     );
 
+    /**
+     * Email Observable for verification
+     */
     this.email$ = this.emailSearchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
@@ -90,7 +99,7 @@ export class ProfileComponent implements OnInit {
       switchMap((term: string) => this.profService.searchEmail(term)),
       map(res => {
           if (res.length !== 0) {
-            this.profileFieldsToUpdate1.email = undefined;
+            this.profileFieldsToUpdate.email = undefined;
           }
           return res;
         }
@@ -98,29 +107,47 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  /**
+   * Gets user movie lists and assigns it to the uMovieLists variable
+   */
   getUserMovieLists(id: number): void {
     this.umlService.getUserMovieListByUser(id).subscribe(movieLists => this.uMovieLists = movieLists);
   }
 
+  /**
+   * Selects which content to show profile info or user's movie lists
+   */
   onSelect(str: string): void {
     this.selectedOption = str;
   }
 
+  /**
+   * Confirms deletion of a movie list assigning it to the movieListToDelete variable
+   */
   confirmDelete(umList: UserMovieList): void {
     this.movieListToDelete = umList;
   }
 
+  /**
+   * Deletes selected user movie list
+   */
   delete(umList: UserMovieList): void {
     this.uMovieLists = this.uMovieLists.filter(h => h !== umList);
     this.umlService.deleteUserMovieList(umList).subscribe();
     this.movieListToDelete = null;
   }
 
+  /**
+   * Update Profile Toggle
+   */
   toggleUpdateProfile(bol: boolean): void {
     this.togUpProfile = bol;
-    this.profileFieldsToUpdate1 = new MessageProfile();
+    this.profileFieldsToUpdate = new MessageProfile();
   }
 
+  /**
+   * Change Password Toggle
+   */
   toggleChangePassword(bol: boolean): void {
     if (bol) {
       document.getElementById('password-li').style.display = 'block';
@@ -134,19 +161,26 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if passwords are empty
+   * If not validates if they are equal
+   */
   verifyNewPassword(newPw: string, repeatPw: string): void {
     if (repeatPw === '' || newPw === '') {
       this.passwordVerify = null;
-      this.profileFieldsToUpdate1.password = undefined;
+      this.profileFieldsToUpdate.password = undefined;
     } else if (newPw === repeatPw) {
-      this.profileFieldsToUpdate1.password = newPw;
+      this.profileFieldsToUpdate.password = newPw;
       this.passwordVerify = true;
     } else {
-      this.profileFieldsToUpdate1.password = undefined;
+      this.profileFieldsToUpdate.password = undefined;
       this.passwordVerify = false;
     }
   }
 
+  /**
+   * Updates Profile with or without a new password
+   */
   updateProfile(username: string, email: string, newPassword: string, repeatPassword: string, fName: string, lName: string): void {
     this.messageService.clear();
     if (newPassword === ''){
@@ -154,7 +188,7 @@ export class ProfileComponent implements OnInit {
       this.profService.updateUserProfileNoPw(user).subscribe(
         res => {
           if (res) {
-            this.profileFieldsToUpdate1 = new MessageProfile();
+            this.profileFieldsToUpdate = new MessageProfile();
             this.toggleChangePassword(false);
             this.profileUpdateConfirmToggle = false;
           }
@@ -171,7 +205,7 @@ export class ProfileComponent implements OnInit {
       this.profService.updateUserProfile(user).subscribe(
         res => {
           if (res) {
-            this.profileFieldsToUpdate1 = new MessageProfile();
+            this.profileFieldsToUpdate = new MessageProfile();
             this.toggleChangePassword(false);
             this.profileUpdateConfirmToggle = false;
           }
@@ -189,30 +223,45 @@ export class ProfileComponent implements OnInit {
     this.profileUpdateConfirmToggle = false;
   }
 
+  /**
+   * Confirms before updating profile
+   */
   UpdateProfileConfirm(bol: boolean, username: string, email: string, newPassword: string, repeatPassword: string, fName: string, lName: string) {
     this.profileUpdateConfirmToggle = bol;
   }
 
+  /**
+   * Update Profile Confirmation toggle
+   */
   UpdateProfileConfirmToggle(bol: boolean) {
     this.profileUpdateConfirmToggle = bol;
   }
 
+  /**
+   * Assigns variables for update on key up
+   */
   keyUpFieldsToUpdate(oldField: string, newField: string, fieldName: string): void {
     if (newField === '') {
     } else if (oldField !== newField) {
-      this.profileFieldsToUpdate1[fieldName] = newField;
+      this.profileFieldsToUpdate[fieldName] = newField;
     } else {
-      this.profileFieldsToUpdate1[fieldName] = undefined;
+      this.profileFieldsToUpdate[fieldName] = undefined;
     }
   }
 
+  /**
+   * Assigns variables for update on focusOut
+   */
   focusOutFieldsToUpdate(oldField: string, newField: string, fieldName: string): void {
     if (newField === '') {
-      this.profileFieldsToUpdate1[fieldName] = undefined;
+      this.profileFieldsToUpdate[fieldName] = undefined;
       this[fieldName].nativeElement.value = oldField;
     }
   }
 
+  /**
+   * Verifies update with old password
+   */
   passwordVerification(password: string) {
     alert(<string>this.username.nativeElement);
     this.profService.verifyPassword(this.user[0].username, password).subscribe(

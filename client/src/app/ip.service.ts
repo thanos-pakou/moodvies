@@ -30,6 +30,9 @@ export class IpService {
               private eh: ErrorHandlingService
   ) { }
 
+  /**
+   * Gets user's ip address
+   * */
   getIpAddress(): Observable<any> {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = "https://api.ipify.org?format=json"; // site that doesn’t send Access-Control-*
@@ -37,6 +40,9 @@ export class IpService {
 
   }
 
+  /**
+   * Saves user's address into the server
+   * */
   postIpAddress(): Observable<boolean> {
     const url = `api/ip-address`;
     const ip = new ipAddress(this.ipAddress);
@@ -51,11 +57,17 @@ export class IpService {
     )
   }
 
+  /**
+   * Gets id from ip-address posted
+   * */
   getIpId(): Observable<string> {
     const url = `api/ip-address?spec_ip=${this.ipAddress}`;
     return this.http.get<string>(url);
   }
 
+  /**
+   * Updates actor's visit and pushed the new ip-address that just visited
+   * */
   actorVisit(actor: Actor, actorId: number): Observable<boolean> {
     const url = `api/actor-update/${actorId}`;
     return this.http.put(url, actor, httpOptions).pipe(
@@ -68,6 +80,9 @@ export class IpService {
     );
   }
 
+  /**
+   * Updates director's visit and pushed the new ip-address that just visited
+   * */
   directorVisit(director: Director, directorId: number): Observable<boolean> {
     const url = `api/director-update/${directorId}`;
     return this.http.put(url, director, httpOptions).pipe(
@@ -81,6 +96,9 @@ export class IpService {
   }
 
 
+  /**
+   * Updates movies's visit and pushed the new ip-address that just visited
+   * */
   movieVisit(movie: Movie, movieId: number): Observable<boolean> {
     const url = `api/movie-update/${movieId}`;
     return this.http.put(url, movie, httpOptions).pipe(

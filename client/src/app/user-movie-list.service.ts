@@ -21,21 +21,33 @@ export class UserMovieListService {
               private eh: ErrorHandlingService) { }
 
 
+  /**
+   * Gets all movie lists from the server
+   * */
   getUserMovieLists(): Observable<UserMovieList[]> {
     return this.http.get<UserMovieList[]>(this.url);
   }
 
+  /**
+   * Gets  movie list from the server by id
+   * */
   getUserMovieList(id: number): Observable<UserMovieList> {
     const url = `${this.url}/${id}`;
     return this.http.get<UserMovieList>(url);
   }
 
+  /**
+   * Gets movie lists from the server by user
+   * */
   getUserMovieListByUser(id: number): Observable<UserMovieList[]> {
     const url = `${this.url}/?user=${id}`;
     return this.http.get<UserMovieList[]>(url);
   }
 
 
+  /**
+   * Deletes a movie list from the server
+   * */
   deleteUserMovieList(umList: UserMovieList | number): Observable<UserMovieList> {
     const id = typeof umList === 'number' ? umList : umList.idUserMovieList;
     const url = `${this.url}/${id}`;

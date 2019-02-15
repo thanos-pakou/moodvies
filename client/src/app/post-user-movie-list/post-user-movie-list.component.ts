@@ -20,7 +20,6 @@ export class PostUserMovieListComponent implements OnInit {
   containedMovie: number[] = [];
   userMovieList: Movie[] = [];
   searchValue = null;
-  postedUserMovieList: UserMovieList = null;
   user: User[];
 
   private searchTerms = new Subject<string>();
@@ -29,12 +28,15 @@ export class PostUserMovieListComponent implements OnInit {
               private authService: AuthService,
               private router: Router) { }
 
-  // Push a search term into the observable stream.
+  /**
+   * Pushes a movie search term into the observable stream.
+   */
   search(term: string): void {
     this.searchTerms.next(term);
   }
 
   ngOnInit() {
+    // Username Observable for verification
     this.movies$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
@@ -49,17 +51,26 @@ export class PostUserMovieListComponent implements OnInit {
     this.authService.getUser().subscribe(user => this.user = user);
   }
 
+  /**
+   * Adds movie to userMovieList:the movie list that will be created
+   */
   addMovie(id: number, title: string, pub_year: number): void {
     const movie = new Movie(id, title, pub_year);
     this.containedMovie.push(id);
     this.userMovieList.push(movie);
   }
 
+  /**
+   * Removes movie from userMovieList: the movie list that will be created
+   */
   deleteMovie(num: number): void {
     this.containedMovie.splice(num, 1);
     this.userMovieList.splice(num, 1);
   }
 
+  /**
+   * Posts movie list into the server through movie service
+   */
   postList(userId: number, title: string, description: string): void {
     this.movieService.postMovieList(userId, title, description, this.containedMovie).subscribe(
       res => {

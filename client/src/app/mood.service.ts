@@ -14,10 +14,16 @@ export class MoodService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Gets all moods from the server
+   * */
   getMoods(): Observable<Mood[]> {
     return this.http.get<Mood[]>(this.moodUrl);
   }
 
+  /**
+   * Gets mood from the server by id
+   * */
   getMood(id: number): Observable<Mood> {
     const url = `${this.moodUrl}/${id}`;
     return this.http.get<Mood>(url);

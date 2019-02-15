@@ -54,6 +54,7 @@
   width:300px;
   height:100px;
   overflow: auto;
+  overflow-wrap: break-word;
 }
 
 .mood_movies_container {
@@ -65,6 +66,9 @@
 }
 .mood_movies {
   margin-right: 5px;
+  width: 60px;
+  height: 90px;
+  display: inline;
 }
 
 
@@ -198,5 +202,33 @@ ul.ngx-pagination  {
   .mood_description {
     margin-left:100px;
     width:180px;
+  }
+}
+
+@media (max-width: 500px) {
+  .mood_description {
+    position: relative;
+    width: 200px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .mood {
+    padding-left: 0;
+  }
+  .num-of-movies {
+    margin-left: 0;
+    position: relative;
+    padding-top: 40px;
+  }
+}
+.mood_name {
+  margin-left: 0;
+}
+
+@media (max-width: 420px) {
+  .mood-container {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
