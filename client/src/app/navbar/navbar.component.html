@@ -53,7 +53,10 @@
 
 <div class="profile" *ngIf="profile">
   <app-profile></app-profile><br>
-  <button (click)="getProfile(false)" style="margin-left: 70px;">Close Profile</button>
+  <div class="close-profile">
+    <button (click)="getProfile(false)" style="margin-top: 10px;">Close Profile</button>
+  </div>
+
 
 </div>
 

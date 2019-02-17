@@ -26,11 +26,9 @@
 }
 
 .mood:hover {
-
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top   ;
-
 }
 
 .mood_description_h{
@@ -131,7 +129,7 @@
   width:650px;
   font-size: 30px;
   cursor: pointer;
-  float: right;
+  position: absolute;
 }
 
 .movie_name_pop {
@@ -192,8 +190,8 @@
   }
   .imdb {
     width: 400px;
-    margin-left: 400px;
-    margin-top: -90px;
+    margin-left: 0;
+    margin-top: 0;
   }
 
   .movie_name {
@@ -204,12 +202,57 @@
 
 @media only screen and (max-width: 740px) {
   .movie_description {
-    margin-top: 0;
+    margin-top: 40px;
     position: relative;
+    margin-left: 0;
   }
 
   .movie_image_container {
     width: 100%;
     text-align: center;
+  }
+  .movie_name_pop {
+    margin-left: -140px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .movie_image {
+    margin-right: 600px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .movie_image {
+    height: 152px;
+    width: 105px;
+  }
+  .movie_name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .movie_description {
+    margin-top: 60px;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .movie_description {
+    width:200px;
+  }
+  .movie-info {
+    width: 200px;
+}
+}
+@media only screen and (max-width: 280px) {
+  .movie_description {
+    margin-top:100px;
   }
 }

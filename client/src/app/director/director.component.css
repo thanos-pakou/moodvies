@@ -163,8 +163,6 @@
 
 @media (max-width: 750px) {
   .num-of-movies {
-    margin-top:40vh;
-    margin-left:-145px;
     font-size:70%;
     width: 150px;
   }
@@ -175,23 +173,43 @@
 }
 
 @media (max-width: 650px) {
-  .num-of-movies {
-    margin-top:40vh;
-    margin-left:-145px;
-    font-size:70%;
-    width: 120px;
-  }
-}
 
-@media (max-width: 650px) {
   .director-image {
     height: 131px;
     width: 80px;
     margin-bottom: 60px;
   }
   .director-description {
-    margin-left:100px;
-    width:180px;
+    position: relative;
+    width: 200px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .mood {
+    padding-left: 0;
+  }
+
+  .num-of-movies {
+    margin-left: 0;
+    position: relative;
+    padding-top: 40px;
+    font-size: 70%;
+    width: 120px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .director-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .director-name {
+    width: auto;
+    margin-left: 0;
+    font-size: 17px;
+    font-weight: bold;
   }
 }
 

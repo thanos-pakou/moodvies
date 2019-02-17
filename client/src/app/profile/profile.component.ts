@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
   constructor(private auth: AuthService,
               private umlService: UserMovieListService,
               public messageService: MessageService,
-              private profService: ProfileService) { }
+              public profService: ProfileService) { }
 
   ngOnInit() {
     this.messageService.clearMessagesProfile();

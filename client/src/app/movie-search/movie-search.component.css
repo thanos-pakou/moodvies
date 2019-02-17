@@ -25,7 +25,6 @@
   position: absolute;
   margin-top:50px;
   padding:50px;
-  right:0;
   width:500px;
   background: rgba(0, 0, 0, 0.7);
 
@@ -65,6 +64,14 @@
     margin-top:279px;
     margin-left: 71.5vw;
   }
+  .search-result {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+  }
+  .search-result-movie {
+    height: auto;
+  }
 }
 
 @media only screen and (max-width: 585px) {
@@ -72,6 +79,13 @@
     position: absolute;
     margin-top:279px;
     margin-left: 52vw;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .search-result {
+    margin-top:0;
+    padding: 0;
   }
 }
 

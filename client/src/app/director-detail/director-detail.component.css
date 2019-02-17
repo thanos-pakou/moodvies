@@ -27,15 +27,17 @@
   display: block;
 }
 
-.actor-description {
+.director-description {
   display: block;
   margin-top: 50px;
   margin-left: 90px;
   width: 80%;
   height: 100px;
+  overflow: auto;
+  overflow-wrap: break-word;
 }
 
-.actor-description-h {
+.director-description-h {
   text-align: center;
   padding: 0;
   margin-top: 50px;
@@ -54,22 +56,22 @@
   font-weight: bold;
 }
 
-.movie-name{
-  position: absolute;
-  margin-right:100px;
-  margin-left: 50px;
-  width:650px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
 .movie-description {
-  margin-top:50px;
-  margin-left:90px;
+  margin-top:-140px;
+  margin-left:190px;
   position: absolute;
   width:300px;
   height:100px;
   overflow: auto;
+}
+
+.movie-name{
+  margin-right:240px;
+  margin-left: 50px;
+  width:650px;
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
 }
 
 .movie-name-pop {
@@ -90,6 +92,12 @@
   visibility: visible;
 }
 
+.movie-info {
+  position:absolute; margin-left:600px;
+  margin-top:-140px;
+  width:18%;
+}
+
 .my-pagination /deep/ ul.ngx-pagination {
 
   list-style-type: none !important;
@@ -100,8 +108,9 @@
 .imdb {
   border-radius: 20px;
   padding:8px;
-  margin-left: 700px;
-  margin-right: 50px;
+  margin-left: 900px;
+  margin-top: -200px;
+  margin-right: 0;
   position: absolute;
   color: black;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -116,4 +125,115 @@
   height: 20px;
   width: 20px;
   margin-left:40px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .imdb {
+    position: relative;
+    margin-left: 590px;
+    margin-top: 0;
+  }
+
+  .movie-name {
+    margin-right: 0;
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .director-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .movie-info {
+    position: relative;
+    margin-top: 20px;
+    width: 400px;
+    margin-left: 0;
+  }
+  .imdb {
+    width: 400px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .movie-name {
+    font-size: 25px;
+    margin-left: 5px;
+  }
+  .director-description {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 740px) {
+  .movie-description {
+    margin-top: 40px;
+    position: relative;
+    margin-left: 0;
+  }
+
+  .movie-image-container {
+    width: 100%;
+    text-align: center;
+  }
+  .movie-name-pop {
+    margin-left: -140px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .movie-image {
+    margin-right: 600px;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .movie-image {
+    height: 152px;
+    width: 105px;
+  }
+  .movie-name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .actor-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .movie-description {
+    margin-top: 60px;
+    width: auto;
+  }
+  .director-description-h {
+    font-size: 17px;
+  }
+  .director-description {
+    width: 200px;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .movie-info {
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 280px) {
+  .movie-description {
+    margin-top:100px;
+  }
 }

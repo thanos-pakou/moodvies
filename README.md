@@ -36,5 +36,9 @@ they want to get. The services in this application allow users to:
 * Access other people's movie lists
 * Delete a movie-list created from the user.
 
+### Live Example 
 
+Moodvies app was uploaded in a virtual machine hosted by [okeanos](https://okeanos.grnet.gr).
+
+The application can be reached in this link: [Moodvies Website](https://snf-856718.vm.okeanos.grnet.gr/)
 

@@ -6,7 +6,7 @@
     <hr>
     <img class="actor-image" [attr.src]="actor.image">
     <h3 class="actor-description-h">Description</h3>
-    <span class="actor-description">{{ actor.description }}</span>
+    <div class="actor-description">{{ actor.description }}</div>
 
     <h4 class="actor-description-h">Date of Birth</h4>
     <span class="actor-date-of-birth">{{ actor.date_of_birth }}</span>
@@ -22,10 +22,10 @@
         {{ getTitle(movie.title, movie.pub_year)[0] }}
         <span *ngIf="getTitle(movie.title, movie.pub_year)[1]" class="movie-name-pop">{{ getTitle(movie.title, movie.pub_year)[1] }}</span>
       </span>
-      <span class="movie-description">
+      <div class="movie-description">
         {{ movie.description }}
-      </span>
-      <span style="position:absolute; margin-left:450px; margin-top:50px; width:18%">
+      </div>
+      <div class="movie-info">>
         Director<span *ngIf="movie.director.length > 1">s</span>:
         <strong *ngFor="let direct of movie.director_details">
           {{ direct.name + ' ' + direct.l_name }}
@@ -36,7 +36,7 @@
         Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
         <br>
         Duration: <strong>{{ movie.strDuration }}</strong>
-      </span>
+      </div>
       <span class="imdb">
         <img class="imdb-img" src="../../assets/imdb/imdb2.png">
         {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>

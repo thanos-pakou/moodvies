@@ -174,7 +174,7 @@
 
 @media (max-width: 750px) {
   .num-of-movies {
-    margin-top:40vh;
+    margin-top: 30%;
     margin-left:-145px;
     font-size:70%;
     width: 150px;
@@ -186,23 +186,43 @@
 }
 
 @media (max-width: 650px) {
-  .num-of-movies {
-    margin-top:40vh;
-    margin-left:-145px;
-    font-size:70%;
-    width: 120px;
-  }
-}
 
-@media (max-width: 650px) {
   .actor_image {
-    height: 131.5px;
+    height: 131px;
     width: 80px;
     margin-bottom: 60px;
   }
   .actor_description {
-    margin-left:100px;
-    width:180px;
+    position: relative;
+    width: 200px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .mood {
+    padding-left: 0;
+  }
+
+  .num-of-movies {
+    margin-left: 0;
+    position: relative;
+    padding-top: 40px;
+    font-size: 70%;
+    width: 120px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .actor-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .actor_name {
+    width: auto;
+    margin-left: 0;
+    font-size: 17px;
+    font-weight: bold;
   }
 }
 

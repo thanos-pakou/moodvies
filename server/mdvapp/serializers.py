@@ -161,7 +161,7 @@ class IpActorSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.ModelSerializer):
-    date_of_birth = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
+    date_of_birth = serializers.DateField(format="%d-%m-%Y")
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
 
@@ -196,7 +196,7 @@ class DirectorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Director
-        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
+        fields = ('idDirector', 'name', 'l_name', 'description', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
                   'visits_count', 'movies')
 
     def get_movies(self, obj):
@@ -270,7 +270,7 @@ class GenreMoviesSerializer(serializers.ModelSerializer):
 
 
 class ActorMoviesSerializer(serializers.ModelSerializer):
-    date_of_birth = serializers.DateField(format='%d-%m-%Y', input_formats='%d-%m-%Y')
+    date_of_birth = serializers.DateField(format='%d-%m-%Y')
     movies = serializers.SerializerMethodField()
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
 
@@ -294,7 +294,7 @@ class DirectorMoviesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Director
-        fields = ('idDirector', 'name', 'l_name', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
+        fields = ('idDirector', 'name', 'l_name', 'description', 'date_of_birth', 'image', 'search_field', 'visit', 'visit_details',
                   'visits_count',  'movies', 'director_details', 'genre_details')
 
     def get_movies(self, obj):

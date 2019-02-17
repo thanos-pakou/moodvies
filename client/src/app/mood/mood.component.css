@@ -182,26 +182,32 @@ ul.ngx-pagination  {
     .container {
       padding: 0 !important;
     }
+    .mood_header>h1 {
+      font-size: 28px
+    }
+    .mood_header>h3  {
+      font-size: 20px
+    }
 }
+
 
 @media (max-width: 650px) {
   .num-of-movies {
-    margin-top:40vh;
-    margin-left:-145px;
-    font-size:70%;
+    margin-top: 40vh;
+    margin-left: -145px;
+    font-size: 70%;
     width: 120px;
   }
-}
 
-@media (max-width: 650px) {
   .mood_image {
     height: 131.5px;
     width: 80px;
     margin-bottom: 60px;
   }
+
   .mood_description {
-    margin-left:100px;
-    width:180px;
+    margin-left: 100px;
+    width: 180px;
   }
 }
 
@@ -221,10 +227,17 @@ ul.ngx-pagination  {
     position: relative;
     padding-top: 40px;
   }
+  .mood_name {
+    margin-left: 0;
+  }
+  .mood_header>h1 {
+    font-size: 20px
+  }
+  .mood_header>h3 {
+    font-size: 14px
+  }
 }
-.mood_name {
-  margin-left: 0;
-}
+
 
 @media (max-width: 420px) {
   .mood-container {
