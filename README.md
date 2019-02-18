@@ -169,6 +169,9 @@ If everything goes well you will be able to access the application in this link
 
 [http://localhost:4200](http://localhost:4200)
 
+You can use the test account: <b>Username: test -- Password: test1234</b>
+<br>
+ or the admin account: <b>Username: moodvies -- Password: moodvies</b>
 
 ## For Linux
 
@@ -285,6 +288,9 @@ If everything goes well you will be able to access the application in this link
 
 [http://localhost:4200](http://localhost:4200)
 
+You can use the test account: <b>Username: test -- Password: test1234</b>
+<br>
+ or the admin account: <b>Username: moodvies -- Password: moodvies</b>
 
 # Live Example 
 Moodvies app was uploaded in a virtual machine hosted by [okeanos](https://okeanos.grnet.gr).
