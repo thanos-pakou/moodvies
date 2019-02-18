@@ -190,6 +190,7 @@ class IpDirectorSerializer(serializers.ModelSerializer):
 
 
 class DirectorSerializer(serializers.ModelSerializer):
+    date_of_birth = serializers.DateField(format="%d-%m-%Y")
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
@@ -286,6 +287,7 @@ class ActorMoviesSerializer(serializers.ModelSerializer):
 
 
 class DirectorMoviesSerializer(serializers.ModelSerializer):
+    date_of_birth = serializers.DateField(format='%d-%m-%Y')
     visit_details = IpAddressSerializer(many=True, read_only=True, source='visit')
     movies = serializers.SerializerMethodField()
     visits_count = serializers.IntegerField(read_only=True)
