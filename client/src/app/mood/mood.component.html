@@ -12,7 +12,7 @@
     <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div id="{{j.toString()+'a'}}" (mouseenter)="getBackImage(j+'a', mood.back_image)" (mouseleave)="delBackImage(j+'a')" class="mood" *ngFor="let mood of moods | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let j = index;" [attr.data-index]="j">
       <hr>
-      <img routerLink="moods/{{mood.id}}" class="mood_image" [attr.src]="mood.image">
+      <img routerLink="/moods/{{mood.id}}" class="mood_image" [attr.src]="mood.image">
       <span class="mood_name" routerLink="/moods/{{ mood.id }}">
         {{ mood.mood }}
       </span>

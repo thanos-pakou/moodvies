@@ -47,11 +47,12 @@
 
 .mood_description {
   display: block;
-  margin-top:50px;
-  margin-left:90px;
-  width:80%;
-  height:100px;
-
+  margin-top: 50px;
+  margin-left: 90px;
+  width: 80%;
+  height: 100px;
+  overflow: auto;
+  overflow-wrap: break-word;
 }
 
 .mood_movies_container {
@@ -153,7 +154,8 @@
 
 
 .movie-info {
-  position:absolute; margin-left:600px;
+  position:absolute;
+  margin-left:600px;
   margin-top:-140px;
   width:18%;
 }
@@ -199,6 +201,11 @@
     font-size: 25px;
     margin-left: 5px;
   }
+  .mood_description {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media only screen and (max-width: 740px) {
@@ -241,6 +248,9 @@
   .container {
     padding-left: 0;
     padding-right: 0;
+  }
+  .mood_description {
+    width: 200px;
   }
 }
 

@@ -136,7 +136,6 @@
     float: none;
     margin-top:20px;
     margin-left: auto;
-    text-align: center;
   }
 
   .director-name{
@@ -158,6 +157,12 @@
   .num-of-movies {
     margin-top: 30%;
     margin-left: -145px;
+  }
+  .director-header>h1{
+    font-size: 28px;
+  }
+  .director-header>h3{
+    font-size: 20px;
   }
 }
 
@@ -196,6 +201,12 @@
     padding-top: 40px;
     font-size: 70%;
     width: 120px;
+  }
+  .director-header>h1{
+    font-size: 22px;
+  }
+  .director-header>h3{
+    font-size: 16px;
   }
 }
 

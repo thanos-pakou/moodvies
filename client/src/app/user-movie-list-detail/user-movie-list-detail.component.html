@@ -2,14 +2,17 @@
 <div class=container>
   <br><br>
   <div *ngIf="userMovieList" class="mood-container">
-    <h2>{{ userMovieList.title }} mood</h2>
+    <h2>Movie List: {{ userMovieList.title }}</h2>
     <hr>
     <h3 class="mood_description_h">Description</h3>
     <span class="mood_description">{{ userMovieList.description }}
-      <br><br><br><br><br>
-      <h5>Creator</h5>
-      {{ userMovieList.user_details.username }}
+      <br><br><br>
     </span>
+
+    <div class="creator">
+      <h5>Creator</h5>
+      <strong>{{ userMovieList.user_details['username'] }} </strong>
+    </div>
 
 
     <h3 class="mood_description_h">Movies in this list </h3><br><br><br>
@@ -23,10 +26,10 @@
         {{ getTitle(movie.title, movie.pub_year)[0] }}
         <span *ngIf="getTitle(movie.title, movie.pub_year)[1]" class="movie_name_pop">{{ getTitle(movie.title, movie.pub_year)[1] }}</span>
       </span>
-      <span class="movie_description">
+      <div class="movie_description">
         {{ movie.description }}
-      </span>
-      <span style="position:absolute; margin-left:450px; margin-top:50px; width:18%">
+      </div>
+      <div class='movie-info'>
         Director<span *ngIf="movie.director.length > 1">s</span>:
         <strong *ngFor="let direct of movie.director_details">
           {{ direct.name + ' ' + direct.l_name }}
@@ -37,7 +40,13 @@
         Mood: <strong style="cursor:pointer" routerLink="/moods/{{mood.id}}" *ngFor="let mood of movie.mood_details; let b=index">{{mood.mood}}<span *ngIf="movie.mood_details.length - 1 != b">, </span></strong>
         <br>
         Duration: <strong>{{ movie.strDuration }}</strong>
-      </span>
+      </div>
+      <div class="imdb">
+        <img class="imdb-img" src="../../assets/imdb/imdb2.png">
+        {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
+        <img class="moodvies-img" src="../../favicon.ico">
+        {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
+      </div>
       <hr>
     </div>
     <span style="text-align: center; margin: auto; display: block">Page</span>

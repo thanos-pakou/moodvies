@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie';
 
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
 import { Location } from '@angular/common';
 import {DomSanitizer, Title} from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
@@ -12,9 +12,9 @@ import {MessageService} from '../message.service';
 import {ReviewLike} from '../review-like';
 import * as jwt_decode from "jwt-decode";
 import { Router } from "@angular/router";
-import {UserMovieList} from "../user-movie-list";
 import {Review} from "../review";
 import {IpService} from "../ip.service";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -22,7 +22,7 @@ import {IpService} from "../ip.service";
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css']
 })
-export class MovieDetailComponent implements OnInit {
+export class MovieDetailComponent implements OnInit, OnDestroy {
 
   @Input()
   movie: Movie;
@@ -36,6 +36,7 @@ export class MovieDetailComponent implements OnInit {
   reviewLikeForCheck: any[] = [];
   token: string;
   reviewToDelete: Review;
+  movieSub: Subscription;
 
 
   constructor(private route: ActivatedRoute,
@@ -117,26 +118,31 @@ export class MovieDetailComponent implements OnInit {
     }
   }
 
-  getMovie(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.movieId = id;
-    this.movieService.getMovie(id).subscribe(
-      movie => {
-        this.movie = null;
-        this.reviewLikeForCheck = [];
-        this.movie = movie;
-      },
-      () => {},
-      () => {
-        this.titleService.setTitle( this.movie.title + ' (' + this.movie.pub_year + ')');
-        for (let j in this.movie.reviews) {
-          if (this.user) {
-            this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
-          }
+  ngOnDestroy(): void {
+    this.movieSub.unsubscribe();
+  }
 
+  getMovie(): void {
+    this.movieSub = this.route.params.subscribe((params: Params) => {
+      this.movieId = params.id;
+      this.movieService.getMovie(params.id).subscribe(
+        movie => {
+          this.movie = null;
+          this.reviewLikeForCheck = [];
+          this.movie = movie;
+        },
+        () => {},
+        () => {
+          this.titleService.setTitle( this.movie.title + ' (' + this.movie.pub_year + ')');
+          for (let j in this.movie.reviews) {
+            if (this.user) {
+              this.checkIfLiked(this.user[0].id, this.movie.reviews[j].idReview);
+            }
+
+          }
         }
-      }
-    );
+      );
+    });
   }
 
   getUrl() {

@@ -45,6 +45,7 @@
   margin-right:100px;
   margin-left: 50px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .actor_description {
@@ -71,6 +72,7 @@
 .actor_image {
   height: 190px;
   width: 130px;
+  cursor: pointer;
 }
 
 .movie_image {
@@ -147,7 +149,6 @@
     float: none;
     margin-top:20px;
     margin-left: auto;
-    text-align: center;
   }
 
   .actor_name{
@@ -169,6 +170,12 @@
   .num-of-movies {
     margin-top: 30%;
     margin-left: -145px;
+  }
+  .actor_header>h1{
+    font-size: 28px;
+  }
+  .actor_header>h3{
+    font-size: 20px;
   }
 }
 
@@ -209,6 +216,12 @@
     padding-top: 40px;
     font-size: 70%;
     width: 120px;
+  }
+  .actor_header>h1{
+    font-size: 20px;
+  }
+  .actor_header>h3{
+    font-size: 15px;
   }
 }
 

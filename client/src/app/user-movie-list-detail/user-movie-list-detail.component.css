@@ -51,11 +51,12 @@
 
 .mood_description {
   display: block;
-  margin-top:50px;
-  margin-left:90px;
-  width:80%;
-  height:100px;
-
+  margin-top: 50px;
+  margin-left: 90px;
+  width: 80%;
+  height: 100px;
+  overflow: auto;
+  overflow-wrap: break-word;
 }
 
 .mood_movies_container {
@@ -88,8 +89,8 @@
 }
 
 .movie_description {
-  margin-top:50px;
-  margin-left:90px;
+  margin-top:-140px;
+  margin-left:190px;
   position: absolute;
   width:300px;
   height:100px;
@@ -125,4 +126,144 @@
 #first {
   display: block !important;
   margin-right:60px !important;
+}
+
+.imdb {
+  border-radius: 20px;
+  padding:8px;
+  margin-left: 900px;
+  margin-top: -200px;
+  margin-right: 0;
+  position: absolute;
+  color: black;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.imdb-img {
+  height:40px;
+  width: 50px;
+}
+
+.moodvies-img {
+  height: 20px;
+  width: 20px;
+  margin-left:40px;
+}
+
+.movie-info {
+  position:absolute;
+  margin-left:600px;
+  margin-top:-140px;
+  width:18%;
+}
+.creator {
+  margin-left:50px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .imdb {
+    position: relative;
+    margin-left: 590px;
+    margin-top: 0;
+  }
+
+  .movie_name {
+    margin-right: 0;
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .mood-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .movie-info {
+    position: relative;
+    margin-top: 20px;
+    width: 400px;
+    margin-left: 0;
+  }
+  .imdb {
+    width: 400px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .movie_name {
+    font-size: 25px;
+    margin-left: 5px;
+  }
+  .mood_description {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 740px) {
+  .movie_description {
+    margin-top: 40px;
+    position: relative;
+    margin-left: 0;
+  }
+
+  .movie_image_container {
+    width: 100%;
+    text-align: center;
+  }
+  .movie_name_pop {
+    margin-left: -140px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .movie_image {
+    margin-right: 600px;
+  }
+  .mood-container>h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .movie_image {
+    height: 152px;
+    width: 105px;
+  }
+  .movie_name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .movie_description {
+    margin-top: 60px;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .mood_description {
+    width: 200px;
+  }
+  .creator {
+    margin-left:10px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .movie_description {
+    width:200px;
+  }
+  .movie-info {
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 280px) {
+  .movie_description {
+    margin-top:100px;
+  }
 }
