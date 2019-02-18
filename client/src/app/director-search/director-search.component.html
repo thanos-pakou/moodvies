@@ -8,7 +8,7 @@
 <ng-container *ngIf="directors$ | async; let directors">
   <div  *ngIf="directors.length>0" class="search-result">
     <span class="results-length">Results of directors(<strong>{{ directors.length }}</strong>) </span>
-    <div class="search-result-movie" *ngFor="let dir of directors" routerLink="/actors/{{dir.idDirector}}">
+    <div class="search-result-movie" *ngFor="let dir of directors" routerLink="/directors/{{dir.idDirector}}">
       <a>
         <img class='search_movie_image' [attr.src]="dir.image">
         <div class="movie-info">
