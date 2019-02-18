@@ -21,3 +21,10 @@
 .error-messages>h4 {
   color:#484545;
 }
+
+@media only screen and (max-width: 950px) {
+  .error-messages {
+    left: 0;
+    width: 100%;
+  }
+}

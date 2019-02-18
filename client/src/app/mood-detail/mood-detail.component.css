@@ -82,6 +82,7 @@
 .movie_image {
   height: 190px;
   width: 130px;
+  cursor: pointer;
 }
 .imdb {
   border-radius: 20px;

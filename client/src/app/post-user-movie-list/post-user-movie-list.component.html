@@ -1,5 +1,5 @@
 
-<h1 style="color:white;">Create a Movie List</h1>
+<h1 class="create-movie-list-header">Create a Movie List</h1>
 <br><br><br>
 <div class="create-list-container-2">
   <div class="movie-list-input">
@@ -17,27 +17,15 @@
   </div>
   <span class="glyphicon glyphicon-search search_icon"></span>
 </form>
-<div class="user-list-header">Your List</div>
-<div class="userList">
-  <span *ngIf="!userMovieList[0]">No movies have been added to your list yet..</span>
-  <div *ngFor="let movie of userMovieList; let i = index" class="user-list-movie">
 
-        <span class="user-list-movie-info" style="color:white; font-family: 'Berlin Sans FB'; font-size: 16px; float: left">
-          <strong>{{ i+1 }})</strong> {{movie['title']}} ({{movie['pub_year']}})
-        </span>
-    <button type="button" class="btn btn-danger remove-movie" (click)="deleteMovie(i)">Remove Movie</button>
-  </div>
-  <span *ngIf="userMovieList[0]">
-      <button class="btn btn-warning create-list-but" (click)="postList(user[0].id, titleList.value, titleDesc.value)" >Create Movie List</button>
-    </span>
-</div>
 <br><br><br>
+
 
 <ng-container *ngIf="movies$ | async; let movies;">
   <div  *ngIf="movies.length>0" class="search-result">
     <h4 style="text-align: center; color:white">Results ({{ movies.length }}) </h4>
     <br>
-    <div class="search-result-movie" *ngFor="let movie of movies">ng
+    <div class="search-result-movie" *ngFor="let movie of movies">
       <div routerLink="/movies/{{movie.id}}">
         <img class='search_movie_image' [attr.src]="movie.logo">
         <div class="movie-info">{{movie.title}} ({{ movie.pub_year }})</div>
@@ -47,15 +35,31 @@
         <div class="movie-info">
           <span *ngFor="let genre of movie.genre_details; let b = index"> {{genre.genre}}<span *ngIf="movie.genre_details.length - 1 != b">, </span>  </span>
         </div>
-        <span class="imdb">
+        <div class="imdb">
                 <img class="imdb-img" src="../../assets/imdb/imdb.png">
           {{ movie.imdb_score }}<span *ngIf="movie.imdb_score % 1 === 0">.0</span>
                 <img class="moodvies-img" src="../../favicon.ico">
           {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
-              </span>
+              </div>
       </div>
       <button type="button" class="btn btn-success addMovie movie-info" *ngIf="!containedMovie.includes(movie.id)" (click)="addMovie(movie.id, movie.title, movie.pub_year)">Add Movie +</button>
       <button type="button" class="btn btn-success addMovie movie-info" *ngIf="containedMovie.includes(movie.id)" disabled>Movie Added</button>
     </div>
   </div>
 </ng-container>
+<div class="user-list-header">Your List</div>
+<div class="userList">
+  <span *ngIf="!userMovieList[0]">No movies have been added to your list yet..</span>
+  <div *ngFor="let movie of userMovieList; let i = index" class="user-list-movie">
+
+        <div class="user-list-movie-info" style="color:white; font-family: 'Berlin Sans FB'; font-size: 16px;">
+          <strong>{{ i+1 }})</strong> {{movie['title']}} ({{movie['pub_year']}})
+          <br>
+          <button type="button" class="btn btn-danger remove-movie" (click)="deleteMovie(i)">Remove Movie</button>
+        </div>
+
+  </div>
+  <span *ngIf="userMovieList[0]">
+      <button class="btn btn-warning create-list-but" (click)="postList(user[0].id, titleList.value, titleDesc.value)" >Create Movie List</button>
+    </span>
+</div>

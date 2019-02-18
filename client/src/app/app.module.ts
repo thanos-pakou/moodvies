@@ -23,8 +23,6 @@ import { ActorComponent } from './actor/actor.component';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { DirectorComponent } from './director/director.component';
 import { DirectorDetailComponent } from './director-detail/director-detail.component';
-import { GenreComponent } from './genre/genre.component';
-import { GenreDetailComponent } from './genre-detail/genre-detail.component';
 import { UserMovieListComponent } from './user-movie-list/user-movie-list.component';
 import { UserMovieListDetailComponent } from './user-movie-list-detail/user-movie-list-detail.component';
 import { ErrorHandlingService } from './errorhandling.service';
@@ -62,8 +60,6 @@ import { ProfileService } from "./profile.service";
     ActorDetailComponent,
     DirectorComponent,
     DirectorDetailComponent,
-    GenreComponent,
-    GenreDetailComponent,
     UserMovieListComponent,
     UserMovieListDetailComponent,
     RegisterComponent,

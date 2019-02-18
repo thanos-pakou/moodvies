@@ -3,8 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ErrorHandlingService} from './errorhandling.service';
 import {Observable} from 'rxjs';
 import {UserMovieList} from './user-movie-list';
-import {Movie} from './movie';
-import {User} from './user';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -48,9 +48,9 @@
   text-align: center;
   position: absolute;
   height:300px;
-  width:300px;
+  width:100%;
   background: rgba(0,0,0, 0.7);
-  margin-left:807px;
+  left:0;
 }
 
 .user-rate>h5 {
@@ -190,8 +190,8 @@
   float: right;
 }
 
-.actor {
-
+.trailer {
+  float: right;
 }
 
 .actor-image {
@@ -308,39 +308,80 @@ iframe {
 
 @media only screen and (max-width: 1200px) {
   iframe {
-    width:450px;
-    height:230px;
+    width: 540px;
+    height: 276px;
+  }
+
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .movie-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .container {
+    width: auto;
   }
 }
 
 @media only screen and (max-width: 950px) {
-  .logoImage {
-    position: relative;
-    margin-left: 30px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    height: 230px;
-    width: 150px;
+  .trailer {
+    float: none;
+    margin-top:40px;
+    margin-bottom: 40px;
+    margin-right: 400px;
   }
-
-  .rating {
-    text-align: center;
-    font-family: "Bookman Old Style";
-    background-color: #c4c2c0;
-    box-shadow: 5px 10px 8px 10px #888888;
-    width: 150px;
-    bottom: 450px;
-    left:300px;
-    position: relative;
-
-
-    margin-top:200px;
-  }
-
   iframe {
-
+    float: none;
     position: relative;
-
   }
-
+  .delete-cont {
+    left: 0;
+    width: 100%;
+    margin-left: 0;
+    height: auto;
+  }
 }
+
+@media only screen and (max-width: 660px) {
+  .date_posted {
+    float: none;
+  }
+  .delete-review {
+    float: none;
+    margin-top: 20px;
+  }
+  .like-butt {
+    float: none;
+    margin-top: 20px;
+  }
+  .movie-review {
+    height: auto;
+  }
+  iframe {
+    width: 385px;
+    height: 197px;
+  }
+  .movie-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .movie_desc {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .movie-container>h1 {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  iframe {
+    width: 300px;
+    height: 145px;
+  }
+}
+

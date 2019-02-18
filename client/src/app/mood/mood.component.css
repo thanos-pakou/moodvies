@@ -45,6 +45,7 @@
   margin-right:100px;
   margin-left: 50px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .mood_description {
@@ -75,6 +76,7 @@
 .mood_image {
   height: 190px;
   width: 130px;
+  cursor: pointer;
 }
 
 .movie_image {

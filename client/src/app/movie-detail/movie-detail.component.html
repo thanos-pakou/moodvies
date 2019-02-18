@@ -3,7 +3,7 @@
   <div class="movie-container">
     <h1>{{ movie.title }} ({{ movie.pub_year }}) - {{ movie.duration }} mins</h1>
     <h3
-      style="margin-bottom: 50px">Director: {{ movie.director_details[0].name + ' ' + movie.director_details[0].l_name }} <span class="movie_country">Country: {{ movie.country }} </span>
+      style="margin-bottom: 50px">Director: <a routerLink="/directors/{{movie.director}}">{{ movie.director_details[0].name + ' ' + movie.director_details[0].l_name }}</a> <span class="movie_country">Country: {{ movie.country }} </span>
       <button *ngIf="user" (click)="userRate(true)">Rate this movie</button>
       <span style="margin-left: 30px; font-size: 14px" *ngIf="!user">You can rate this movie by <a routerLink="/login">logging in</a></span>
       <div class="user-rate" *ngIf="this.userRatee">
@@ -36,12 +36,12 @@
       </span>
       <span style="float:right">Genre:
         <span *ngFor="let genre of movie.genre_details">
-          <a routerLink="/genres">{{genre.genre}}&nbsp;&nbsp;</a>
+          <span routerLink="/genres">{{genre.genre}}&nbsp;&nbsp;</span>
         </span>
       </span>
     </h4>
     <img class="logoImage" [attr.src]="movie.logo">
-    <iframe style="float:right"  frameBorder="0" scrolling="no" [src]="getUrl()">
+    <iframe class="trailer"  frameBorder="0" scrolling="no" [src]="getUrl()">
     </iframe>
     <br>
     <div class="rating">
@@ -77,10 +77,11 @@
       <br>
       <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
       <div class="movie-review" *ngFor="let review of movie.reviews | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let b = index" [attr.data-index]='b'>
-        <progress class="progress-cus-bar" value="{{ getLikesNum(review.likes[0].positive_likes, review.likes[1].total_likes) }}" max="100">
-        </progress>
+
         <h5 class="review-creator">
           <span class="review-username">{{review.user_details['username']}}</span> reviewed this movie
+          <progress class="progress-cus-bar" value="{{ getLikesNum(review.likes[0].positive_likes, review.likes[1].total_likes) }}" max="100">50
+          </progress>
           <span class="likes">
             {{getLikes(review.likes[0].positive_likes, review.likes[1].total_likes)}}
             <span *ngIf="review.likes[1].total_likes != 0">from {{review.likes[1].total_likes}} user<span *ngIf="review.likes[1].total_likes != 1">s</span>

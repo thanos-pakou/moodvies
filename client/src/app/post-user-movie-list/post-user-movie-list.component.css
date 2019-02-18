@@ -19,6 +19,10 @@
 
 }
 
+.create-movie-list-header {
+  color: white;
+}
+
 .movie-info {
   margin-left:70px;
   color: white;
@@ -36,20 +40,6 @@
   height:20px;
   padding-top:0 !important;
   opacity: 0.7;
-}
-
-.error-messages {
-  position: absolute;
-  padding:40px;
-  width:30%;
-  text-align: center;
-  margin-top:50px;
-  left:70%;
-  background-color: rgba(255,255,255, 0.9);
-}
-
-.error-messages>h4 {
-  color:#484545;
 }
 
 .btn-close-list-window {
@@ -73,7 +63,7 @@
 
 .user-list-movie {
   padding-top:30px;
-  height:80px;
+  height:140px;
   width:100%;
   background-color: rgba(77, 156, 159, 0.21);
 
@@ -147,7 +137,7 @@
 }
 
 .imdb {
-  margin-left: 450px;
+  margin-left: 60%;
   margin-right: 50px;
   position: absolute;
   color:white;
@@ -169,3 +159,50 @@
   margin-left:70px;
   position: absolute;
 }
+
+@media (max-width: 1580px) {
+  .imdb {
+    position: relative;
+    margin-left: 0;
+    margin-top: 40px;
+  }
+  .search-result-movie {
+    margin-bottom: 80px;
+  }
+  .addMovie {
+    margin-left: 0;
+  }
+  .user-list-movie {
+    height: auto;
+    padding-bottom: 30px;
+  }
+
+}
+
+@media (max-width: 720px) {
+  .userList {
+    float: none;
+    width: auto;
+  }
+  .search-result {
+    float: none;
+    width: auto;
+  }
+  .user-list-header {
+    margin-left: 0;
+    text-align: left;
+    margin-top: 30px;
+  }
+  .imdb {
+    margin-right: auto;
+  }
+
+  .movie-list-input {
+    width: 100%;
+  }
+  .create-movie-list-header {
+    font-size: 20px;
+  }
+}
+
+

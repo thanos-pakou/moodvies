@@ -90,7 +90,7 @@ export class ErrorHandlingService {
       }
 
       if (error.error.description) {
-        this.messageService.add('Description: ' + error.error.content);
+        this.messageService.add('Description: ' + error.error.description);
       }
 
       if (error.error.content) {

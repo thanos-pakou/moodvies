@@ -177,6 +177,7 @@ export class MovieService {
       'movies': movieList
     };
     return this.http.post<UserMovieList>(url, sth, httpOptions).pipe(
+      catchError(this.eh.handleError<UserMovieList>('postReviewLike', )),
       map(res => {
         if(res) {
           return res;
@@ -184,7 +185,8 @@ export class MovieService {
           return null;
         }
 
-      })
+      }),
+
     );
   }
 }

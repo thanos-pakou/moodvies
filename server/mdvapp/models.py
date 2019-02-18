@@ -88,13 +88,6 @@ class Mood(models.Model):
         return self.mood
 
 
-class Images(models.Model):
-    idimage = models.AutoField(primary_key=True)
-    url = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = 'images'
-
 
 # --------------------- Movie Model ---------------------
 class Movie(models.Model):
@@ -114,7 +107,6 @@ class Movie(models.Model):
     search_field = models.CharField(max_length=1000, default=None)
     genre = models.ManyToManyField(Genre)
     actor = models.ManyToManyField(Actor)
-    images = models.ManyToManyField(Images)
     director = models.ManyToManyField(Director)
     recommended = models.BooleanField(default=False)
     visit = models.ManyToManyField(IPAddress, blank=True)

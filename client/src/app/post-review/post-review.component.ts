@@ -21,7 +21,7 @@ export class PostReviewComponent implements OnInit {
 
   ngOnInit() {
     this.messageService.clear();
-    window.scrollTo(3000, document.body.scrollHeight);
+
   }
 
   postReview(title: string, content: string): void {
@@ -33,7 +33,7 @@ export class PostReviewComponent implements OnInit {
         this.posted.emit(true);
       } else {
         window.setTimeout(function() {
-          window.scrollTo(3000, document.body.scrollHeight);
+          window.scrollTo(0,  document.body.scrollHeight -900);
         }, 200);
       }
     });

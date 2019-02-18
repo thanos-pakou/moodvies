@@ -37,6 +37,7 @@ export class AppComponent implements OnInit{
           const decoded = jwt_decode(this.token);
           if(decoded['exp'] - currDate < 6000 ) {
             localStorage.removeItem('moodvies-jwt-token');
+            localStorage.removeItem('moodvies-jwt-token');
             localStorage.setItem('moodvies-jwt-token', results['token']);
           }
         } else {

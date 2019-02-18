@@ -7,7 +7,7 @@ import {MovieService} from "../movie.service";
 import {AuthService} from "../auth.service";
 import {User} from "../user";
 import {Router} from "@angular/router";
-import {UserMovieList} from "../user-movie-list";
+import {MessageService} from "../message.service";
 
 @Component({
   selector: 'app-post-user-movie-list',
@@ -26,7 +26,8 @@ export class PostUserMovieListComponent implements OnInit {
 
   constructor(private movieService: MovieService,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   /**
    * Pushes a movie search term into the observable stream.
@@ -72,6 +73,7 @@ export class PostUserMovieListComponent implements OnInit {
    * Posts movie list into the server through movie service
    */
   postList(userId: number, title: string, description: string): void {
+    this.messageService.clear();
     this.movieService.postMovieList(userId, title, description, this.containedMovie).subscribe(
       res => {
         if(res) {

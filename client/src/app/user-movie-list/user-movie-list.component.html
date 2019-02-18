@@ -33,19 +33,22 @@
     <div id="{{j.toString()+'a'}}"  class="mood" *ngFor="let umList of userMovieLists | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
       <hr>
       <span class="mood_name" routerLink="/movie-lists/{{ umList.idUserMovieList }}">
-        {{ umList.title }}
+          {{ umList.title }}
       </span>
-      <span class="mood_description">
+      <br><br><br>
+
+      <div class="mood_description">
+        <h5 style="color: black; text-align: left">Description</h5>
         {{ umList.description }}
-      </span>
+      </div>
       <br>
-      <span class="userList-username">
+        <span class="userList-username">
         from {{ umList.user_details.username }}
       </span>
 
-      <span style="position:absolute; margin-left:450px; margin-top:50px; width:180px">Total number of movies in that list: <strong>{{ umList.movies.length }}</strong></span>
+      <div class="num-of-movies">Total number of movies in that list: <strong>{{ umList.movies.length }}</strong></div>
       <div class="mood_movies_container">
-        <span  *ngFor="let movie of umList['movies_details'] | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
+        <div  *ngFor="let movie of umList['movies_details'] | paginate: { itemsPerPage: 6, currentPage: p[j], id: j }; let i = index" [attr.data-index]="i" class="mood_movies">
          <img routerLink="/movies/{{movie.id}}" *ngIf="movie.logo != null" [attr.src]="movie.logo" class="movie_image">
           <div class="movie_info">
             <h4 style="color:black">{{ movie.title }}</h4>
@@ -66,7 +69,7 @@
           </span>
           </div>
           <br *ngIf="i === 2"><br *ngIf="i === 2">
-        </span>
+        </div>
         <div style=" margin-top:15px; margin-right: 60px; margin-bottom:50px; font-size:10px;">
           <pagination-controls  [maxSize]="5" previousLabel="" nextLabel="" class="my-pagination" *ngIf="umList.movies.length > 6" style="text-align: center" (pageChange)="p[j] = $event" [id]="j">
           </pagination-controls>

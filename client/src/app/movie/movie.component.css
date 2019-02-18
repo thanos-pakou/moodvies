@@ -35,6 +35,7 @@
 .movie_image {
   height: 190px;
   width: 130px;
+  cursor: pointer;
 }
 
 .movie_name{

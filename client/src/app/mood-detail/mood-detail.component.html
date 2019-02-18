@@ -14,7 +14,7 @@
     <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div  class="movie" *ngFor="let movie of mood.movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
       <hr>
-        <img *ngIf="movie.logo" class="movie_image" [attr.src]="movie.logo">
+        <img *ngIf="movie.logo" routerLink="/movies/{{movie.idMovie}}" class="movie_image" [attr.src]="movie.logo">
       <span class="movie_name" routerLink="/movies/{{movie.id}}">
         {{ getTitle(movie.title, movie.pub_year)[0] }}
         <span *ngIf="getTitle(movie.title, movie.pub_year)[1]" class="movie_name_pop">{{ getTitle(movie.title, movie.pub_year)[1] }}</span>

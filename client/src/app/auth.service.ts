@@ -79,6 +79,7 @@ export class AuthService {
       alert('You have successfully logged out');
     }
     localStorage.removeItem('moodvies-jwt-token');
+    localStorage.removeItem('moodvies-jwt-token');
   }
 
 
