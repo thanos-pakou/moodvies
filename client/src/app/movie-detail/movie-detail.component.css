@@ -110,7 +110,8 @@
 }
 .movie-review>h5>.likes {
   float:right;
-
+  margin-right: -140px;
+  margin-top: 20px;
 }
 
 .likes {
@@ -382,6 +383,9 @@ iframe {
   iframe {
     width: 300px;
     height: 145px;
+  }
+  .movie-review>h5>.likes {
+    margin-right: auto;
   }
 }
 
