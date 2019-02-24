@@ -7,10 +7,12 @@
   </div>
   <div class="director-container">
     <h2>Director List</h2>
+    <ngx-loading [show]="directorService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+                 [template]="loadingTemplate"></ngx-loading>
     <app-director-search></app-director-search><br><br><br>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!directorService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!directorService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div *ngFor="let dir of directors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
       <hr>
       <img class="director-image" [attr.src]="dir.image" routerLink="/directors/{{ dir.idDirector}}">
@@ -53,9 +55,9 @@
       </div>
       <hr>
     </div>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!directorService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!directorService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

@@ -10,6 +10,7 @@ import {Movie} from './movie';
 })
 export class MoodService {
 
+  loading = false;
   private moodUrl = 'api/mood';
 
   constructor(private http: HttpClient) { }

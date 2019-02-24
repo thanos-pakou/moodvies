@@ -27,6 +27,7 @@
     "core-js": "^2.6.4",
     "jwt-decode": "^2.2.0",
     "ngx-cookie-service": "^2.1.0",
+    "ngx-loading": "^3.0.1",
     "ngx-pagination": "^3.2.1",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.29"
@@ -34,7 +35,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.4",
     "@angular/cli": "^7.0.7",
-    "@angular/compiler-cli": "^7.2.4",
+    "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "^7.2.4",
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
@@ -44,7 +45,7 @@
     "css-star-rating": "^1.2.4",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^3.1.4",
+    "karma": "^4.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",

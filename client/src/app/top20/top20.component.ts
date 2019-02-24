@@ -17,11 +17,18 @@ export class Top20Component implements OnInit {
               private titleService: Title,) { }
 
   ngOnInit() {
+    this.movieService.loading = true;
     this.getTop20Movies();
   }
 
   getTop20Movies(): void {
-    this.movieService.getTopMovies().subscribe(movies => this.movies = movies);
+    this.movieService.getTopMovies().subscribe(
+      movies => {
+        this.movies = movies;
+        this.movieService.loading = false;
+      },
+      () => this.movieService.loading = false
+    );
     this.titleService.setTitle('Moodvies --  Top 20 movies by our users');
   }
 

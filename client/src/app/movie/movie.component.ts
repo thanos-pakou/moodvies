@@ -19,13 +19,19 @@ export class MovieComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    this.movieService.loading = true;
     this.getMovies();
     this.titleService.setTitle('Moodvies -- List of all movies');
   }
 
   getMovies(): void {
-    this.movieService.getMovies().subscribe(movies => this.movies = movies);
-
+    this.movieService.getMovies().subscribe(
+      movies => {
+        this.movies = movies;
+        this.movieService.loading = false;
+      },
+      () => this.movieService.loading = false
+    );
   }
 
   getTitle(title, pub_year): String[] {

@@ -12,7 +12,6 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./actor.component.css']
 })
 export class ActorComponent implements OnInit {
-
   actors: Actor[];
   p1 = 1;
   p: number[] = [];
@@ -30,6 +29,7 @@ export class ActorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.actorService.loading = true;
     this.titleService.setTitle('Moodvies--Actor Page');
     this.getActors();
     this.actors$ = this.searchTerms.pipe(
@@ -47,7 +47,13 @@ export class ActorComponent implements OnInit {
   }
 
   getActors(): void {
-    this.actorService.getActors().subscribe(actors => this.actors = actors);
+    this.actorService.getActors().subscribe(
+      actors => {
+        this.actors = actors;
+        this.actorService.loading = false
+    },
+      () => this.actorService.loading = false
+    );
 
   }
 

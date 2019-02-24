@@ -12,6 +12,7 @@ import {Actor} from "./actor";
 })
 export class DirectorService {
 
+  loading = false;
   private directorUrl = 'api/director';
 
   constructor(private http: HttpClient) { }

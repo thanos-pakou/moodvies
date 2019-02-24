@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Movie } from './movie';
 import {Observable, of} from 'rxjs/index';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {ErrorHandlingService} from './errorhandling.service';
 import {Review} from './review';
 import {ReviewLike} from './review-like';
@@ -22,6 +22,7 @@ const httpOptions = {
 })
 export class MovieService {
 
+  loading = false;
   createReview = false;
   private movieUrl = 'api/movie';
 

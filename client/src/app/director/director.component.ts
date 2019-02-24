@@ -23,12 +23,18 @@ export class DirectorComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    this.directorService.loading = true;
     this.titleService.setTitle('Moodvies--Director Page');
     this.getDirectors();
   }
 
   getDirectors(): void {
-    this.directorService.getDirectors().subscribe(directors => this.directors = directors);
+    this.directorService.getDirectors().subscribe(directors => {
+      this.directors = directors;
+      this.directorService.loading = false;
+    },
+      () => this.directorService.loading = false
+    );
   }
 
 }

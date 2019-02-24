@@ -6,9 +6,11 @@
   </div>
   <div class="movies-container">
     <h2>Movie List</h2>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <ngx-loading [show]="movieService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+                 [template]="loadingTemplate"></ngx-loading>
+    <span *ngIf="!movieService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!movieService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div  class="movie" *ngFor="let movie of movies | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let j = index;" [attr.data-index]="j">
       <hr>
       <img *ngIf="movie.logo" routerLink="/movies/{{movie.id}}" class="movie_image" [attr.src]="movie.logo">
@@ -40,9 +42,9 @@
       </span>
       <hr>
     </div>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!movieService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!movieService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

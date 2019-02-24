@@ -42,7 +42,7 @@
           {{ movie.total_rate }}<span *ngIf="movie.total_rate % 1 === 0">.0</span>
               </div>
       </div>
-      <button type="button" class="btn btn-success addMovie movie-info" *ngIf="!containedMovie.includes(movie.id)" (click)="addMovie(movie.id, movie.title, movie.pub_year)">Add Movie +</button>
+        <button type="button" class="btn btn-success addMovie movie-info" *ngIf="!containedMovie.includes(movie.id)" (click)="addMovie(movie.id, movie.title, movie.pub_year)">Add Movie +</button>
       <button type="button" class="btn btn-success addMovie movie-info" *ngIf="containedMovie.includes(movie.id)" disabled>Movie Added</button>
     </div>
   </div>

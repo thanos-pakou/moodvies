@@ -7,10 +7,12 @@
   </div>
   <div class="actor-container">
     <h2>Actor List</h2>
+    <ngx-loading [show]="actorService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+                 [template]="loadingTemplate"></ngx-loading>
     <app-actor-search></app-actor-search><br><br><br>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!actorService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!actorService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div *ngFor="let actor of actors | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }">
       <hr>
       <img class="actor_image" routerLink="/actors/{{actor.idActor}}" [attr.src]="actor.image">
@@ -57,9 +59,9 @@
       </div>
       <hr>
     </div>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!actorService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!actorService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
   </div>
 </div>
 <app-footer></app-footer>

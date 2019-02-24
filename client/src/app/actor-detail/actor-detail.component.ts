@@ -26,6 +26,7 @@ export class ActorDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.actorService.loading = true;
     this.ip.getIpAddress().subscribe(
       res => {
         this.ip.ipAddress = res.ip;
@@ -48,7 +49,10 @@ export class ActorDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.actorId = id;
     this.actorService.getActor(id).subscribe(
-      actor => this.actor = actor,
+      actor => {
+        this.actor = actor
+        this.actorService.loading = false;
+      },
       () => {},
       () => {
         this.titleService.setTitle('Actor: ' + this.actor.name + ' ' + this.actor.last_name);

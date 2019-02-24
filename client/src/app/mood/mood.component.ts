@@ -19,14 +19,18 @@ export class MoodComponent implements OnInit {
               private titleService: Title) { }
 
   ngOnInit() {
+    this.moodService.loading = true;
     this.getMoods();
     this.titleService.setTitle('Moodvies--Mood Page');
   }
 
   getMoods(): void {
     this.moodService.getMoods().subscribe(
-      moods => this.moods = moods,
-      () => {},
+      moods => {
+        this.moods = moods;
+        this.moodService.loading = false;
+      },
+      () => this.moodService.loading = false,
       () => {}
     );
   }

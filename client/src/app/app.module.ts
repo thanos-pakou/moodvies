@@ -46,6 +46,7 @@ import { DirectorSearchComponent } from './director-search/director-search.compo
 import { CookieService } from 'ngx-cookie-service';
 import { PostUserMovieListComponent } from './post-user-movie-list/post-user-movie-list.component';
 import { ProfileService } from "./profile.service";
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { ProfileService } from "./profile.service";
     NgbModule.forRoot(),
     NgxPaginationModule,
     BrowserAnimationsModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [MovieService,
     AuthService,

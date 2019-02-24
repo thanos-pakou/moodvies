@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 <div class=container>
   <br><br>
+  <ngx-loading [show]="actorService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+               [template]="loadingTemplate"></ngx-loading>
   <div *ngIf="actor" class="actor-container">
     <h2>{{ actor.name + ' ' + actor.last_name }}</h2>
     <hr>

@@ -3,6 +3,10 @@
   background-size: auto;
 }
 
+.loading {
+  text-align: center;
+}
+
 .actor-container {
   padding: 20px 20px 100px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;

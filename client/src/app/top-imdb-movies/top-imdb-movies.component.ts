@@ -18,11 +18,18 @@ export class TopImdbMoviesComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    this.movieService.loading = true;
     this.getTopImdbMovies();
   }
 
   getTopImdbMovies(): void {
-    this.movieService.getTopImdbMovies().subscribe(movies => this.movies = movies);
+    this.movieService.getTopImdbMovies().subscribe(
+      movies => {
+        this.movies = movies;
+        this.movieService.loading = false;
+      },
+      () => this.movieService.loading = false
+    );
     this.titleService.setTitle('Moodvies --  Top 20 movies according to imdb');
   }
 

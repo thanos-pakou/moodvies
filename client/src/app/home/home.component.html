@@ -14,6 +14,8 @@
     <!-- Carousel -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <div class="rec_movies_layer">
+        <ngx-loading [show]="movieService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+                     [template]="loadingTemplate"></ngx-loading>
         <!-- Indicators -->
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

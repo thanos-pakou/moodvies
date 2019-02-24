@@ -17,12 +17,19 @@ export class HomeComponent implements OnInit {
               private titleService: Title) { }
 
   ngOnInit() {
+    this.movieService.loading = true;
     this.getMovies();
     this.titleService.setTitle('Moodvies--Home Page');
   }
 
   getMovies(): void {
-    this.movieService.getRecommendedMovies().subscribe(movies => this.movies = movies);
+    this.movieService.getRecommendedMovies().subscribe(
+      movies => {
+        this.movies = movies;
+        this.movieService.loading = false;
+      },
+      () => this.movieService.loading = false
+      );
   }
 
   getTitle(title, pub_year): String[] {

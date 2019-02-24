@@ -205,7 +205,6 @@ class User(generics.ListCreateAPIView):
             return CustomUser.objects.filter(username=self.request.user)
 
 
-
 class UserModify(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
