@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 
 import { Mood } from '../mood';
 import { MoodService } from '../mood.service';
 import {Title} from "@angular/platform-browser";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-mood',
@@ -10,12 +11,19 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./mood.component.css']
 })
 export class MoodComponent implements OnInit {
+
+
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
   bool = false;
   p1 = 1;
   p: number[] = [];
   moods: Mood[];
 
-  constructor(private moodService: MoodService,
+  constructor(public moodService: MoodService,
               private titleService: Title) { }
 
   ngOnInit() {

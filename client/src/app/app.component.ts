@@ -1,10 +1,11 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {AuthService} from "./auth.service";
 import { Router } from "@angular/router";
 import { CookieService } from 'ngx-cookie-service';
 import {HttpClient} from "@angular/common/http";
 import * as jwt_decode from "jwt-decode";
 import {IpService} from "./ip.service";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ import {IpService} from "./ip.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+
+
   title = 'moodvies';
   token: string;
   ipAddress: any;

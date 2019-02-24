@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 
 import { Actor } from '../actor';
 import { ActorService } from '../actor.service';
 import {debounceTime, delay, distinctUntilChanged, startWith, switchMap} from "rxjs/operators";
 import {Observable, Subject} from "rxjs";
 import {Title} from "@angular/platform-browser";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-actor',
@@ -12,6 +13,15 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./actor.component.css']
 })
 export class ActorComponent implements OnInit {
+
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public coloursEnabled = false;
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
+
   actors: Actor[];
   p1 = 1;
   p: number[] = [];
@@ -20,7 +30,7 @@ export class ActorComponent implements OnInit {
   actors$: Observable<Actor[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private actorService: ActorService,
+  constructor(public actorService: ActorService,
               private titleService: Title,
   ) { }
 

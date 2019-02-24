@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie';
 import {Title} from "@angular/platform-browser";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-movie',
@@ -10,11 +11,18 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./movie.component.css']
 })
 export class MovieComponent implements OnInit {
+
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
+
   p: number[] = [];
   p1 = 1;
   movies: Movie[];
 
-  constructor(private movieService: MovieService,
+  constructor(public movieService: MovieService,
               private titleService: Title,
               ) { }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {MovieService} from '../movie.service';
 import {Movie} from '../movie';
 import {Title} from "@angular/platform-browser";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-top-imdb-movies',
@@ -10,10 +11,17 @@ import {Title} from "@angular/platform-browser";
 })
 export class TopImdbMoviesComponent implements OnInit {
 
+
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
+
   movies: Movie[];
   p1 = 1;
 
-  constructor(private movieService: MovieService,
+  constructor(public movieService: MovieService,
               private titleService: Title,
               ) { }
 

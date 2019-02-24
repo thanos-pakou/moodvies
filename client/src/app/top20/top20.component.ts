@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {Movie} from '../movie';
 import {MovieService} from '../movie.service';
 import {Title} from "@angular/platform-browser";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-top20',
@@ -10,10 +11,15 @@ import {Title} from "@angular/platform-browser";
 })
 export class Top20Component implements OnInit {
 
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
   p1 = 1;
   movies: Movie[];
 
-  constructor(private movieService: MovieService,
+  constructor(public movieService: MovieService,
               private titleService: Title,) { }
 
   ngOnInit() {
