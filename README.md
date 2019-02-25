@@ -2,7 +2,16 @@
 
 An application which serves information about movies from the server to the client.
 
-## Technology Stack
+#### Content:
+* [Technology Stack](#tech-stack)
+* [Detailed Description](#det-desc)
+* [Issues-Needs](#issues)
+* [Installation Instructions](#install)
+    * [Windows](#win)
+    * [Linux](#linux)
+* [Live Exaple](#example)
+
+## <a name="tech-stack"></a>Technology Stack
 
 * [Angular Web Framework](https://angular.io/)  Used for the frontend handling
   * angular-devkit/core              7.2.4
@@ -19,7 +28,7 @@ An application which serves information about movies from the server to the clie
     
  * [MySQL 8.0.12](https://www.mysql.com/) used as database
 
-## Detailed Description
+## <a name="det-desc"></a>Detailed Description
 
 Moodvies is a cloud application created to help users find a suitable movie to watch based on the mood 
 they want to get (example cheerful mood). The application's backend is being handled by [Django Web Framework](https://www.djangoproject.com/)
@@ -57,13 +66,21 @@ a specific actor, director or movie is being visited, the ip address is saved to
  That way, every time a user goes to all movies, actors, directors, or even search  movies, actors, directors
  the result list is being sorted and the first result will be the one with the most ip address visits.
 
-# Installation instructions
+# <a name="issues"></a>Issues-Needs
+There are plenty of things in this application that need more attention and work. Many parts of the codes 
+could be updated for better performance and user experience. I couldn't find any issues that stop the app from
+running or messing with moodvies basic functionality but i found some issues that need attention:
+* Css for mobiles is incomplete 
+* Register form validation needs to be updated for dynamic validation
+* Search components needs ngx-loading implementation
+* Error handling service and messages need a big upgrade in the way it functions
 
+# <a name="install"></a>Installation instructions
 You can download and run the application moodvies in your local machine following the steps above. Note 
 that in order for you to have a smoother user experience in your local machine and check how the app
 is showing data you have to download the static files (uploads.rar) and also run the dump query to your database.
 
-## For Windows
+## <a name="win"></a>For Windows
 ### Windows(1) Install MySQL Server
 Download and install MySQL server running the [MySQL installer for windows](https://dev.mysql.com/downloads/installer/)
 You can also have an easier experience using [MySQL Workbench](https://www.mysql.com/products/workbench/) providing UI support.
@@ -173,7 +190,7 @@ You can use the test account: <b>Username: test -- Password: test1234</b>
 <br>
  or the admin account: <b>Username: moodvies -- Password: moodvies</b>
 
-## For Linux
+## <a name="linux"></a>For Linux
 
 ### Linux(1) Install MySQL package
 To install MySQL package type in command prompt 
@@ -292,7 +309,7 @@ You can use the test account: <b>Username: test -- Password: test1234</b>
 <br>
  or the admin account: <b>Username: moodvies -- Password: moodvies</b>
 
-# Live Example 
+# <a name="example"></a>Live Example 
 Moodvies app was uploaded in a virtual machine hosted by [okeanos](https://okeanos.grnet.gr).
 
 The application can be reached in this link: [Moodvies Website](https://snf-856718.vm.okeanos.grnet.gr/)
