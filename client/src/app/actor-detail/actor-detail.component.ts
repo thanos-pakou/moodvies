@@ -16,7 +16,6 @@ import {ngxLoadingAnimationTypes} from "ngx-loading";
 export class ActorDetailComponent implements OnInit {
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
-  public loading = true;
   public primaryColour = 'PrimaryWhite';
   public secondaryColour = 'SecondaryGrey';
   public coloursEnabled = false;

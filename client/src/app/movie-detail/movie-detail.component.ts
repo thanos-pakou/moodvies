@@ -25,7 +25,7 @@ import {ngxLoadingAnimationTypes} from "ngx-loading";
 })
 export class MovieDetailComponent implements OnInit, OnDestroy {
 
-  public loading = true;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = 'PrimaryWhite';
   public secondaryColour = 'SecondaryGrey';
   public loadingTemplate: TemplateRef<any>;

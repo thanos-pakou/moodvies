@@ -14,7 +14,7 @@ import {ngxLoadingAnimationTypes} from "ngx-loading";
 })
 export class MoodDetailComponent implements OnInit {
 
-  public loading = true;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = 'PrimaryWhite';
   public secondaryColour = 'SecondaryGrey';
   public loadingTemplate: TemplateRef<any>;
