@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 <div class=container>
   <br><br>
+  <ngx-loading [show]="moodService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+               [template]="loadingTemplate"></ngx-loading>
   <div *ngIf="mood" class="mood-container">
     <h2>{{ mood.mood }} mood</h2>
       <hr>

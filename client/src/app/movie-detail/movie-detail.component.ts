@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, TemplateRef} from '@angular/core';
 
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie';
@@ -15,6 +15,7 @@ import { Router } from "@angular/router";
 import {Review} from "../review";
 import {IpService} from "../ip.service";
 import {Subscription} from "rxjs";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 
 @Component({
@@ -23,6 +24,12 @@ import {Subscription} from "rxjs";
   styleUrls: ['./movie-detail.component.css']
 })
 export class MovieDetailComponent implements OnInit, OnDestroy {
+
+  public loading = true;
+  public primaryColour = 'PrimaryWhite';
+  public secondaryColour = 'SecondaryGrey';
+  public loadingTemplate: TemplateRef<any>;
+  public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour, tertiaryColour: this.primaryColour, backdropBorderRadius: '3px' };
 
   @Input()
   movie: Movie;
@@ -57,6 +64,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   movieId: number;
 
   ngOnInit() {
+    this.movieService.loading = true;
     this.token = localStorage.getItem('moodvies-jwt-token');
     if (this.token) {
       this.auth.tokenRefresh(this.token).subscribe(results => {
@@ -130,8 +138,9 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
           this.movie = null;
           this.reviewLikeForCheck = [];
           this.movie = movie;
+          this.movieService.loading = false;
         },
-        () => {},
+        () => this.movieService.loading = false,
         () => {
           this.titleService.setTitle( this.movie.title + ' (' + this.movie.pub_year + ')');
           for (let j in this.movie.reviews) {

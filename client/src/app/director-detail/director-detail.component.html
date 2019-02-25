@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 <div class=container>
   <br><br>
+  <ngx-loading [show]="directorService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+               [template]="loadingTemplate"></ngx-loading>
   <div *ngIf="director" class="actor-container">
     <h2>{{ director.name + ' ' + director.l_name }}</h2>
     <hr>

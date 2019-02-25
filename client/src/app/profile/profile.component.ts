@@ -263,11 +263,9 @@ export class ProfileComponent implements OnInit {
    * Verifies update with old password
    */
   passwordVerification(password: string) {
-    alert(<string>this.username.nativeElement);
     this.profService.verifyPassword(this.user[0].username, password).subscribe(
       res => {
         if(res) {
-          alert(this.username.nativeElement.value);
           this.updateProfile(this.username.nativeElement.value, this.email.nativeElement.value, this.newPassword.nativeElement.value, this.repeatPassword.nativeElement.value, this.firstName.nativeElement.value, this.lastName.nativeElement.value)
         }
       }

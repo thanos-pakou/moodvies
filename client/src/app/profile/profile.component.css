@@ -7,6 +7,7 @@
 
 
 .profile-option, .movie-list-option {
+  margin-bottom: 50px;
   width:50%;
   text-align: center;
   color: white;
@@ -32,11 +33,12 @@
 }
 
 .selected-option-cont {
-  height:620px;
-  overflow: scroll;
-  position: absolute;
-  width:60%;
-  margin-top: 120px;
+  padding-bottom: 20px;
+  height: auto;
+  overflow: auto;
+  position: relative;
+  width:100%;
+  margin-top: 180px;
   background: rgba(255,255,255, 0.85) !important;
   color:black;
 }
@@ -89,7 +91,7 @@
   text-align: center;
   position:fixed;
   height:auto;
-  width:100%;
+  width:60%;
   margin-left:auto;
   background: rgba(0,0,0, 0.9);
   z-index: 100;
@@ -157,7 +159,6 @@
 @media only screen and (max-width: 1075px) {
   .movie-list-option {
     float: left;
-    margin-bottom: 200px;
   }
 }
 
@@ -172,5 +173,8 @@
   }
   .list-group-item {
     height: 140px;
+  }
+  .update-profile-confirm {
+    width: 100%;
   }
 }

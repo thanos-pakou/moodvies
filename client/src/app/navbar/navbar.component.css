@@ -38,6 +38,7 @@ nav {
 
 .dropdown-menu>li>a:hover {
   color:black !important;
+  cursor: pointer;
 }
 
 .form-control {
@@ -73,10 +74,11 @@ nav {
 .profile {
   position: fixed;
   width: 100%;
-  height: 1080px;
-  top: 5%;
+  height: 100%;
   background: rgba(0,0,0,0.7);
   z-index: 4000;
+  top: 0;
+  overflow: scroll;
 }
 .close-profile {
   text-align: center;
@@ -98,11 +100,6 @@ nav {
   }
 }
 
-@media only screen and (max-width: 1075px) {
-  .profile {
-    top: 11%;
-  }
-}
 
 @media only screen and (max-width: 980px) {
   nav{
@@ -115,7 +112,7 @@ nav {
 @media only screen and (max-width: 767px) {
   nav {
     width: 100%;
-    height: 400px;
+    height: auto;
     top: 0 !important;
     position: absolute;
     background-color: black !important;
@@ -124,8 +121,6 @@ nav {
   .collapse {
     display: inline-grid;
     margin-left: 1%;
-    margin-bottom: 200px;
-    position: absolute !important;
   }
 
   .navbar {
@@ -147,6 +142,14 @@ nav {
   }
   .profile {
     width: 99%;
+  }
+
+  .dropdown-menu>li>a {
+    color:#9d9d9d !important;
+  }
+
+  .dropdown-menu>li>a:hover {
+    color:white !important;
   }
 }
 

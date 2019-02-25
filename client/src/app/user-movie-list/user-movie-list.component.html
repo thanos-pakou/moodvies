@@ -20,6 +20,8 @@
   </div>
   <div class="movie-container">
     <h2>Movie Lists</h2>
+    <ngx-loading [show]="umlService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+                 [template]="loadingTemplate"></ngx-loading>
     <div class="create-new-list-window">
       <button *ngIf="authService.isLoggedIn" (click)="listWindow(true)">Create New List</button>
       <span *ngIf="!authService.isLoggedIn">You must first <a routerLink="/login">login</a> to create a movie list</span>
@@ -27,9 +29,9 @@
     <br><br>
     <br><br>
 
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!umlService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!umlService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div id="{{j.toString()+'a'}}"  class="mood" *ngFor="let umList of userMovieLists | paginate: { itemsPerPage: 5, currentPage: p1, id: 'first' }; let id of [1,2]; let j = index;" [attr.data-index]="j">
       <hr>
       <span class="mood_name" routerLink="/movie-lists/{{ umList.idUserMovieList }}">
@@ -77,9 +79,9 @@
       </div>
       <hr>
     </div>
-    <span style="text-align: center; margin: auto; display: block">Page</span>
+    <span *ngIf="!umlService.loading" style="text-align: center; margin: auto; display: block">Page</span>
     <br>
-    <pagination-controls class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
+    <pagination-controls *ngIf="!umlService.loading" class="my-pagination" previousLabel="Prev" (pageChange)="p1 = $event" id="first"></pagination-controls>
     <div class="create-new-list-window">
       <button *ngIf="authService.isLoggedIn" (click)="listWindow(true)">Create New List</button>
       <span *ngIf="!authService.isLoggedIn">You must first <a routerLink="/login">login</a> to create a movie list</span>

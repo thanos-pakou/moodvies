@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
-<div *ngIf="movie" class=container>
-  <div class="movie-container">
+<div class=container>
+  <ngx-loading [show]="movieService.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px'}"
+               [template]="loadingTemplate"></ngx-loading>
+  <div *ngIf="movie" class="movie-container">
     <h1>{{ movie.title }} ({{ movie.pub_year }}) - {{ movie.duration }} mins</h1>
     <h3
       style="margin-bottom: 50px">Director: <a routerLink="/directors/{{movie.director}}">{{ movie.director_details[0].name + ' ' + movie.director_details[0].l_name }}</a> <span class="movie_country">Country: {{ movie.country }} </span>

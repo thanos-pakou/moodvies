@@ -14,6 +14,7 @@ const httpOptions = {
 })
 export class UserMovieListService {
 
+  loading = false;
   url = 'api/movie-list';
 
   constructor(private http: HttpClient,

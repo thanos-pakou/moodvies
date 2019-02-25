@@ -2,20 +2,12 @@
   font-family: "Palatino Linotype";
 }
 
-.search_icon {
-  color:white !important;
-  padding:5px !important;
-  left: 10px;
-  top:5.5px !important;
-  background: rgba(255, 255, 255, 0.12);
-}
 
 .form-control {
   border-radius: 0;
   height:27px;
   margin-top:3px;
   padding-right:40px;
-  margin-right:-37px;
 }
 
 .search-result {
@@ -69,17 +61,6 @@
     margin-right: auto;
     width: auto;
   }
-  .search-result-movie {
-    height: auto;
-  }
-}
-
-@media only screen and (max-width: 585px) {
-  .search_icon {
-    position: absolute;
-    margin-top:279px;
-    margin-left: 52vw;
-  }
 }
 
 @media only screen and (max-width: 450px) {
@@ -89,11 +70,4 @@
   }
 }
 
-@media only screen and (max-width: 385px) {
-  .search_icon {
-    position: absolute;
-    margin-top: 279px;
-    margin-left: 53.6vw;
-  }
-}
 
